@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+<meta charset="utf-8">
+<title>தீக்கதிர் – செய்தி வீடியோ ஸ்டுடியோ</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="application-name" content="Theekkathir News Studio">
+<meta name="description" content="தீக்கதிர் செய்தி வீடியோ தயாரிப்பு ஸ்டுடியோ">
+<meta name="theme-color" content="#FFC800">
+<style>
+@font-face{font-family:"Noto Sans Tamil";font-weight:100 900;src:local("Noto Sans Tamil"),local("NotoSansTamil-Regular"),local("NotoSansTamil")}
+@font-face{font-family:"Noto Sans Tamil";font-weight:700 900;src:local("Noto Sans Tamil Bold"),local("NotoSansTamil-Bold")}
+:root{--bg:#fffdf0;--card:#fff;--ink:#101010;--mut:#6b6b6b;--line:#efe3b0;--red:#D71920;--gold:#FFC800;--warm:#FFC800;--yel:#FFC800;--in:#fffef8;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#101010;--card:#1b1b1b;--ink:#f4f4f4;--mut:#9a9a9a;--line:#333;--gold:#FFC800;--warm:#FFC800;--yel:#FFC800;--in:#242424;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#101010;--card:#1b1b1b;--ink:#f4f4f4;--mut:#9a9a9a;--line:#333;--gold:#FFC800;--warm:#FFC800;--yel:#FFC800;--in:#242424;color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:500 16px/1.5 "Noto Sans Tamil","Latha","Nirmala UI",sans-serif}
+main{display:grid;gap:16px;padding:12px;max-width:1100px;margin:auto}
+@media(min-width:900px){main{grid-template-columns:380px 1fr;align-items:start}.stage{position:sticky;top:12px}}
+.stage{background:#000;border-radius:14px;padding:8px;border:2px solid var(--red)}
+canvas{width:100%;aspect-ratio:9/16;max-height:78vh;display:block;margin:auto;background:#101010;border-radius:8px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;display:grid;gap:12px;min-width:0}
+h2{margin:0;font-size:17px;font-weight:800}
+label{display:grid;gap:4px;font-size:14px;color:var(--mut)}
+input,textarea,select{font:inherit;color:var(--ink);background:var(--in);border:1px solid var(--line);border-radius:8px;padding:9px 10px;width:100%}
+textarea{resize:vertical}
+.bar{height:10px;border-radius:99px;background:var(--line);overflow:hidden}.bar>div{height:100%;width:0;background:var(--red);transition:width .2s}
+select{width:100%;min-width:0}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+.row>*{flex:1 1 140px}
+button{font:inherit;font-weight:700;border:0;border-radius:8px;padding:11px 14px;background:var(--red);color:var(--on,#101010);cursor:pointer}
+button.alt{background:var(--in);color:var(--ink);border:1px solid var(--line)}
+button.gold{background:var(--deep,#D71920);color:#fff}
+button:disabled{opacity:.5}
+.tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px}
+.tabs button{flex:0 0 auto;min-width:42px;padding:8px 12px;background:var(--in);color:var(--ink);border:1px solid var(--line)}
+.tabs button.on{background:var(--red);color:var(--on,#101010);border-color:var(--red)}
+#st{font-size:14px;color:var(--gold);min-height:22px}
+small{color:var(--mut)}
+details summary{cursor:pointer;font-weight:700}
+/* ---- முதல் பக்கம் (காட்சி மட்டும்): ?mode=view ---- */
+html.m-view,html.m-view body{height:100%;overflow:hidden;background:var(--stg,#000);padding:0;overscroll-behavior:none}
+html.m-view main{display:block;padding:0;max-width:none;margin:0;height:100%}
+html.m-view #mainPanel,html.m-view #cardPanel{display:none!important}
+html.m-view .stage{position:fixed;inset:0;background:var(--stg,#000);border:0;border-radius:0;padding:0;display:block;cursor:pointer}
+html.m-view canvas{position:absolute;inset:0;width:100%;height:100%;max-height:none;aspect-ratio:auto;object-fit:contain;border-radius:0;background:var(--stg,#000);pointer-events:none}
+#vInfo{display:none}
+html.m-view #vInfo{display:block;position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 10px);transform:translateX(-50%);z-index:5;background:rgba(0,0,0,.62);color:#fff;font:800 12px "Noto Sans Tamil",sans-serif;padding:3px 12px;border-radius:99px;pointer-events:none}
+</style>
+<script>(function(){var m=new URLSearchParams(location.search).get('mode')||'';document.documentElement.classList.add('m-'+(m||'full'));if(new URLSearchParams(location.search).get('hub'))document.documentElement.classList.add('hub');if(m==='settings'){var l=document.createElement('link');l.rel='stylesheet';l.href='settings.css';document.head.appendChild(l)}})();</script>
+<script src="media-store.js"></script>
+</head>
+<body>
+<main>
+<div class="stage"><canvas id="cv" width="1080" height="1920"></canvas></div>
+<div id="vInfo"></div>
+<div class="panel" id="mainPanel">
+  <h2>தீக்கதிர் – செய்தி ஸ்டுடியோ <small style="font-weight:600;opacity:.7">· CapCut பாணி</small></h2>
+  <div id="appThemes"></div>
+
+  <!-- முக்கிய செயல்கள் (ஹைலைட்) -->
+  <div class="row" style="gap:10px">
+    <button id="bPlay" class="alt" style="flex:1.2">▶ முன்னோட்டம்</button>
+    <button id="bOne" style="flex:1.4">MP4 · இந்த செய்தி</button>
+    <button id="bAll" class="gold" style="flex:1.4">🎞 MP4 · தொகுப்பு</button>
+  </div>
+  <div class="row"><button id="bCard" class="alt" style="flex:1">🖼 நியூஸ் கார்டு (போட்டோ)</button></div>
+  <div id="st">தயார். 1080×1920 · 30 FPS</div><small id="net"></small>
+  <div class="bar" aria-hidden="true"><div id="xProg"></div></div>
+  <div class="row"><button id="xCancel" class="gold" hidden>நிறுத்து</button></div>
+
+  <div class="tabs" id="tabs"></div>
+
+  <!-- 1. எழுத்து (முதன்மை) -->
+  <div class="row" style="align-items:end"><label>📍 இடம்<input data-k="loc"></label><label>📅 தேதி<input data-k="date"></label><label style="flex:0 0 120px">தேர்வு<input type="date" id="dPick"></label></div>
+  <label>தலைப்பு (*சொல்* = சிவப்பு)<textarea data-k="headline" rows="2"></textarea></label>
+  <label>செய்தி ஸ்கிரிப்ட்<textarea data-k="script" rows="5"></textarea></label><small id="pgInfo"></small>
+  <label>டிக்கர் (| கொண்டு பிரிக்கவும்)<input data-k="ticker"></label>
+
+  <!-- 2. குரோமோ / நேரம் (CapCut பாணி) -->
+  <div class="sc" style="border:2px solid var(--red);padding:12px;border-radius:14px;background:var(--in)">
+    <h2 style="margin:0 0 8px;font-size:16px">🎬 குரோமோ · நேரம் (நீங்களே முடிவு செய்யுங்கள்)</h2>
+    <label>இந்தச் செய்தியின் நீளம்<select data-k="len"><option value="20">20 வி</option><option value="30">30 வி</option><option value="40">40 வி</option><option value="50">50 வி</option><option value="60">60 வி</option></select></label>
+    <label>குரோமோ எழுத்து (காலி = இயல்பு; | கொண்டு பிரிக்கவும்)<input data-k="promo" placeholder="BREAKING NEWS | JUST IN"></label>
+    <label>குரோமோ வரும் நேரங்கள் (எ.கா: 5, 18, 0:45)<input data-k="promoAt" placeholder="5, 18, 0:45" inputmode="text"></label>
+    <small id="promoAtInfo"></small>
+    <div class="row" style="align-items:end;margin-top:6px">
+      <label style="flex:1">முன்னோட்ட நேரம் <b id="pScrubT">0:00</b>
+        <input type="range" id="pScrub" min="0" max="90" step="0.1" value="0">
+      </label>
+    </div>
+    <div class="row" style="margin-top:6px">
+      <button class="gold" id="bPrAdd" type="button" style="flex:1.5">＋ இந்த நேரத்தில் குரோமோ சேர்</button>
+      <button class="alt" id="bPrClr" type="button">✖ அழி</button>
+    </div>
+    <small style="display:block;margin-top:6px">Timeline-ல் நேரத்தை நகர்த்தி “＋ சேர்” அழுத்தினால் அந்த வினாடியில் குரோமோ வரும். CapCut போல நீங்களே நேரத்தைத் தேர்ந்தெடுக்கலாம்.</small>
+  </div>
+
+  <!-- 3. Media + BREAKING -->
+  <div class="row">
+    <label>வீடியோ / படம்<input type="file" id="fMedia" accept="video/*,image/*" multiple><small id="mInfo"></small></label>
+    <label style="flex:0 0 130px;display:flex;align-items:center;gap:8px;flex-direction:row;font-weight:800;color:var(--red)">BREAKING <input type="checkbox" data-k="breaking" style="width:26px;height:26px"></label>
+  </div>
+
+  <!-- 4. Zoom — gesture முதல், ஸ்லைடர் மறைப்பு -->
+  <div style="padding:10px 12px;border:1px dashed var(--line);border-radius:12px;background:var(--in)">
+    <strong style="font-size:14px">🔍 ஜூம் & நிலை · Preview-ல் டச் செய்யுங்கள்</strong>
+    <small style="display:block;margin:4px 0 8px">Preview footage மேல் <b>ஒரு விரலால் இழுத்தால்</b> நகரும் · <b>இரு விரலால்</b> zoom. ஸ்லைடர் தேவையில்லை.</small>
+    <div class="row">
+      <button class="alt" id="bRst">↺ Zoom மீட்டமை</button>
+      <button class="alt" id="bClr">🗑 படங்களை அழி</button>
+    </div>
+    <details style="margin-top:8px">
+      <summary style="font-size:13px;color:var(--mut)">மேம்பட்ட ஜூம் ஸ்லைடர் (தேவைப்பட்டால் மட்டும்)</summary>
+      <div style="padding-top:8px">
+        <label>🔍 Zoom<input type="range" data-k="zoom" min="1" max="4" step="0.01" value="1"></label>
+        <div class="row"><label>↔ இடது–வலது<input type="range" data-k="px" min="-540" max="540" step="2" value="0"></label><label>↕ மேல்–கீழ்<input type="range" data-k="py" min="-600" max="600" step="2" value="0"></label></div>
+      </div>
+    </details>
+  </div>
+
+  <div class="row">
+    <button class="alt" id="bAdd">＋ புதிய செய்தி</button>
+    <button class="alt" id="bDel">🗑 நீக்கு</button>
+    <button class="alt" id="bDate">📅 இன்றைய தேதி</button>
+  </div>
+
+  <!-- மேம்பட்டவை மறைப்பு -->
+  <details>
+    <summary>🎞 தொகுப்பு வீடியோ & இயல்பு அமைப்பு</summary>
+    <div class="panel" style="border:0;padding:8px 0 0">
+      <label style="display:flex;gap:8px;align-items:center;flex-direction:row"><input type="checkbox" id="gCombo" style="width:auto"> தொகுப்பு முறை (ஒவ்வொரு செய்தியும் தன் நீளம் · முடிவில் புரோமோ · End card கடைசியில்)</label>
+      <div class="row"><label>தொடக்க செய்தி எண் (part 2)<input id="gFrom" type="number" min="1" max="10"></label></div>
+      <small id="cInfo"></small>
+      <div class="row"><button class="alt" id="bTpl" type="button">⭐ இந்த அமைப்பை இயல்பாக சேமி</button><button class="alt" id="bTplRst" type="button">↺ இயல்புக்கு மீட்டமை</button></div>
+      <div class="row"><button class="alt" id="bCP" type="button">▶ தொகுப்பு முன்னோட்டம்</button><button class="gold" id="bCombo" type="button">🎞 MP4 உருவாக்கு (தொகுப்பு)</button></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>⚙ சேனல் · தரம் · Watermark · ஒலி (மேம்பட்டது)</summary>
+    <div class="panel" style="border:0;padding:8px 0 0">
+      <div class="row">
+        <label>தரம்<select id="xRes"><option value="1080" selected>1080 × 1920 (HD)</option><option value="720">720 × 1280 (விரைவு)</option></select></label>
+        <label>வேகம்<select id="xFps"><option value="20">20 fps</option><option value="24">24 fps</option><option value="30" selected>30 fps</option></select></label>
+      </div>
+      <div class="row">
+        <label>சேனல் பெயர்<input id="gName"></label>
+        <label>வீடியோ நீளம் (வி)<input id="gDur" type="number" min="6" max="180"></label>
+      </div>
+      <div class="row"><label>துணை தலைப்பு<input id="gSub"></label><label>ஒரு படம் / வினாடி<input id="gSl" type="number" min="1" max="15"></label></div>
+      <div class="row"><label>BREAKING எழுத்து<input id="gBrk"></label></div>
+      <div class="row" style="align-items:center;flex-wrap:wrap;gap:14px"><label style="display:flex;gap:8px;align-items:center;flex-direction:row"><input type="checkbox" id="gPrOn" style="width:auto"> 🎬 வீடியோ மேல் புரோமோ அனிமேஷன்</label></div>
+      <div class="row"><label>இயல்புநிலை புரோமோ எழுத்து<input id="gPrDef" placeholder="BREAKING NEWS"></label><label>புரோமோ பாணி<select id="gPrStyle"><option value="full">முழுக் கட்டம்</option><option value="band">நடுப் பட்டை</option></select></label></div>
+      <div class="row"><label>எத்தனை வினாடிக்கு ஒருமுறை<input id="gPrEvery" type="number" min="5" max="180"></label><label>எத்தனை வினாடி தெரியும்<input id="gPrDur" type="number" min="2" max="10"></label></div>
+      <div class="row"><button class="alt" id="bPrTest" type="button">▶ புரோமோவைச் சோதி</button></div>
+      <div class="row"><label>டிக்கர் பேட்ஜ் வரி 1<input id="gTk1"></label><label>டிக்கர் பேட்ஜ் வரி 2<input id="gTk2"></label></div>
+      <div class="row"><label>End card வாசகம்<input id="gEnd"></label><label>End card நன்றி வரி<input id="gThx"></label></div>
+      <div class="row"><label>தொடர்பு தலைப்பு<input id="gCt"></label><label>போன் நம்பர்<input id="gPh"></label></div>
+      <label>Watermark எழுத்து<input id="gWm"></label>
+      <div class="row"><label>அளவு<input type="range" id="gWmS" min="20" max="140" step="2"></label><label>தெளிவு<input type="range" id="gWmO" min="0.1" max="1" step="0.05"></label></div>
+      <div class="row"><label>↔ இடம்<input type="range" id="gWmX" min="0" max="100"></label><label>↕ இடம்<input type="range" id="gWmY" min="0" max="100"></label><label>நிறம்<input type="color" id="gWmC" style="padding:2px;height:42px"></label></div>
+      <label>லோகோ படம்<input type="file" id="fLogo" accept="image/*"></label>
+      <div class="row" style="align-items:center;flex-wrap:wrap;gap:14px;margin-top:6px">
+        <label style="display:flex;gap:8px;align-items:center;flex-direction:row"><input type="checkbox" id="gSfx" style="width:auto"> MP4 ஒலி விளைவுகள்</label>
+        <label style="display:flex;gap:8px;align-items:center;flex-direction:row"><input type="checkbox" id="gTick" style="width:auto"> தட்டச்சு tick</label>
+        <label style="display:flex;gap:8px;align-items:center;flex-direction:row"><input type="checkbox" id="gSfxP" style="width:auto"> முன்னோட்டத்திலும் ஒலி</label>
+      </div>
+      <button class="alt" id="bSave">💾 அமைப்பை சேமி</button>
+    </div>
+  </details>
+
+  <details>
+    <summary>📋 10 செய்திகள் வரி வடிவில் ஒட்டு</summary>
+    <div class="panel" style="border:0;padding:8px 0 0">
+      <small>ஒரு வரி = ஒரு செய்தி:<br>தலைப்பு | இடம் | வரி1 ; வரி2 ; வரி3 | டிக்கர்</small>
+      <textarea id="bulk" rows="5" placeholder="சென்னையில் *கனமழை* | சென்னை | வரி 1 ; வரி 2 ; வரி 3 | டிக்கர் செய்தி"></textarea>
+      <button class="alt" id="bImp">இறக்குமதி செய்</button>
+    </div>
+  </details>
+  <small>குறிப்பு: MP4 உருவாக்கும் போது இந்தத் தாவலைத் திறந்தே வைக்கவும். ஒலி footage வீடியோவிலிருந்து சேரும்.</small>
+</div>
+<div class="panel" id="cardPanel" style="display:none;border:2px solid var(--red)">
+  <h2>🖼 நியூஸ் கார்டு (போட்டோ)</h2>
+  <small>வீடியோவின் முதல் பக்கம் அப்படியே போட்டோவாக (1080×1920) இறங்கும். இங்கே மாற்றும் எழுத்து வீடியோவை பாதிக்காது.</small>
+  <div class="row"><button id="cJpg">⬇ JPG போட்டோ</button><button id="cPng" class="alt">⬇ PNG போட்டோ</button></div>
+  <div id="cSt" style="font-size:14px;color:var(--gold);min-height:20px"></div><div id="cOut"></div>
+  <div class="tabs" id="ctabs"></div>
+  <div class="row"><label>📍 இடம்<input data-c="loc"></label><label>📅 தேதி<input data-c="date"></label></div>
+  <label>தலைப்பு (வரி 2 சிவப்பு; *சொல்* = சிவப்பு)<textarea data-c="headline" rows="3"></textarea></label>
+  <label>செய்தி ஸ்கிரிப்ட் (முழு எழுத்தும் கார்டில் தெரியும்)<textarea data-c="script" rows="7"></textarea></label>
+  <label>டிக்கர் (| கொண்டு பிரிக்கவும்)<input data-c="ticker"></label>
+  <div class="row"><label style="flex:0 0 130px">BREAKING<input type="checkbox" data-c="breaking" style="width:28px;height:28px"></label><label>படம் எண் (இந்த செய்தியின் கோப்பு)<input type="number" data-c="idx" min="1" value="1"></label></div>
+  <div style="padding:8px 10px;border:1px dashed var(--line);border-radius:10px">
+    <strong style="font-size:13px">🔍 ஜூம் · Preview-ல் டச் / இழுக்கவும்</strong>
+    <div class="row" style="margin-top:6px"><button class="alt" id="cRst">↺ Zoom மீட்டமை</button><button class="alt" id="cSync">↻ வீடியோவிலிருந்து எடு</button><button class="alt" id="cBack">🎬 வீடியோ முறைக்கு</button></div>
+    <details style="margin-top:6px"><summary style="font-size:12px;color:var(--mut)">மேம்பட்ட ஜூம் ஸ்லைடர்</summary>
+      <label>🔍 Zoom<input type="range" data-c="zoom" min="1" max="4" step="0.01" value="1"></label>
+      <div class="row"><label>↔<input type="range" data-c="px" min="-540" max="540" step="2" value="0"></label><label>↕<input type="range" data-c="py" min="-600" max="600" step="2" value="0"></label></div>
+    </details>
+  </div>
+  <small>கார்டில் விரலால் இழுத்து நகர்த்தலாம்; தேதி / இடத்தை தட்டி மாற்றலாம்.</small>
+</div>
+</main>
+<script>
+let SBY=1140;let GOLD="#FFC800",RED="#D71920",YEL="#FFC800",PAGE="#f3f3f3",PANEL="#ffffff",PANEL2="#f1f1f1",INK="#101010",TKB="#070707",TKT="#ffffff",YR="255,200,0";const _sh=(h,f)=>{const n=parseInt(h.slice(1),16);let r=n>>16,g=n>>8&255,b=n&255;const m=f<0?0:255,p=Math.abs(f);r=Math.round(r+(m-r)*p);g=Math.round(g+(m-g)*p);b=Math.round(b+(m-b)*p);return "#"+((1<<24)|(r<<16)|(g<<8)|b).toString(16).slice(1)};const VX=20,VY=536,VW=1040,VH=600,HB=256,BRH=70,HLB=524,TKY=1814,GAP=12,TT=1180,TH=560,TW=880,W=1080,H=1920,FONT='"Noto Sans Tamil","Latha","Nirmala UI","Tamil Sangam MN",sans-serif';
+const cv=document.getElementById("cv"),ctx=cv.getContext("2d");
+const $=s=>document.querySelector(s);
+const today=()=>{const d=new Date(),p=n=>String(n).padStart(2,"0");return p(d.getDate())+"-"+p(d.getMonth()+1)+"-"+d.getFullYear()};
+const blank=()=>({headline:"சென்னையில் கனமழை தொடரும்\nமக்கள் எச்சரிக்கையுடன் இருக்க வேண்டும்",loc:"சென்னை",date:today(),script:"சென்னை மற்றும் புறநகர் பகுதிகளில் கடந்த 12 மணி நேரமாக தொடரும் *கனமழையால்* சில தாழ்வான பகுதிகளில் நீர் தேங்கியுள்ளது. மக்கள் தேவையில்லாமல் *வெளியே செல்ல வேண்டாம்* என மாவட்ட நிர்வாகம் எச்சரிக்கை விடுத்துள்ளது.",ticker:"சென்னையில் கனமழை தொடரும் | பள்ளிகளுக்கு இன்று விடுமுறை",breaking:true});
+const FL=[["gBrk","brk"],["gTk1","tk1"],["gTk2","tk2"],["gEnd","end"],["gThx","thx"],["gWm","wm"],["gCt","ct"],["gPh","ph"]];
+let G={name:"தீக்கதிர்",sub:"Mobile TV",dur:90,slide:3,brk:"BREAKING NEWS",tk1:"BREAKING",tk2:"NEWS",end:"ஊடக உலகின் உண்மை போராளி",thx:"நன்றி · தொடர்ந்து இணைந்திருங்கள்",wm:"#Theekathir",ct:"செய்தி & விளம்பர தொடர்புக்கு",ph:"98XXX XXXXX"},items=[blank()],cur=0,media={},logoImg=null;
+try{const s=JSON.parse(localStorage.getItem("tk_studio2")||"null");if(s&&s.items&&s.items.length){G=Object.assign(G,s.G);items=s.items}}catch(e){}
+if(!localStorage.getItem("tk_studio2")){try{const b=JSON.parse(localStorage.getItem("np_brand")||"null");if(b&&b.tv)Object.assign(G,b.tv)}catch(e){}}
+if(!G.v3){G.dur=90;G.v3=1}if(!G.v4){G.ct="செய்தி & விளம்பர தொடர்புக்கு";G.v4=1}items.forEach(x=>{if(!x.dm)x.date=today()});
+/* முதல் செய்தியின் அமைப்பு தானாகவே "இயல்பு அமைப்பு"-ஆக சேமிக்கப்படும் (G.tpl); புதிய செய்தி எப்போதும் இதிலிருந்தே தொடங்கும் */
+if(!G.tpl){const f=items[0]||{};G.tpl={breaking:f.breaking!==false,promo:f.promo||"",len:+f.len||30}}
+items.forEach(x=>{if(!x.len)x.len=G.tpl.len||30});
+const tplSt=()=>({breaking:G.tpl.breaking,promo:G.tpl.promo,len:G.tpl.len,zoom:1,px:0,py:0});
+const save=()=>{try{localStorage.setItem("tk_studio2",JSON.stringify({G,items}))}catch(e){}};
+function setLogo(u){const im=new Image();im.onload=()=>{logoImg=im};im.src=u}
+try{const l=localStorage.getItem("tk_logo");if(l)setLogo(l)}catch(e){}
+
+/* ---------- helpers ---------- */
+const clamp=(v,a=0,b=1)=>Math.min(b,Math.max(a,v));
+const ease=x=>1-Math.pow(1-clamp(x),3);
+function tok(s){let g=false;return (s||"").trim().split(/\s+/).filter(Boolean).map(w=>{if(w[0]==="*")g=true;const o={t:w.replace(/\*/g,""),g};if(w.length>1&&w.endsWith("*"))g=false;return o})}
+function wrap(toks,maxW,font){ctx.font=font;const sp=ctx.measureText(" ").width;const L=[];let c=[],w=0;for(const k of toks){k.w=ctx.measureText(k.t).width;if(c.length&&w+sp+k.w>maxW){L.push(c);c=[];w=0}w+=(c.length?sp:0)+k.w;c.push(k)}if(c.length)L.push(c);return L}
+function fit(text,maxW,start,maxL,wt){let s=start,L;for(;s>=34;s-=4){L=wrap(tok(text),maxW,`${wt} ${s}px ${FONT}`);if(L.length<=maxL)break}return{L,s}}
+function drawLine(line,x,y,s,wt,col){ctx.font=`${wt} ${s}px ${FONT}`;const sp=ctx.measureText(" ").width;for(const k of line){ctx.fillStyle=k.g?RED:col;ctx.fillText(k.t,x,y);x+=k.w+sp}}
+function shrink(text,maxW,s,wt){while(s>22){ctx.font=`${wt} ${s}px ${FONT}`;if(ctx.measureText(text).width<=maxW)break;s-=2}return s}
+function glass(x,y,w,h,r,tint){ctx.save();ctx.beginPath();ctx.roundRect(x,y,w,h,r);ctx.fillStyle=tint||"rgba(255,255,255,.09)";ctx.fill();const g=ctx.createLinearGradient(0,y,0,y+h);g.addColorStop(0,"rgba(255,255,255,.22)");g.addColorStop(.5,"rgba(255,255,255,.03)");g.addColorStop(1,"rgba(255,255,255,.07)");ctx.fillStyle=g;ctx.fill();ctx.strokeStyle="rgba(255,255,255,.28)";ctx.lineWidth=2;ctx.stroke();ctx.restore()}
+function pin(x,y,c){ctx.fillStyle=c;ctx.beginPath();ctx.arc(x,y-8,13,Math.PI,0);ctx.lineTo(x,y+16);ctx.closePath();ctx.fill();ctx.fillStyle="#101010";ctx.beginPath();ctx.arc(x,y-8,5,0,7);ctx.fill()}
+function cover(src,sw,sh,x,y,w,h,z,ox,oy){const s=Math.max(w/sw,h/sh)*z,dw=sw*s,dh=sh*s,mx=(dw-w)/2,my=(dh-h)/2;ox=clamp(ox||0,-mx,mx);oy=clamp(oy||0,-my,my);ctx.save();ctx.beginPath();ctx.roundRect(x,y,w,h,8);ctx.clip();ctx.drawImage(src,x+(w-dw)/2+ox,y+(h-dh)/2+oy,dw,dh);ctx.restore()}
+const plain=s=>(s||"").replace(/\*/g,"");
+let STILL=false,cardMode=false;
+const MLF=it=>{const L=media[cur]||[];if(!STILL)return L;const m=L[(it.idx||1)-1];return m?[m]:[]};
+
+/* ---------- main frame (reference layout) ---------- */
+const GG=(a,b)=>{const g=ctx.createLinearGradient(a,0,b,0);g.addColorStop(0,_sh(RED,-.25));g.addColorStop(.5,_sh(RED,.08));g.addColorStop(1,_sh(RED,-.15));return g};
+const RG=(a,b)=>{const g=ctx.createLinearGradient(a,0,b,0);g.addColorStop(0,_sh(YEL,-.15));g.addColorStop(.5,YEL);g.addColorStop(1,_sh(YEL,-.08));return g};
+function poly(p){ctx.beginPath();p.forEach((q,i)=>i?ctx.lineTo(q[0],q[1]):ctx.moveTo(q[0],q[1]));ctx.closePath()}
+function cal(x,y,s,c){ctx.strokeStyle=c;ctx.lineWidth=s*.08;ctx.beginPath();ctx.roundRect(x-s/2,y-s/2,s,s,s*.12);ctx.stroke();ctx.fillStyle=c;ctx.fillRect(x-s/2,y-s/2,s,s*.26);for(let i=0;i<3;i++)for(let j=0;j<3;j++)ctx.fillRect(x-s*.32+i*s*.25,y-s*.05+j*s*.2,s*.14,s*.1)}
+function logo(cx,cy,r,cl){ctx.save();if(logoImg){ctx.beginPath();ctx.arc(cx,cy,r,0,7);ctx.clip();ctx.drawImage(logoImg,cx-r,cy-r,2*r,2*r)}else{let g=ctx.createRadialGradient(cx,cy,0,cx,cy,r);g.addColorStop(0,YEL);g.addColorStop(1,_sh(YEL,-.25));ctx.fillStyle=g;ctx.beginPath();ctx.arc(cx,cy,r,0,7);ctx.fill();for(let i=0;i<11;i++){const a=Math.PI+(i+.5)/11*Math.PI,a0=a-.07,a1=a+.07;ctx.fillStyle=i%2?RED:YEL;ctx.beginPath();ctx.moveTo(cx+Math.cos(a0)*r*.4,cy+r*.3+Math.sin(a0)*r*.4);ctx.lineTo(cx+Math.cos(a)*r*.92,cy+r*.3+Math.sin(a)*r*.92);ctx.lineTo(cx+Math.cos(a1)*r*.4,cy+r*.3+Math.sin(a1)*r*.4);ctx.fill()}ctx.fillStyle=RED;ctx.beginPath();ctx.arc(cx,cy+r*.3,r*.34,Math.PI,0);ctx.fill();ctx.fillStyle=_sh(YEL,-.35);if(cl){ctx.save();ctx.beginPath();ctx.arc(cx,cy,r,0,7);ctx.clip();ctx.fillRect(cx-r,cy+r*.3,2*r,r);ctx.restore()}else ctx.fillRect(cx-r,cy+r*.3,2*r,r)}ctx.restore();ctx.strokeStyle=YEL;ctx.lineWidth=7;ctx.beginPath();ctx.arc(cx,cy,r,0,7);ctx.stroke()}
+function scriptPages(txt){const run=f=>{const l=[];(txt||"").split("\n").forEach(par=>{if(par.trim())wrap(tok(par),TW,`700 ${f}px ${FONT}`).forEach(x=>l.push(x))});return l};
+let sf=50,sl=run(50),cap=Math.floor(TH/(50*1.45));
+for(let f=50;f>=42;f-=2){const L=run(f),c=Math.floor(TH/(f*1.45));if(L.length<=c){sf=f;sl=L;cap=c;break}}
+if(sl.length>cap){for(sf=50;sf>=30;sf-=2){sl=run(sf);cap=Math.floor(TH/(sf*1.45));if(sl.length<=cap*3)break}}
+const np=Math.max(1,Math.min(3,Math.ceil(sl.length/cap)));return{sf,sl,gp:sf*1.45,np,per:Math.max(1,Math.ceil(sl.length/np))}}
+function scriptFull(txt){let sf=50,sl=[];for(;sf>=24;sf-=2){sl=[];(txt||"").split("\n").forEach(par=>{if(par.trim())wrap(tok(par),TW,`700 ${sf}px ${FONT}`).forEach(l=>sl.push(l))});if(sl.length*sf*1.45<=TH)break}return{sf,sl,gp:sf*1.45}}
+const EC=3.8;
+/* ---------- தொகுப்பு முறை (G.combo): ஒவ்வொரு செய்தியும் தன் நீளம் (30 / 50 வி) ஓடி, கடைசியில் புரோமோ; End card கடைசிச் செய்திக்கு மட்டும் ---------- */
+const _sm=new WeakMap();
+const segLen=it=>{const k=(it.script||"")+"|"+(+it.len||30);let c=_sm.get(it);if(!c||c.k!==k){c={k,v:Math.max(+it.len||30,2+scriptPages(it.script).np*6+.4)};_sm.set(it,c)}return c.v};
+/* G.cFrom-ஆம் செய்தியிலிருந்து தொடங்கி, 180 வினாடிக்குள் (End card உட்பட) எத்தனை செய்தி அடங்கும் என்று கணக்கிடும் */
+const comboRange=()=>{const a=clamp((+G.cFrom||1)-1,0,items.length-1);let b=a,body=segLen(items[a]);for(let k=a+1;k<items.length;k++){const n=body+segLen(items[k]);if(n+EC>180)break;body=n;b=k}return{a,b,tot:Math.min(180,body+EC)}};
+const lastSeg=it=>items[comboRange().b]===it;
+const durOf=it=>G.combo?Math.min(180,segLen(it)+(lastSeg(it)?EC:0)):Math.min(180,Math.max(G.dur,2+scriptPages(it.script).np*6+EC+.4));
+function draw(it,t){
+  const D=durOf(it),a=(s,d)=>ease((t-s)/d),C=(s)=>{ctx.textAlign=s?"center":"left"};
+  ctx.setTransform(1,0,0,1,0,0);ctx.globalAlpha=1;ctx.textBaseline="alphabetic";ctx.textAlign="left";ctx.shadowBlur=0;
+  ctx.fillStyle="#0a0a0a";ctx.fillRect(0,0,W,H);
+  const pu=.1+.04*Math.sin(t*1.5);ctx.fillStyle=PAGE;ctx.fillRect(0,0,W,H);
+  [[0,560],[1080,650],[1080,1500],[0,1420]].forEach(([x,y])=>{const g=ctx.createRadialGradient(x,y,0,x,y,600);g.addColorStop(0,`rgba(${YR},${pu})`);g.addColorStop(1,"rgba("+YR+",0)");ctx.fillStyle=g;ctx.fillRect(0,0,W,H)});
+  ctx.save();ctx.globalAlpha=.05;ctx.fillStyle=YEL;const gx=((t*140)%1600)-300;poly([[gx,0],[gx+120,0],[gx-380,H],[gx-500,H]]);ctx.fill();ctx.restore();
+  ctx.save();const zoom=1+.01*(t/D);ctx.translate(W/2,H/2);ctx.scale(zoom,zoom);ctx.translate(-W/2,-H/2);
+
+  /* header */
+  let p=a(.1,.7);HEADER(t,p);
+  const lw=a(.4,.9)*W;ctx.fillStyle=RG(0,W);ctx.fillRect(0,248,lw,5);ctx.fillStyle=GG(0,W);ctx.fillRect(0,253,lw,3);ctx.save();ctx.beginPath();ctx.rect(0,248,lw,5);ctx.clip();ctx.fillStyle="rgba(255,255,255,.45)";ctx.fillRect(((t*170)%1500)-200,248,220,5);ctx.restore();ctx.save();ctx.beginPath();ctx.rect(0,253,lw,3);ctx.clip();ctx.fillStyle="rgba("+YR+",.55)";ctx.fillRect(((t*130)%1600)-200,253,180,3);ctx.restore();
+
+
+  /* breaking band ABOVE headline */
+  if(it.breaking)BRKBAND(it,t);
+  HEAD2(it,t);
+  /* video frame (multi photo / video slideshow) */
+  const vx=VX,vy=VY,vw=VW,vh=VH;p=a(it.breaking?1.2:.9,.7);
+  ctx.save();ctx.globalAlpha=p;ctx.translate(W/2,vy+vh/2);ctx.scale(.9+.1*p,.9+.1*p);ctx.translate(-W/2,-(vy+vh/2));
+  ctx.fillStyle=PANEL;ctx.fillRect(vx,vy,vw,vh);ctx.fillStyle="#161616";ctx.fillRect(vx+8,vy+8,vw-16,vh-16);
+  const fx=vx+12,fy=vy+12,fw=vw-24,fh=vh-24,ML=MLF(it),uz=(it.zoom||1)*(1+.03*(t/D));
+  const SL=G.slide||3,nM=ML.length,si=nM?Math.max(0,Math.floor(t/SL))%nM:0,st2=t%SL,nx=nM?(si+1)%nM:0;
+  if(!STILL&&!window._exp)ML.forEach((m,i)=>{if(m.type!=="v")return;const on=i===si||(nM>1&&i===nx&&st2>SL-.6);if(on&&!m.el._on){m.el._on=true;m.el.currentTime=0;m.el.play().catch(()=>{})}else if(!on&&m.el._on){m.el._on=false;m.el.pause()}m.el.muted=!(rec&&i===si)});
+  const dm=(m,al)=>{ctx.save();ctx.globalAlpha=al;if(m.type==="v"){if(m.el.readyState>=2){cover(m.el,m.el.videoWidth,m.el.videoHeight,fx,fy,fw,fh,uz,it.px,it.py);if(window._exp)snapFrame(m)}else if(window._exp&&m._lc)cover(m._lc,m._lc.width,m._lc.height,fx,fy,fw,fh,uz,it.px,it.py)}else cover(m.el,m.el.naturalWidth,m.el.naturalHeight,fx,fy,fw,fh,uz,it.px,it.py);ctx.restore()};
+  if(nM){dm(ML[si],p);if(nM>1&&st2>SL-.5)dm(ML[nx],p*ease((st2-(SL-.5))/.5))}
+  else{ctx.save();ctx.fillStyle="#242424";ctx.fillRect(fx,fy,fw,fh);const gg=ctx.createLinearGradient(fx+((t*260)%1500)-400,0,fx+((t*260)%1500),0);gg.addColorStop(0,"rgba(255,255,255,0)");gg.addColorStop(.5,"rgba(255,255,255,.1)");gg.addColorStop(1,"rgba(255,255,255,0)");ctx.fillStyle=gg;ctx.fillRect(fx,fy,fw,fh);ctx.fillStyle="#9a9a9a";ctx.font=`700 44px ${FONT}`;ctx.textAlign="center";ctx.fillText("வீடியோ / படம் இங்கே",W/2,vy+vh/2+14);ctx.restore();ctx.textAlign="left"}
+  WMARK(fx,fy,fw,fh);FRAMEFX(it,t,fx,fy,fw,fh);PROMO(it,t,fx,fy,fw,fh);
+  if(nM>1){for(let j=0;j<nM;j++){ctx.fillStyle=j===si?GOLD:"rgba(255,255,255,.45)";ctx.beginPath();ctx.arc(vx+vw/2-(nM-1)*14+j*28,vy+vh-30,7,0,7);ctx.fill()}}
+  FRAMEBORDER(vx,vy,vw,vh,t,p);
+  ctx.restore();
+
+  /* script box: starts right after video — subheading popup + pages */
+  p=a(1.7,.7);SBY=VY+VH+GAP;ctx.save();ctx.globalAlpha=p;
+  ctx.fillStyle=PANEL;ctx.fillRect(VX,SBY,VW,TKY-GAP-SBY);
+  BOXFX(VX,SBY,VW,TKY-GAP-SBY,t);
+  SCRIPTSUB(t,SBY+8);
+  const SP=STILL?scriptFull(it.script):scriptPages(it.script),sf=SP.sf,sl=SP.sl,gp=SP.gp,np=STILL?1:SP.np,per=STILL?Math.max(1,sl.length):SP.per;window._pg=STILL?1:SP.np;
+  const ps0=2,pdur=6,uu=Math.max(0,t-ps0),pix=np>1?Math.floor(uu/pdur)%np:0,lt=np>1?uu%pdur:uu;
+  const pl=sl.slice(pix*per,(pix+1)*per),fo=np>1?1-ease((lt-(pdur-.35))/.35):1,y0=SBY+58;
+  pl.forEach((ln,i)=>{const q=1;ctx.globalAlpha=p*fo*(np>1?ease(lt/.35):1);drawLine(ln,138+(1-q)*50,y0+i*gp+gp/2+sf*.32,sf,700,INK)});
+  ctx.globalAlpha=p;if(np>1)for(let j=0;j<np;j++){ctx.fillStyle=j===pix?RED:"#bbb";ctx.beginPath();ctx.arc(1030-(np-1-j)*28,TKY-GAP-30,7,0,7);ctx.fill()}
+  ctx.restore();
+
+  /* ticker */
+  p=a(1.2,.6);ctx.save();ctx.translate(0,(1-p)*200+56);
+  ctx.fillStyle=TKB;ctx.fillRect(0,1760,W,102);ctx.fillStyle=YEL;ctx.fillRect(0,1758,W,3);ctx.fillRect(0,1861,W,3);
+  ctx.save();ctx.beginPath();ctx.rect(250,1762,770,98);ctx.clip();
+  const sg2=(plain(it.ticker)||plain(it.headline)).split("|").map(s=>s.trim()).filter(Boolean);ctx.font=`700 36px ${FONT}`;const ws=sg2.map(s=>ctx.measureText(s).width),gap=70,uw=ws.reduce((x,y)=>x+y+gap*2,0);
+  for(let x0=270-(((STILL?0:t)*160)%uw);x0<W;x0+=uw){let x=x0;sg2.forEach((s,i)=>{ctx.fillStyle=TKT;ctx.fillText(s,x,1824);x+=ws[i]+gap;ctx.fillStyle=YEL;ctx.fillRect(x,1796,4,40);x+=gap})}
+  ctx.restore();
+  ctx.fillStyle=TKB;ctx.fillRect(1030,1762,50,98);ctx.strokeStyle=YEL;ctx.lineWidth=7;ctx.globalAlpha=.6+.4*Math.sin(t*6);for(let i=0;i<2;i++){ctx.beginPath();ctx.moveTo(1034+i*18,1796);ctx.lineTo(1050+i*18,1812);ctx.lineTo(1034+i*18,1828);ctx.stroke()}ctx.globalAlpha=1;
+  ctx.fillStyle=RG(0,250);poly([[0,1760],[250,1760],[218,1862],[0,1862]]);ctx.fill();ctx.save();poly([[0,1760],[250,1760],[218,1862],[0,1862]]);ctx.clip();{const bs=((t*300)%720)-220;ctx.fillStyle="rgba(255,255,255,.38)";poly([[bs,1760],[bs+46,1760],[bs+10,1862],[bs-36,1862]]);ctx.fill()}ctx.restore();ctx.fillStyle="#fff";poly([[250,1760],[256,1760],[224,1862],[218,1862]]);ctx.fill();
+  ctx.globalAlpha=.7+.3*Math.abs(Math.sin(t*3));ctx.fillStyle="#101010";ctx.font=`800 italic ${shrink(G.tk1,185,38,"800 italic")}px ${FONT}`;ctx.fillText(G.tk1,28,1806);ctx.font=`800 italic ${shrink(G.tk2,185,58,"800 italic")}px ${FONT}`;ctx.fillText(G.tk2,28,1855);
+  ctx.restore();
+  ctx.restore();
+
+  if(t<.7){const q=ease(t/.7),x=-W+q*W*2.2;ctx.fillStyle=YEL;ctx.fillRect(x,0,W*.5,H);ctx.fillStyle=GOLD;ctx.fillRect(x+W*.5,0,16,H)}
+  /* end card */
+  if(!G.combo||lastSeg(it))ENDCARD(it,t,D);
+}
+
+
+/* ---------- animated frame border (photo / video box) ---------- */
+function FRAMEBORDER(x,y,w,h,t,p){
+  const per=2*(w+h)-24,pu=.5+.5*Math.sin(t*1.3),L=54;
+  ctx.save();ctx.globalAlpha=p;ctx.lineJoin="miter";
+  ctx.shadowColor="rgba("+YR+",.9)";ctx.shadowBlur=STILL?5:4+5*pu;ctx.strokeStyle=YEL;ctx.lineWidth=5;ctx.strokeRect(x+3,y+3,w-6,h-6);
+  if(!STILL){ctx.lineCap="round";ctx.lineWidth=4;ctx.globalAlpha=p*.5;[["#ffffff",0],[GOLD,.5]].forEach(([c,o])=>{ctx.strokeStyle=c;ctx.shadowColor=c;ctx.shadowBlur=6;ctx.setLineDash([360,per-360]);ctx.lineDashOffset=-(t*180+o*per);ctx.strokeRect(x+3,y+3,w-6,h-6)});ctx.setLineDash([])}
+  ctx.shadowBlur=0;ctx.lineCap="butt";ctx.strokeStyle=GOLD;ctx.lineWidth=6;ctx.globalAlpha=p*(STILL?1:.75+.25*pu);
+  [[x,y,1,1],[x+w,y,-1,1],[x,y+h,1,-1],[x+w,y+h,-1,-1]].forEach(([cx,cy,sx,sy])=>{ctx.beginPath();ctx.moveTo(cx+sx*L,cy+sy*3);ctx.lineTo(cx+sx*3,cy+sy*3);ctx.lineTo(cx+sx*3,cy+sy*L);ctx.stroke()});
+  ctx.restore();
+}
+/* ---------- script box: maroon border, running light, bullet + line ---------- */
+function BOXFX(x,y,w,h,t){
+  const M=_sh(YEL,-.35),cx=78,cy=y+90,pu=.5+.5*Math.sin(t*3);
+  ctx.save();ctx.strokeStyle=M;ctx.lineWidth=5;ctx.strokeRect(x,y,w,h);
+  /* ripple rings */
+  for(let k=0;k<2;k++){const r=(t*.8+k*.5)%1;ctx.strokeStyle="rgba("+YR+","+(.55*(1-r))+")";ctx.lineWidth=3;ctx.beginPath();ctx.arc(cx,cy,27+r*22,0,7);ctx.stroke()}
+  /* pulsing circle with glow, gold ring and rotating shine */
+  ctx.save();ctx.translate(cx,cy);ctx.scale(1+.07*pu,1+.07*pu);ctx.shadowColor="rgba("+YR+",.85)";ctx.shadowBlur=8+12*pu;ctx.fillStyle=RG(-27,27);ctx.beginPath();ctx.arc(0,0,27,0,7);ctx.fill();ctx.shadowBlur=0;
+  ctx.strokeStyle=GOLD;ctx.lineWidth=3;ctx.beginPath();ctx.arc(0,0,27,0,7);ctx.stroke();
+  ctx.rotate(t*2.4);ctx.fillStyle="rgba(16,16,16,.6)";ctx.beginPath();ctx.arc(14,0,6,0,7);ctx.fill();ctx.restore();
+  /* vertical line: grows in, then light flows down it */
+  const LH=Math.max(200,h-170),lg=STILL?1:ease((t-1.9)/.9),lh=LH*lg,ly=y+136;
+  ctx.fillStyle=M;ctx.fillRect(75.5,ly,5,lh);
+  if(lg>=1||STILL){ctx.save();ctx.beginPath();ctx.rect(75.5,ly,5,LH);ctx.clip();const fy=ly-90+((t*300)%(LH+180));const g=ctx.createLinearGradient(0,fy,0,fy+90);g.addColorStop(0,"rgba("+YR+",0)");g.addColorStop(.6,"rgba("+YR+",.95)");g.addColorStop(1,"rgba(255,255,255,0)");ctx.fillStyle=g;ctx.fillRect(75.5,fy,5,90);ctx.restore()}
+  if(lg>0){ctx.save();ctx.shadowColor="rgba("+YR+",.9)";ctx.shadowBlur=10;ctx.fillStyle=YEL;ctx.beginPath();ctx.arc(78,ly+lh,6+2*pu,0,7);ctx.fill();ctx.restore()}
+  ctx.restore();
+}
+/* ---------- header: bigger logo area ---------- */
+function HEADER(t,p){
+  const HH=248,LX=330;ctx.save();ctx.translate(0,-(1-p)*340);
+  ctx.save();ctx.beginPath();ctx.rect(0,0,W,HH);ctx.clip();
+  const hg=ctx.createLinearGradient(0,0,0,HH);hg.addColorStop(0,PANEL);hg.addColorStop(1,PANEL2);ctx.fillStyle=hg;ctx.fillRect(0,0,W,HH);
+  /* drifting soft red glows */
+  [[300+230*Math.sin(t*.35),30,.07],[790+210*Math.cos(t*.3),280,.09]].forEach(([x,y,a])=>{const g=ctx.createRadialGradient(x,y,0,x,y,340);g.addColorStop(0,"rgba("+YR+","+a+")");g.addColorStop(1,"rgba("+YR+",0)");ctx.fillStyle=g;ctx.fillRect(0,0,W,HH)});
+  /* dot grid wave */
+  for(let r=0;r<10;r++)for(let c=0;c<44;c++){const x=130+c*20+(r%2)*10,y=16+r*28,a=.04+.035*Math.sin(c*.45+r*.7+t*1.0);ctx.fillStyle="rgba(120,120,130,"+a+")";ctx.fillRect(x,y,7,7)}
+  /* slow diagonal streaks */
+  for(let k=0;k<3;k++){const x=((t*55+k*560)%1800)-360;ctx.fillStyle="rgba("+YR+",.04)";poly([[x,0],[x+52,0],[x-100,HH],[x-152,HH]]);ctx.fill()}
+  /* top-left red corner */
+  const sw=Math.sin(t*.8)*4,C1=[[0,0],[112+sw,0],[0,112+sw]];
+  ctx.fillStyle=RG(0,120);poly(C1);ctx.fill();ctx.fillStyle="rgba("+YR+",.4)";poly([[124+sw,0],[142+sw,0],[0,142+sw],[0,124+sw]]);ctx.fill();
+  ctx.save();poly(C1);ctx.clip();{const sx=((t*170)%460)-140;ctx.fillStyle="rgba(255,255,255,.4)";poly([[sx,0],[sx+24,0],[sx-110,130],[sx-134,130]]);ctx.fill()}ctx.restore();
+  /* bottom-right red stripes */
+  const sh=Math.sin(t*.7)*5,S1=[[W,150+sh],[W,HH],[W-118-sh,HH]],S2=[[W,112+sh],[W,140+sh],[W-170-sh,HH],[W-200-sh,HH]];
+  ctx.fillStyle=RG(W-200,W);poly(S1);ctx.fill();ctx.fillStyle="rgba("+YR+",.78)";poly(S2);ctx.fill();
+  [S1,S2].forEach((P,i)=>{ctx.save();poly(P);ctx.clip();const bx=W-340+(((t*150)+i*100)%400);ctx.fillStyle="rgba(255,255,255,.42)";poly([[bx,0],[bx+22,0],[bx-44,HH],[bx-66,HH]]);ctx.fill();ctx.restore()});
+  ctx.restore();
+  /* logo */
+  const lp=ease((t-.3)/.6),spt=t-1.2,cy=spt<0?0:spt%4,cx2=cy/1.3,sa=cy<1.3?(cx2<.5?2*cx2*cx2:1-Math.pow(-2*cx2+2,2)/2)*Math.PI*2:0,SX=Math.max(.03,Math.abs(Math.cos(sa)));
+  ctx.save();ctx.globalAlpha=lp;ctx.translate(LX,96);ctx.scale(.6+.4*lp,.6+.4*lp);ctx.translate(-LX,-96);
+  if(logoImg){const s1=Math.min(640/logoImg.width,176/logoImg.height),dw=logoImg.width*s1,dh=logoImg.height*s1;ctx.save();ctx.translate(LX,96);ctx.scale(SX,1);ctx.translate(-LX,-96);ctx.drawImage(logoImg,LX-dw/2,96-dh/2,dw,dh);ctx.restore()}
+  else{ctx.save();ctx.translate(LX,96);ctx.scale(1.2,1.2);ctx.translate(-257,-120);
+    ctx.save();ctx.translate(100,120);ctx.scale(SX,1);ctx.translate(-100,-120);logo(100,120,72);ctx.restore();
+    ctx.fillStyle=GG(180,480);poly([[196,66],[486,66],[470,166],[180,166]]);ctx.fill();ctx.fillStyle=RG(186,480);poly([[202,72],[480,72],[465,160],[187,160]]);ctx.fill();
+    ctx.fillStyle="#101010";ctx.textAlign="center";const nsz=shrink(G.name,250,80,800);ctx.font=`800 ${nsz}px ${FONT}`;ctx.shadowColor="rgba(255,255,255,.4)";ctx.shadowBlur=8;ctx.fillText(G.name,333,116+nsz*.3);ctx.shadowBlur=0;ctx.textAlign="left";ctx.restore()}
+  ctx.restore();
+  ctx.globalAlpha=1;SUBBOX(t);
+  /* divider with travelling light — follows theme yellow */
+  {const dg=ctx.createLinearGradient(0,40,0,208);dg.addColorStop(0,"rgba("+YR+",0)");dg.addColorStop(.5,"rgba("+YR+",.75)");dg.addColorStop(1,"rgba("+YR+",0)");ctx.fillStyle=dg;ctx.fillRect(672,40,3,168);
+   const yy=40+((t*80)%168);ctx.save();ctx.shadowColor="rgba("+YR+",.9)";ctx.shadowBlur=8;ctx.fillStyle="rgba("+YR+",.9)";ctx.beginPath();ctx.arc(673.5,yy,3.2,0,7);ctx.fill();ctx.restore()}
+  ctx.save();ctx.translate(297,6);ctx.scale(.72,.72);CONTACT(t);ctx.restore();
+  ctx.restore();
+}
+
+/* ---------- BREAKING NEWS: நடுவில் சீரமைந்த. கட்டங்கள் (BREAKING சிவப்பு, NEWS மஞ்சள்) நிலையாக இருக்கும்;
+   எழுத்துகள் வெளிப்படையாக (transparent / வெட்டப்பட்டு) இருக்கும் — அந்த எழுத்துகளின் உள்ளே மட்டும் police siren ஒளி மாறி மாறி மின்னும் (~1.4/வினாடி — மெதுவாக).
+   இயக்கம் ஒவ்வொரு CYC வினாடிக்கும் திரும்பும்: BREAKING இடமிருந்து → , NEWS வலமிருந்து ← சறுக்கி மோதி (impact) → siren → இரண்டும் வெளியே சறுக்கி → மீண்டும். */
+const BLUR_OK=typeof ctx.filter==="string";
+const blurT=px=>{if(BLUR_OK&&!STILL&&px>.4)ctx.filter="blur("+px.toFixed(1)+"px)"};
+const BRK_CYC=5,BRK_T0=.3;
+const _bo=document.createElement("canvas");
+function BRKBAND(it,t){
+  const y0=HB,h=BRH,S=STILL,ws=(G.brk||"").trim().split(/\s+/),l=ws[0]||"",r=ws.slice(1).join(" ");
+  const eB=S?1:ease(t/.35);if(eB<=0)return;
+  /* சுழற்சி நேரம் u: 0 → CYC */
+  const u=S?1:Math.max(0,t-BRK_T0)%BRK_CYC,
+    inL=S?1:ease(u/.5),inN=S?1:ease((u-.1)/.5),outP=S?0:clamp((u-(BRK_CYC-.7))/.5),
+    eL=Math.min(inL,1-ease(outP)),eN=Math.min(inN,1-ease(clamp(outP-.1/.5))),
+    cyc=S?0:Math.floor(Math.max(0,t-BRK_T0)/BRK_CYC)+(t<BRK_T0?-1:0);
+  const sk=26,pad=34,gap=16;let fs=44;const mw=q=>{ctx.font=`800 italic ${fs}px ${FONT}`;return ctx.measureText(q).width};
+  while(fs>24&&mw(l)+mw(r)+pad*4+gap+sk*2>W-60)fs-=2;
+  const lw=Math.round(mw(l)+pad*2),rw=Math.round(mw(r)+pad*2),tot=lw+gap+rw+sk,x0=Math.round((W-tot)/2),xr=x0+lw+gap;
+  const cy=y0+h/2-1,top=y0+6,bot=y0+h-10;
+  /* siren: மோதலுக்குப் பிறகு (u>.7) வெளியே சறுக்கும் வரை, ஒவ்வொரு .2வினா மாறி மாறி */
+  const sir=!S&&u>=.7&&outP<=0,ph=sir?Math.floor((u-.7)/.35)%2:0,onL=!sir||ph===0,onN=!sir||ph===1;
+  const im=(S||u<.6)?0:clamp(1-(u-.6)/.28),shake=(im>0)?Math.sin(t*90)*3*im:0;
+  ctx.save();
+  ctx.globalAlpha=eB;ctx.translate(shake,-(1-eB)*24);
+  ctx.fillStyle=TKB;ctx.fillRect(-10,y0,W+20,h);
+  if(!S){ctx.save();ctx.beginPath();ctx.rect(0,y0,W,h);ctx.clip();for(let k=0;k<3;k++){const x=((t*70+k*420)%1500)-200;ctx.fillStyle="rgba("+YR+",.05)";poly([[x,y0],[x+46,y0],[x-30,y0+h],[x-76,y0+h]]);ctx.fill()}ctx.restore()}
+  /* கீழ் எல்லை: நிலையான theme கோடு */
+  ctx.save();ctx.shadowColor=YEL;ctx.shadowBlur=S?4:8;ctx.fillStyle=YEL;ctx.fillRect(0,y0+h-4,W,4);ctx.restore();
+  /* ஒரு தொகுதி: நிலையான கட்டம் + வெளிப்படையான (வெட்டப்பட்ட) எழுத்துகள்; உள்ளே siren ஒளி */
+  const block=(x,w,fill,txt,lit,on,e,dir)=>{
+    if(e<=0.001)return;
+    _bo.width=W;_bo.height=h;const o=_bo.getContext("2d");o.clearRect(0,0,W,h);
+    const P=[[x+sk,top-y0],[x+w+sk,top-y0],[x+w,bot-y0],[x,bot-y0]];
+    o.beginPath();P.forEach((q,i)=>i?o.lineTo(q[0],q[1]):o.moveTo(q[0],q[1]));o.closePath();
+    const g=o.createLinearGradient(0,top-y0,0,bot-y0);g.addColorStop(0,_sh(fill,.12));g.addColorStop(1,_sh(fill,-.12));o.fillStyle=g;o.fill();
+    o.fillStyle="rgba(255,255,255,.14)";o.save();o.clip();o.fillRect(x,top-y0,w+sk,(bot-top)*.42);o.restore();
+    o.globalCompositeOperation="destination-out";o.fillStyle="#000";o.textAlign="center";o.font=`800 italic ${fs}px ${FONT}`;o.fillText(txt,x+(w+sk)/2,cy-y0+fs*.34-2);
+    ctx.save();ctx.globalAlpha=eB*e;ctx.translate(dir*(1-e)*(dir<0?x+w+sk+60:W-x+60),0);blurT((1-e)*10);
+    ctx.drawImage(_bo,0,y0);
+    /* எழுத்துகளின் உள்ளே ஒளி: எரியும்போது பிரகாசம், அணையும்போது மங்கல் */
+    ctx.textAlign="center";ctx.font=`800 italic ${fs}px ${FONT}`;
+    const tx=x+(w+sk)/2,ty=cy+fs*.34-2;
+    ctx.save();ctx.beginPath();poly([[x+sk,top],[x+w+sk,top],[x+w,bot],[x,bot]]);ctx.clip();
+    if(on){ctx.shadowColor=lit;ctx.shadowBlur=S?0:22;ctx.fillStyle=lit;ctx.fillText(txt,tx,ty);ctx.shadowBlur=0;ctx.globalAlpha=.9;ctx.fillStyle="#fff";ctx.fillText(txt,tx,ty)}
+    else{ctx.globalAlpha=.22;ctx.fillStyle=lit;ctx.fillText(txt,tx,ty)}
+    ctx.restore();
+    /* அம்புகள்: சறுக்கும்போது கட்டத்தைப் பின்தொடரும்; நின்றதும் கட்டத்தை நோக்கி இடிப்பது போல முன்-பின் அசையும்; வரிசையாக மின்னும் */
+    const hold=S||(u>=.55&&outP<=0),bump=(S||!hold)?0:16*Math.pow(Math.abs(Math.sin(t*Math.PI*1.6)),3),d=dir<0?1:-1,ac=dir<0?_sh(RED,.2):YEL;
+    ctx.save();ctx.strokeStyle=ac;ctx.lineWidth=7;ctx.lineCap="round";ctx.lineJoin="round";ctx.shadowColor=ac;ctx.shadowBlur=S?0:12;
+    for(let i=0;i<2;i++){
+      const bx=dir<0?x-22-i*28+bump:x+w+sk+22+i*28-bump;
+      ctx.globalAlpha=eB*e*((S||!hold)?1:.25+.75*Math.max(0,Math.sin(t*5-i*1.3)));
+      ctx.beginPath();ctx.moveTo(bx-d*8,cy-14);ctx.lineTo(bx+d*8,cy);ctx.lineTo(bx-d*8,cy+14);ctx.stroke()}
+    ctx.restore();ctx.restore()};
+  /* BREAKING: சிவப்பு கட்டம், உள்ளே மஞ்சள்-வெள்ளை ஒளி · NEWS: மஞ்சள் கட்டம், உள்ளே சிவப்பு-வெள்ளை ஒளி */
+  block(x0,lw,RED,l,YEL,onL,eL,-1);
+  block(xr,rw,YEL,r,RED,onN,eN,1);
+  if(im>0){ctx.save();ctx.globalAlpha=.55*im;ctx.fillStyle="#fff";ctx.fillRect(xr-gap-4,y0,10+gap,h);ctx.restore()}
+  ctx.restore();ctx.textAlign="left"
+}
+/* ---------- date + location band (inside the media frame) ---------- */
+function FRAMEFX(it,t,fx,fy,fw,fh){
+  const dt=it.date||"",lc=it.loc||"",ca=STILL?1:ease((t-1)/.5);
+  if(!dt&&!lc)return;
+  ctx.save();ctx.beginPath();ctx.rect(fx,fy,fw,fh);ctx.clip();
+  ctx.globalAlpha=ca;ctx.translate(0,-(1-ca)*18);ctx.lineJoin="round";ctx.lineWidth=8;ctx.strokeStyle="rgba(0,0,0,.8)";ctx.shadowColor="rgba(0,0,0,.7)";ctx.shadowBlur=10;
+  const yy=fy+56;
+  if(dt){const z=shrink(dt,420,42,800);ctx.font=`800 ${z}px ${FONT}`;ctx.textAlign="left";ctx.strokeText(dt,fx+24,yy);ctx.fillStyle="#fff";ctx.fillText(dt,fx+24,yy)}
+  if(lc){const z=shrink(lc,560,42,800);ctx.font=`800 ${z}px ${FONT}`;ctx.textAlign="right";ctx.strokeText(lc,fx+fw-24,yy);ctx.fillStyle="#fff";ctx.fillText(lc,fx+fw-24,yy);{const lw3=ctx.measureText(lc).width;ctx.save();ctx.shadowBlur=0;pin(fx+fw-24-lw3-28,yy-4+(STILL?0:3*Math.sin(t*5)),RED);ctx.restore()}}
+  ctx.restore();ctx.textAlign="left"
+}
+/* ---------- வீடியோ மேல் புரோமோ அனிமேஷன் (திரை முன்னோட்டம் + MP4 ரெண்டர் இரண்டிலும் ஒரே குறியீடு) ----------
+   ஒவ்வொரு G.prEvery வினாடிக்கும் (30, 60, 90…) வீடியோ கட்டத்திற்குள் வெடித்து வந்து, G.prDur வினாடி தெரிந்து மறையும்.
+   வீடியோ பின்னால் தொடர்ந்து ஓடும். நிறங்கள்: RED / YEL (தீம் மாற்றினால் தானாக மாறும்). */
+function promoWords(it){const raw=(it.promo&&it.promo.trim())?it.promo:(G.prDef==null?"BREAKING NEWS":G.prDef);return raw.split("|").map(s=>s.trim()).filter(Boolean)}
+/* புரோமோ நேரங்கள்: நீங்கள் கொடுத்த நேரங்கள் (promoAt) இருந்தால் அவை மட்டும்; இல்லையெனில் G.prEvery இடைவெளி */
+function promoTimes(it){
+  const raw=(it.promoAt||"").trim();if(!raw)return null;const out=[];
+  raw.split(/[,;\s]+/).forEach(x=>{if(!x)return;let v=null;const m=x.match(/^(\d+):(\d{1,2})$/);if(m)v=+m[1]*60+(+m[2]);else if(/^\d+(\.\d+)?$/.test(x))v=+x;if(v!=null&&isFinite(v)&&v>=0)out.push(v)});
+  return out.length?[...new Set(out)].sort((a,b)=>a-b):null}
+function PROMO(it,t,fx,fy,fw,fh){
+  if(STILL||G.prOn===false)return;
+  const words=promoWords(it);if(!words.length)return;
+  const DU=clamp(+G.prDur||4,2,10),tl=promoTimes(it);let T0,k;
+  /* தொகுப்பு முறை: புரோமோ எப்போதும் இந்தச் செய்தியின் கடைசியில் (கடைசிச் செய்தியில் End card-க்கு முன்) */
+  if(G.combo){const D=durOf(it),S0=D-DU-(lastSeg(it)?EC:0),u=t-S0;if(S0<0||u<0||u>=DU)return;(G.prStyle==="band"?promoBand:promoFull)(words[Math.max(0,items.indexOf(it))%words.length],u,DU,fx,fy,fw,fh);return}
+  if(tl){k=-1;for(let i=0;i<tl.length;i++){if(t>=tl[i]&&t<tl[i]+DU){k=i;T0=tl[i];break}}if(k<0)return}
+  else{const E=clamp(+G.prEvery||30,5,180),q=Math.floor(t/E);if(q<1)return;T0=q*E;k=q-1}
+  const u=t-T0;
+  if(u>=DU||T0+DU>durOf(it))return;
+  (G.prStyle==="band"?promoBand:promoFull)(words[k%words.length],u,DU,fx,fy,fw,fh)
+}
+/* பாணி 2: நடுப் பட்டை */
+function promoBand(text,u,DU,fx,fy,fw,fh){
+  const IN=.5,OUT=.45,sk=34;
+  const pin=ease(u/IN),pg=ease((u-.08)/IN),po=u>DU-OUT?ease((u-(DU-OUT))/OUT):0;
+  const cy=fy+fh/2,bh=Math.min(170,fh*.3),xL=fx-sk-6,xR=fx+fw+sk+6,span=xR-xL,y0=cy-bh/2,y1=cy+bh/2;
+  const par=(a,b,ya,yb)=>poly([[a,ya],[b,ya],[b-sk*(yb-ya)/bh,yb],[a-sk*(yb-ya)/bh,yb]]);
+  ctx.save();ctx.beginPath();ctx.rect(fx,fy,fw,fh);ctx.clip();
+  ctx.shadowBlur=0;ctx.textAlign="left";
+  /* மங்கலாக்கு + தொடக்க மின்னல் */
+  ctx.globalAlpha=.4*Math.min(ease(u/.3),1-po);ctx.fillStyle="#000";ctx.fillRect(fx,fy,fw,fh);
+  if(u<.16){ctx.globalAlpha=.32*(1-u/.16);ctx.fillStyle="#fff";ctx.fillRect(fx,fy,fw,fh)}
+  ctx.globalAlpha=1;
+  /* தங்கக் கீற்றுகள் (வலமிருந்து இடம்) */
+  const gl=xR-pg*span,gr=xR-po*span;
+  if(gr-gl>2){ctx.fillStyle=RG(fx,fx+fw);par(gl,gr,y0-24,y0-10);ctx.fill();par(gl,gr,y1+10,y1+24);ctx.fill()}
+  /* சிவப்புப் பட்டை (இடமிருந்து வலம்) */
+  const a=xL+po*span,b=xL+pin*span;
+  if(b-a>2){
+    ctx.shadowColor="rgba(0,0,0,.55)";ctx.shadowBlur=24;ctx.fillStyle=GG(fx,fx+fw);par(a,b,y0,y1);ctx.fill();ctx.shadowBlur=0;
+    ctx.save();par(a,b,y0,y1);ctx.clip();
+    const sh=(u-.45)/1.0;if(sh>0&&sh<1){const sx=fx-160+sh*(fw+320);ctx.fillStyle="rgba(255,255,255,.4)";poly([[sx,y0],[sx+70,y0],[sx+70-sk,y1],[sx-sk,y1]]);ctx.fill()}
+    ctx.restore();
+    ctx.strokeStyle=YEL;ctx.lineWidth=4;ctx.globalAlpha=.9;par(a,b,y0,y1);ctx.stroke();ctx.globalAlpha=1;
+  }
+  /* எழுத்து */
+  const tp=ease((u-.28)/.35),ta=tp*(1-po);
+  if(ta>.01){
+    const s=shrink(text,fw-190,86,"800 italic"),sc=.78+.22*tp+.07*Math.sin(Math.PI*tp)+.012*Math.sin(u*9)*tp,cx=fx+fw/2-sk/2;
+    ctx.save();ctx.globalAlpha=ta;ctx.translate(cx,cy);ctx.scale(sc,sc);
+    ctx.font=`800 italic ${s}px ${FONT}`;ctx.textAlign="center";
+    const tw=ctx.measureText(text).width,ty=s*.34;
+    ctx.lineJoin="round";ctx.lineWidth=7;ctx.strokeStyle="rgba(0,0,0,.4)";ctx.strokeText(text,0,ty);
+    ctx.fillStyle="#fff";ctx.fillText(text,0,ty);
+    const pl=.55+.45*Math.sin(u*12);ctx.fillStyle=YEL;ctx.globalAlpha=ta*pl;
+    [-1,1].forEach(d=>{ctx.beginPath();ctx.arc(d*(tw/2+34),0,10,0,7);ctx.fill()});
+    ctx.restore();
+  }
+  ctx.restore();ctx.textAlign="left"
+}
+/* பாணி 1 (இயல்பு): செய்தி சேனல் இடைவேளை போல வீடியோ கட்டம் முழுவதும் — வண்ணத் திரைகள் துடைத்து வந்து → எழுத்து → துடைத்து வெளியேறும்; பின்னால் வீடியோ தொடர்ந்து ஓடும் */
+function promoFull(text,u,DU,fx,fy,fw,fh){
+  const IN=Math.min(.75,DU*.2),OUT=IN,sk=90,xL=fx-sk-20,span=fw+sk*2+40,y0=fy,y1=fy+fh,cx=fx+fw/2,cy=fy+fh/2,hold0=IN+.18,hold1=DU-OUT;
+  const dIn=[0,.09,.18],dOut=[.18,.09,0];
+  const E=k=>xL+ease((u-dIn[k])/IN)*span,Lf=k=>xL+ease((u-hold1-dOut[k])/OUT)*span;
+  const lay=k=>{const a=Lf(k),b=E(k);if(b-a<1.5)return false;poly([[a,y0],[b,y0],[b-sk,y1],[a-sk,y1]]);return true};
+  const dark=ctx.createLinearGradient(fx,0,fx+fw,0);dark.addColorStop(0,_sh(RED,-.7));dark.addColorStop(1,_sh(RED,-.82));
+  ctx.save();ctx.beginPath();ctx.rect(fx,fy,fw,fh);ctx.clip();ctx.shadowBlur=0;ctx.textAlign="left";
+  /* துடைக்கும் அடுக்குகள்: தங்கம் → அடர் சிவப்பு → சிவப்பு */
+  if(lay(0)){ctx.fillStyle=RG(fx,fx+fw);ctx.fill()}
+  if(lay(1)){ctx.fillStyle=dark;ctx.fill()}
+  if(lay(2)){
+    ctx.fillStyle=GG(fx,fx+fw);ctx.fill();
+    ctx.save();lay(2);ctx.clip();
+    /* ஒளி வட்டம் */
+    const gl=ctx.createRadialGradient(cx,cy,0,cx,cy,fw*.62);gl.addColorStop(0,"rgba(255,255,255,.22)");gl.addColorStop(1,"rgba(255,255,255,0)");ctx.fillStyle=gl;ctx.fillRect(fx,fy,fw,fh);
+    /* சுழலும் கதிர்கள் */
+    const N=14,a0=u*.32,R=fw;ctx.fillStyle="rgba(255,255,255,.07)";
+    for(let i=0;i<N;i+=2){const a=a0+i*Math.PI*2/N;ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,R,a,a+Math.PI*2/N);ctx.closePath();ctx.fill()}
+    /* நகரும் சாய்வுக் கீற்றுகள் */
+    [[420,40,.10],[300,18,.12],[560,70,.07]].forEach(([sp,w,al],i)=>{const x=((u*sp+i*390)%(fw+500))+fx-250;ctx.fillStyle=`rgba(255,255,255,${al})`;poly([[x,y0],[x+w,y0],[x+w-sk,y1],[x-sk,y1]]);ctx.fill()});
+    /* மேல்/கீழ் தங்கக் கோடுகள் (நடுவிலிருந்து விரியும்) */
+    const lw=fw*ease((u-.45)/.5)*(1-ease((u-(hold1-.1))/.3));
+    ctx.fillStyle=YEL;ctx.fillRect(cx-lw/2,fy+30,lw,5);ctx.fillRect(cx-lw/2,fy+fh-35,lw,5);
+    ctx.fillStyle="rgba(255,255,255,.7)";ctx.fillRect(cx-lw/2,fy+40,lw,2);ctx.fillRect(cx-lw/2,fy+fh-45,lw,2);
+    /* மின்னல் பளபளப்பு */
+    const sh=(u-hold0-.55)/.9;if(sh>0&&sh<1){const sx=fx-200+sh*(fw+400);ctx.fillStyle="rgba(255,255,255,.2)";poly([[sx,y0],[sx+110,y0],[sx+110-sk,y1],[sx-sk,y1]]);ctx.fill()}
+    ctx.restore();
+  }
+  /* உள்ளடக்கம் */
+  const tp=ease((u-hold0+.1)/.4),ca=tp*(1-ease((u-(hold1-.12))/.26));
+  if(ca>.01){
+    const s=shrink(text,fw-150,128,"800 italic"),sc=.7+.3*tp+.06*Math.sin(Math.PI*tp)+.01*Math.sin(u*8)*tp,ty=s*.3;
+    ctx.save();ctx.globalAlpha=ca;ctx.translate(cx,cy+(1-tp)*40);ctx.scale(sc,sc);
+    ctx.font=`800 italic ${s}px ${FONT}`;ctx.textAlign="center";
+    const tw=ctx.measureText(text).width;
+    ctx.shadowColor="rgba(0,0,0,.5)";ctx.shadowBlur=22;ctx.lineJoin="round";ctx.lineWidth=11;ctx.strokeStyle="rgba(0,0,0,.35)";ctx.strokeText(text,0,ty);
+    ctx.shadowBlur=0;ctx.fillStyle="#fff";ctx.fillText(text,0,ty);
+    const bw=tw*ease((u-hold0-.1)/.45);ctx.fillStyle=YEL;ctx.beginPath();ctx.roundRect(-bw/2,ty+24,bw,10,5);ctx.fill();
+    /* சேனல் பெயர் பட்டம் */
+    const nm=(G.name||"").trim();
+    if(nm){ctx.font=`800 34px ${FONT}`;const pw=ctx.measureText(nm).width+86,ph=56,py=-s*.62-62;
+      ctx.fillStyle=YEL;ctx.beginPath();ctx.roundRect(-pw/2,py-ph/2,pw,ph,ph/2);ctx.fill();
+      ctx.fillStyle=RED;ctx.globalAlpha=ca*(.55+.45*Math.sin(u*10));ctx.beginPath();ctx.arc(-pw/2+30,py,9,0,7);ctx.fill();
+      ctx.globalAlpha=ca;ctx.fillStyle="#101010";ctx.textAlign="left";ctx.fillText(nm,-pw/2+52,py+12)}
+    ctx.restore();
+  }
+  ctx.restore();ctx.textAlign="left"
+}
+/* தமிழ் எழுத்துக்கூட்டு (grapheme) பிரிப்பு — தட்டச்சு animation-ல் எழுத்துகள் உடையாமல் வர */
+let _seg=null;const GR=s=>{try{_seg=_seg||new Intl.Segmenter("ta",{granularity:"grapheme"});return Array.from(_seg.segment(s),x=>x.segment)}catch(e){return Array.from(s)}};
+function headlineLayout(it){
+  const y0=it.breaking?HB+BRH:HB,hh=HLB-y0,aH=hh-26,paras=(it.headline||"").split("\n");let hs=98,HL=[];
+  for(;hs>=36;hs-=2){HL=[];paras.forEach((pr,pi)=>{if(pr.trim())wrap(tok(pr),1000,`800 ${hs}px ${FONT}`).forEach(l=>HL.push({l,pi}))});if(HL.length*hs*1.2<=aH)break}
+  let N=0;HL.forEach(o=>o.l.forEach(k=>{k.gs=GR(k.t);N+=k.gs.length}));
+  return{y0,hh,aH,HL,hs,N,dur:Math.min(2.2,Math.max(.7,N*.05)),T0:it.breaking?1.5:1.0}
+}
+/* headline: panel மேலே எழும் (slide-up + fade) → தலைப்பு தட்டச்சு (blur நீக்கத்துடன்) → அமைதியாக நிற்கும் */
+function HEAD2(it,t){
+  const L=headlineLayout(it),{y0,hh,aH,HL,hs,N,dur,T0}=L,S=STILL;
+  const p=S?1:ease((t-(it.breaking?.95:.5))/.6),hl=hs*1.2,top=y0+10+(aH-HL.length*hl)/2;
+  ctx.save();ctx.globalAlpha=p;ctx.translate(0,(1-p)*40);
+  ctx.fillStyle=PANEL;ctx.fillRect(0,y0,W,hh);
+  ctx.fillStyle=RG(0,W);ctx.fillRect(0,HLB-5,W,5);
+  const prog=S?1:clamp((t-T0)/dur),shown=Math.floor(N*prog+(prog>=1?1:0));
+  ctx.save();ctx.beginPath();ctx.rect(0,y0,W,hh-5);ctx.clip();
+  if(!S)blurT(7*(1-ease((t-T0)/.5)));
+  let rem=S?1e9:shown,ex=0,ey=0;
+  HL.forEach((o,i)=>{if(rem<=0)return;const sp=(ctx.font=`800 ${hs}px ${FONT}`,ctx.measureText(" ").width),w=o.l.reduce((x,k)=>x+k.w,0)+sp*(o.l.length-1),c=o.pi>0?RED:INK,yy=top+hs*.98+i*hl;
+    let x=540-w/2;
+    for(const k of o.l){if(rem<=0)break;const n=Math.min(rem,k.gs.length),txt=n>=k.gs.length?k.t:k.gs.slice(0,n).join("");
+      ctx.font=`800 ${hs}px ${FONT}`;ctx.fillStyle=k.g?RED:c;ctx.fillText(txt,x,yy);ctx.fillText(txt,x+hs*.03,yy);
+      ex=x+ctx.measureText(txt).width+hs*.03;ey=yy;rem-=n;x+=k.w+sp}});
+  ctx.restore();
+  /* தட்டச்சு நடக்கும்போது மினுங்கும் cursor */
+  if(!S&&t>=T0&&t<T0+dur+.45&&(prog<1||Math.floor(t*6)%2===0)){ctx.fillStyle=RED;ctx.fillRect(ex+8,ey-hs*.82,Math.max(5,hs*.06),hs*.95)}
+  ctx.restore();
+}
+
+const LXS=330;
+function SUBBOX(t){
+  if(!G.sub)return;
+  ctx.save();const ss=shrink(G.sub,300,30,800);ctx.font=`800 ${ss}px ${FONT}`;
+  const tw=ctx.measureText(G.sub).width,bw=tw+48,bx=LXS-bw/2,by=192,bh=44;
+  ctx.shadowColor="rgba("+YR+",.45)";ctx.shadowBlur=10;ctx.fillStyle=RG(bx,bx+bw);ctx.beginPath();ctx.roundRect(bx,by,bw,bh,10);ctx.fill();ctx.shadowBlur=0;
+  ctx.save();ctx.beginPath();ctx.roundRect(bx,by,bw,bh,10);ctx.clip();const sx=bx+((t*180)%(bw+160))-80;ctx.fillStyle="rgba(255,255,255,.35)";poly([[sx,by],[sx+36,by],[sx+16,by+bh],[sx-20,by+bh]]);ctx.fill();ctx.restore();
+  ctx.strokeStyle=GOLD;ctx.lineWidth=2.5;ctx.beginPath();ctx.roundRect(bx,by,bw,bh,10);ctx.stroke();
+  ctx.fillStyle="#101010";
+  ctx.textAlign="left";ctx.font=`800 ${ss}px ${FONT}`;ctx.fillText(G.sub,bx+24,by+bh/2+11);ctx.restore();
+}
+/* script-area subheading popup — sits inside text box, does not shrink script text */
+function SCRIPTSUB(t,yTop){
+  const label=(G.sub||"செய்தி").trim();if(!label)return;
+  const e=STILL?1:ease((t-1.5)/.5);
+  ctx.save();ctx.globalAlpha=e;
+  const ss=shrink(label,420,28,800);ctx.font=`800 ${ss}px ${FONT}`;
+  const tw=ctx.measureText(label).width,bw=tw+40,bx=54,by=yTop,bh=40;
+  ctx.shadowColor="rgba(0,0,0,.2)";ctx.shadowBlur=8;ctx.fillStyle=RG(bx,bx+bw);ctx.beginPath();ctx.roundRect(bx,by,bw,bh,10);ctx.fill();ctx.shadowBlur=0;
+  ctx.save();ctx.beginPath();ctx.roundRect(bx,by,bw,bh,10);ctx.clip();const sx=bx+((t*160)%(bw+140))-70;ctx.fillStyle="rgba(255,255,255,.32)";poly([[sx,by],[sx+30,by],[sx+12,by+bh],[sx-18,by+bh]]);ctx.fill();ctx.restore();
+  ctx.strokeStyle=GOLD;ctx.lineWidth=2;ctx.beginPath();ctx.roundRect(bx,by,bw,bh,10);ctx.stroke();
+  ctx.fillStyle="#101010";ctx.textAlign="left";ctx.font=`800 ${ss}px ${FONT}`;ctx.fillText(label,bx+20,by+bh/2+ss*.32);
+  ctx.restore();
+}
+/* ---------- single white contact box ---------- */
+function CONTACT(t){
+  const ox=546,oy=84,w=500,ph=G.ph||"",ct=G.ct||"";
+  /* diagonal outline + bottom red line */
+  ctx.save();ctx.strokeStyle="rgba(120,120,120,.45)";ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(ox+26,oy+50);ctx.lineTo(ox-6,oy+142);ctx.stroke();
+  ctx.strokeStyle=RED;ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(ox-6,oy+142);ctx.lineTo(ox+w-140,oy+142);ctx.stroke();ctx.restore();
+  /* bottom red bars with soft shimmer */
+  const bars=[[ox+w-126,oy+134,22],[ox+w-96,oy+134,96]];
+  bars.forEach(([x,y,bw],k)=>{ctx.save();ctx.fillStyle=RG(x,x+bw);poly([[x+8,y],[x+bw+8,y],[x+bw,y+14],[x,y+14]]);ctx.fill();ctx.clip();const sx=x-40+(((t*140)+k*60)%(bw+120));ctx.fillStyle="rgba(255,255,255,.55)";poly([[sx,y],[sx+14,y],[sx+4,y+14],[sx-10,y+14]]);ctx.fill();ctx.restore()});
+  /* main white box */
+  ctx.save();ctx.shadowColor="rgba(0,0,0,.18)";ctx.shadowBlur=12;ctx.shadowOffsetY=3;ctx.fillStyle=PANEL;ctx.beginPath();ctx.roundRect(ox+6,oy+54,w-14,80,18);ctx.fill();ctx.restore();
+  ctx.save();ctx.strokeStyle="rgba("+YR+",.85)";ctx.lineWidth=2.5;ctx.beginPath();ctx.roundRect(ox+6,oy+54,w-14,80,18);ctx.stroke();ctx.restore();
+  /* red title bar */
+  const T=[[ox+34,oy],[ox+w-6,oy],[ox+w-22,oy+46],[ox+18,oy+46]];
+  ctx.save();ctx.fillStyle=RG(ox,ox+w);poly(T);ctx.fill();
+  ctx.clip();const sx=ox-80+((t*170)%(w+260));ctx.fillStyle="rgba(255,255,255,.28)";poly([[sx,oy],[sx+42,oy],[sx+22,oy+46],[sx-20,oy+46]]);ctx.fill();ctx.restore();
+  ctx.save();ctx.fillStyle="rgba(255,255,255,.9)";poly([[ox+w-40,oy],[ox+w-32,oy],[ox+w-48,oy+46],[ox+w-56,oy+46]]);ctx.fill();ctx.restore();
+  ctx.save();ctx.textAlign="center";ctx.fillStyle="#101010";const cs=shrink(ct,w-116,27,800);ctx.font=`800 ${cs}px ${FONT}`;ctx.fillText(ct,ox+w/2-10,oy+30+cs*.08);ctx.restore();
+  /* phone circle: soft ripple + small ring shake */
+  const cx=ox+56,cy=oy+94,rp=(t*.8)%1,k=(t%3.2),sh=k<.7?Math.sin(k*38)*.16*(1-k/.7):0;
+  ctx.save();ctx.strokeStyle="rgba("+YR+","+(.45*(1-rp))+")";ctx.lineWidth=3;ctx.beginPath();ctx.arc(cx,cy,32+rp*14,0,7);ctx.stroke();
+  ctx.fillStyle=RG(cx-32,cx+32);ctx.beginPath();ctx.arc(cx,cy,32,0,7);ctx.fill();
+  ctx.translate(cx,cy);ctx.rotate(sh);ctx.strokeStyle="#101010";ctx.lineWidth=8;ctx.lineCap="round";ctx.beginPath();ctx.moveTo(-10,-11);ctx.quadraticCurveTo(-7,11,13,13);ctx.stroke();ctx.lineWidth=4;ctx.beginPath();ctx.moveTo(-14,-6);ctx.lineTo(-6,-14);ctx.moveTo(8,14);ctx.lineTo(16,8);ctx.stroke();ctx.restore();
+  /* number */
+  ctx.save();ctx.textAlign="left";const ps=shrink(ph,w-140,56,800);ctx.font=`800 ${ps}px ${FONT}`;ctx.fillStyle=INK;ctx.fillText(ph,ox+104,cy+ps*.34);ctx.restore();
+}
+
+/* ---------- loop ---------- */
+let startT=performance.now(),rec=false,playing=true;
+const VIEW=document.documentElement.classList.contains("m-view");
+function loop(now){if(window._exp){requestAnimationFrame(loop);return}if(cardMode&&items[cur].card){STILL=true;try{draw(items[cur].card,4)}catch(e){console.error(e)}requestAnimationFrame(loop);return}STILL=false;let t=Math.max(0,(now-startT)/1000);const DD=durOf(items[cur]);
+/* காட்சிப் பக்கம்: ஒரு செய்தி முடிந்ததும் அடுத்த செய்திக்குத் தானாகச் செல்லும் */
+if(window._cp&&!rec&&t>=DD){const R=comboRange();sel(cur>=R.b||cur<R.a?R.a:cur+1);requestAnimationFrame(loop);return}
+if(VIEW&&!rec&&items.length>1&&t>=DD){sel((cur+1)%items.length);requestAnimationFrame(loop);return}
+t=rec?Math.min(t,DD):playing?t%DD:(window._scrub!=null?window._scrub:4);syncScrub(t,DD);if(playing&&!rec){if(cur!==_sc||t<_st-.5)sfxPreview(items[cur]);_sc=cur;_st=t}try{draw(items[cur],t)}catch(e){console.error(e)}requestAnimationFrame(loop)}
+(async()=>{try{await document.fonts.load("800 40px 'Noto Sans Tamil'","தமிழ்");await document.fonts.load("700 40px 'Noto Sans Tamil'","தமிழ்")}catch(e){}requestAnimationFrame(loop)})();
+
+/* ---------- UI ---------- */
+function tabs(){["#tabs","#ctabs"].forEach(q=>{const t=$(q);t.innerHTML="";items.forEach((_,i)=>{const b=document.createElement("button");b.textContent=i+1;b.className=i===cur?"on":"";b.onclick=()=>sel(i);t.appendChild(b)})})}
+function fill(){document.querySelectorAll("[data-k]").forEach(e=>{const v=items[cur][e.dataset.k];if(e.type==="checkbox")e.checked=!!v;else e.value=v==null?e.defaultValue:v});$("#gName").value=G.name;$("#gDur").value=G.dur;$("#gSub").value=G.sub;$("#gSl").value=G.slide;FL.forEach(([i,k])=>{$("#"+i).value=G[k]});wmFill();promoFill();comboFill();$("#gSfx").checked=G.sfx!==false;$("#gTick").checked=!!G.tick;$("#gSfxP").checked=!!G.sfxp;fillCard()}
+function sel(i){cur=i;window._scrub=null;if(cardMode)getCard(items[i]);startT=performance.now();tabs();fill();playMedia()}
+function playMedia(){Object.values(media).forEach(L=>L.forEach(m=>{m.el._on=false;if(m.type==="v"){m.el.pause();m.el.playbackRate=1;m._pb=false}}))}
+document.querySelectorAll("[data-k]").forEach(e=>e.addEventListener("input",()=>{items[cur][e.dataset.k]=e.type==="checkbox"?e.checked:e.type==="range"?+e.value:e.value;if(e.dataset.k==="date")items[cur].dm=true;save()}));
+$("#gName").oninput=e=>{G.name=e.target.value;save()};
+$("#gSub").oninput=e=>{G.sub=e.target.value;save()};
+FL.forEach(([i,k])=>{$("#"+i).oninput=e=>{G[k]=e.target.value;save()}});
+$("#gSl").onchange=e=>{G.slide=clamp(+e.target.value||3,1,15);e.target.value=G.slide;save()};
+$("#gDur").onchange=e=>{G.dur=clamp(+e.target.value||12,6,180);e.target.value=G.dur;save()};
+$("#fLogo").onchange=e=>{const f=e.target.files[0];if(!f)return;const fr=new FileReader();fr.onload=()=>{const im=new Image();im.onload=()=>{const s=Math.min(1,500/Math.max(im.width,im.height)),c=document.createElement("canvas");c.width=Math.max(1,Math.round(im.width*s));c.height=Math.max(1,Math.round(im.height*s));c.getContext("2d").drawImage(im,0,0,c.width,c.height);let u=c.toDataURL("image/png");if(u.length>230000)u=c.toDataURL("image/webp",.9);setLogo(u);try{localStorage.setItem("tk_logo",u)}catch(x){}$("#st").textContent="✔ லோகோ சேமிக்கப்பட்டது."};im.src=fr.result};fr.readAsDataURL(f)};
+/* footage (வீடியோ / படம்) — செட்டிங் பக்கத்தில் சேர்த்தவை IndexedDB-ல் சேமிக்கப்பட்டு காட்சிப் பக்கத்திலும் தெரியும் */
+function addMedia(k,f,done){const u=URL.createObjectURL(f);media[k]=media[k]||[];if(f.type.startsWith("video")){const v=document.createElement("video");v.src=u;v.loop=true;v.muted=true;v.playsInline=true;v.preload="auto";v.onloadeddata=()=>{media[k].push({type:"v",el:v,file:f});done&&done()}}else{const im=new Image();im.onload=()=>{media[k].push({type:"i",el:im,file:f});done&&done()};im.src=u}}
+let pmT=0;
+function persistMedia(){clearTimeout(pmT);pmT=setTimeout(()=>{if(!window.MediaStore)return;const o={};Object.keys(media).forEach(k=>{const a=(media[k]||[]).map(m=>m.file).filter(Boolean);if(a.length)o[k]=a});MediaStore.put("tv:media",o)},350)}
+$("#fMedia").onchange=e=>{const k=cur;[...e.target.files].forEach(f=>addMedia(k,f,persistMedia));e.target.value=""};
+if(window.MediaStore)MediaStore.get("tv:media").then(o=>{if(!o)return;Object.keys(o).forEach(k=>(o[k]||[]).forEach(f=>addMedia(+k,f)))});
+$("#bClr").onclick=()=>{(media[cur]||[]).forEach(m=>{if(m.type==="v")m.el.pause()});delete media[cur];persistMedia()};
+$("#bPlay").onclick=()=>{playing=!playing;$("#bPlay").textContent=playing?"⏸ முன்னோட்டம்":"▶ முன்னோட்டம்";startT=performance.now()-(playing&&window._scrub!=null?window._scrub*1000:0);window._scrub=null};
+$("#bAdd").onclick=()=>{if(items.length>=10){$("#st").textContent="அதிகபட்சம் 10 செய்திகள்.";return}items.push({...blank(),headline:"",loc:"",script:"",ticker:"",...tplSt()});save();sel(items.length-1)};
+$("#bDel").onclick=()=>{if(items.length<2)return;items.splice(cur,1);const m={};Object.keys(media).forEach(k=>{k=+k;if(k<cur)m[k]=media[k];else if(k>cur)m[k-1]=media[k]});media=m;persistMedia();save();sel(Math.min(cur,items.length-1))};
+$("#bDate").onclick=()=>{items.forEach(x=>{x.date=today();x.dm=false});save();fill();$("#st").textContent="✔ அனைத்து செய்திகளுக்கும் இன்றைய தேதி அமைக்கப்பட்டது."};
+$("#bImp").onclick=()=>{const L=$("#bulk").value.split("\n").map(s=>s.trim()).filter(Boolean).slice(0,10);if(!L.length)return;items=L.map(l=>{const p=l.split("|").map(s=>s.trim());return{headline:p[0]||"",loc:p[1]||"",date:today(),script:(p[2]||"").split(";").map(s=>s.trim()).join("\n"),ticker:p[3]||plain(p[0]),...tplSt()}});media={};save();sel(0);$("#st").textContent=items.length+" செய்திகள் ஏற்றப்பட்டன. ஒவ்வொன்றிற்கும் வீடியோ சேர்க்கலாம்."};
+
+/* ---------- export ---------- */
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+async function record(i){
+  sel(i);rec=true;playMedia();
+  let wl=null;try{wl=await navigator.wakeLock.request("screen")}catch(e){}
+  try{
+    const st=cv.captureStream(30),ML=media[i]||[];
+    ML.forEach(m=>{if(m.type==="v"){try{m.el.captureStream().getAudioTracks().forEach(t=>st.addTrack(t))}catch(e){}}});
+    const mt=mime(),r=new MediaRecorder(st,mt?{mimeType:mt,videoBitsPerSecond:8e6}:{videoBitsPerSecond:8e6}),ch=[];
+    r.ondataavailable=e=>e.data.size&&ch.push(e.data);
+    const done=new Promise(res=>r.onstop=res);
+    startT=performance.now();r.start(500);
+    await sleep(durOf(items[i])*1000+300);r.stop();await done;
+    ML.forEach(m=>{if(m.type==="v")m.el.muted=true});
+    return{blob:new Blob(ch,{type:mt||"video/webm"}),ext:mt.includes("mp4")?"mp4":"webm"}
+  }finally{rec=false;try{wl&&wl.release()}catch(e){}}
+}
+const lock=v=>["#bOne","#bAll","#bCombo"].forEach(s=>$(s).disabled=v);
+const okRec=()=>window.MediaRecorder&&cv.captureStream;
+const inFrame=e=>{const r=cv.getBoundingClientRect(),y=(e.clientY-r.top)*H/r.height;return y>=VY&&y<=VY+VH};
+function syncAdj(){const it=items[cur],c=it.card;document.querySelectorAll("[type=range][data-k]").forEach(e=>e.value=it[e.dataset.k]==null?e.defaultValue:it[e.dataset.k]);if(c)document.querySelectorAll("[type=range][data-c]").forEach(e=>e.value=c[e.dataset.c]==null?e.defaultValue:c[e.dataset.c]);save()}
+const ptr=new Map();let lastD=0;cv.style.touchAction="none";
+cv.addEventListener("pointerdown",e=>{if(!inFrame(e))return;cv.setPointerCapture(e.pointerId);ptr.set(e.pointerId,[e.clientX,e.clientY]);lastD=0});
+cv.addEventListener("pointermove",e=>{if(!ptr.has(e.pointerId))return;const it=tgt(),o=ptr.get(e.pointerId),k=W/cv.clientWidth;ptr.set(e.pointerId,[e.clientX,e.clientY]);
+ if(ptr.size===1){it.px=(it.px||0)+(e.clientX-o[0])*k;it.py=(it.py||0)+(e.clientY-o[1])*k}
+ else if(ptr.size===2){const [a,b]=[...ptr.values()],d=Math.hypot(a[0]-b[0],a[1]-b[1]);if(lastD)it.zoom=clamp((it.zoom||1)*d/lastD,1,4);lastD=d}
+ syncAdj()});
+["pointerup","pointercancel"].forEach(n=>cv.addEventListener(n,e=>{ptr.delete(e.pointerId);lastD=0}));
+let tap=null;
+cv.addEventListener("pointerdown",e=>{tap=inFrame(e)&&ptr.size===1?{x:e.clientX,y:e.clientY}:null});
+cv.addEventListener("pointermove",e=>{if(tap&&Math.hypot(e.clientX-tap.x,e.clientY-tap.y)>8)tap=null});
+cv.addEventListener("pointerup",e=>{if(!tap)return;tap=null;const r=cv.getBoundingClientRect(),x=(e.clientX-r.left)*W/r.width,y=(e.clientY-r.top)*H/r.height;if(y<VY+12||y>VY+100)return;const it=tgt();
+ if(x<540){const v=prompt("தேதி (DD-MM-YYYY)",it.date||"");if(v!==null){it.date=v.trim();it.dm=true}}else{const v=prompt("இடம்",it.loc||"");if(v!==null)it.loc=v.trim()}save();fill()});
+$("#dPick").onchange=e=>{const v=e.target.value;if(!v)return;const [y,m,d]=v.split("-");const it=items[cur];it.date=d+"-"+m+"-"+y;it.dm=true;save();fill();e.target.value=""};
+cv.addEventListener("wheel",e=>{if(!inFrame(e))return;e.preventDefault();const it=tgt();it.zoom=clamp((it.zoom||1)*(e.deltaY<0?1.06:.94),1,4);syncAdj()},{passive:false});
+$("#bRst").onclick=()=>{Object.assign(items[cur],{zoom:1,px:0,py:0});syncAdj()};
+setInterval(()=>{$("#mInfo").textContent=((media[cur]||[]).length)+" கோப்பு சேர்க்கப்பட்டது";const n=window._pg||1;$("#pgInfo").textContent="கட்டங்கள்: "+n+" · ஒவ்வொன்றும் 6 வினாடி · மொத்த நீளம்: "+Math.round(durOf(items[cur]))+" வினாடி (நீளம் அதிகமானால் கட்டங்கள் மீண்டும் சுழலும்)"},700);
+
+/* ---------- saved settings (on this phone only, works offline) ---------- */
+$("#bSave").onclick=()=>{let ok=true;try{localStorage.setItem("tk_studio2",JSON.stringify({G,items}))}catch(e){ok=false}$("#st").textContent=ok?"✔ அமைப்பு இந்த மொபைலில் சேமிக்கப்பட்டது.":"⚠ இந்த browser-ல் சேமிக்க முடியவில்லை."};
+
+/* ---------- animated end card (logo + text stay together) ---------- */
+function ENDCARD(it,t,D){
+  if(t<=D-EC)return;
+  const e=t-(D-EC),q=ease(e/.6),g=ease((e-.15)/.9),tg=ease((e-1.0)/.6),th=ease((e-1.4)/.6);
+  ctx.save();ctx.globalAlpha=q;ctx.fillStyle=PAGE;ctx.fillRect(0,0,W,H);
+  ctx.save();ctx.translate(W/2,H/2);ctx.rotate(e*.3);ctx.fillStyle="rgba("+YR+",.12)";for(let i=0;i<10;i++){ctx.rotate(Math.PI/5);poly([[0,0],[1500,-110],[1500,110]]);ctx.fill()}ctx.restore();
+  const rg=ctx.createRadialGradient(W/2,H/2,0,W/2,H/2,720);rg.addColorStop(0,"rgba("+YR+",.5)");rg.addColorStop(1,"rgba("+YR+",0)");ctx.fillStyle=rg;ctx.fillRect(0,0,W,H);
+  for(let i=0;i<16;i++){const px=(i*197)%W,py=H-((e*150+i*131)%H);ctx.fillStyle=`rgba(${YR},${.15+.35*((i%4)/3)})`;ctx.beginPath();ctx.arc(px,py,3+(i%3)*2,0,7);ctx.fill()}
+  /* லோகோ + பெயர் + வாசகங்கள்: மொத்த உயரத்தைக் கணக்கிட்டு திரையின் மையத்தில் (கிடைமட்டம் + செங்குத்து) சீரமைப்பு; கோடு இல்லை */
+  const nm=(G.name||"").trim(),en=(G.end||"").trim(),tx=(G.thx||"").trim();
+  let lh,dw=0,dh=0;
+  if(logoImg){const s2=Math.min(860/logoImg.width,380/logoImg.height);dw=logoImg.width*s2;dh=logoImg.height*s2;lh=dh}else lh=2*150+8;
+  const cs=logoImg||!nm?0:shrink(nm,900,120,800),ts=en?shrink(en,980,72,800):0,hs=tx?shrink(tx,980,38,700):0;
+  const rows=[];rows.push({k:"logo",h:lh});
+  if(cs)rows.push({k:"name",h:cs*1.15,gap:28});
+  if(ts)rows.push({k:"end",h:ts*1.2,gap:64});
+  if(hs)rows.push({k:"thx",h:hs*1.3,gap:20});
+  let total=0;rows.forEach((r,i)=>{total+=r.h+(i?r.gap:0)});
+  let y=-total/2;rows.forEach((r,i)=>{if(i)y+=r.gap;r.y=y;y+=r.h});
+  ctx.save();ctx.translate(W/2,H/2+Math.sin(e*2.2)*7);const sc=.55+.45*g;ctx.scale(sc,sc);ctx.textAlign="center";
+  rows.forEach(r=>{
+    if(r.k==="logo"){ctx.globalAlpha=q*g;const cy=r.y+r.h/2;if(logoImg)ctx.drawImage(logoImg,-dw/2,cy-dh/2,dw,dh);else logo(0,cy,150,true)}
+    else if(r.k==="name"){ctx.globalAlpha=q*g;ctx.fillStyle=INK;ctx.font=`800 ${cs}px ${FONT}`;ctx.fillText(nm,0,r.y+cs*.9)}
+    else if(r.k==="end"){ctx.globalAlpha=q*g*tg;ctx.fillStyle=RED;ctx.font=`800 ${ts}px ${FONT}`;ctx.fillText(en,0,r.y+ts*.92+(1-tg)*30)}
+    else{ctx.globalAlpha=q*g*th;ctx.fillStyle=INK;ctx.font=`700 ${hs}px ${FONT}`;ctx.fillText(tx,0,r.y+hs*.95+(1-th)*24)}
+  });
+  ctx.restore();ctx.restore();ctx.textAlign="left"
+}
+
+/* ---------- reliable save: list of finished videos with their own buttons ---------- */
+const outList=document.createElement("div");outList.style.cssText="display:grid;gap:8px";$("#st").after(outList);
+const errTxt=e=>(e&&e.code?e.code+": ":"")+((e&&e.message)||e);
+async function saveOut(o,name){
+  if(!o.blob||!o.blob.size)throw new Error("வீடியோ கோப்பு காலியாக உள்ளது (0 bytes) — மீண்டும் முயற்சிக்கவும்");
+  try{const f=new File([o.blob],name,{type:o.blob.type});if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f]});return true}}catch(e){if(e&&e.name==="AbortError")return false}
+  const a=document.createElement("a");a.href=URL.createObjectURL(o.blob);a.download=name;document.body.appendChild(a);a.click();a.remove();return true
+}
+function addOut(o,i){
+  const name="theekkathir-"+(i+1)+"-"+(items[i].date||today())+"."+o.ext,row=document.createElement("div"),b=document.createElement("button");
+  b.className="alt";b.textContent="⬇ சேமி: "+name+" ("+(o.blob.size/1048576).toFixed(1)+" MB)";
+  b.onclick=async()=>{try{const ok=await saveOut(o,name);$("#st").textContent=ok?"✔ சேமிக்கப்பட்டது.":"சேமிப்பு ரத்து."}catch(e){$("#st").textContent="சேமிப்பு பிழை — "+errTxt(e)}};
+  row.appendChild(b);outList.appendChild(row);return name
+}
+async function runOne(i){
+  const o=await record(i),name=addOut(o,i);
+  try{return(await saveOut(o,name))?"ok":"cancel"}catch(e){$("#st").textContent="தானியங்கி சேமிப்பு பிழை — "+errTxt(e)+" · கீழே உள்ள பொத்தானை அழுத்தவும்.";return"err"}
+}
+$("#bOne").onclick=async()=>{setCard(false);if(!okRec()){$("#st").textContent="இந்த browser-ல் வீடியோ எடுக்க முடியாது. Chrome பயன்படுத்தவும்.";return}lock(true);outList.innerHTML="";$("#st").textContent="வீடியோ உருவாகிறது… "+durOf(items[cur]).toFixed(0)+" வினாடி (tab-ஐ மூட வேண்டாம்)";try{const r=await runOne(cur);if(r==="ok")$("#st").textContent="✔ வீடியோ சேமிக்கப்பட்டது.";else if(r==="cancel")$("#st").textContent="சேமிப்பு ரத்து — கீழே உள்ள பொத்தானை அழுத்தி சேமிக்கலாம்."}catch(e){$("#st").textContent="பிழை: "+errTxt(e)}lock(false)};
+$("#bAll").onclick=async()=>{setCard(false);if(!okRec()){$("#st").textContent="Chrome பயன்படுத்தவும்.";return}lock(true);outList.innerHTML="";try{let n=0;for(let i=0;i<items.length;i++){$("#st").textContent="வீடியோ "+(i+1)+"/"+items.length+" உருவாகிறது… (tab-ஐ மூட வேண்டாம்)";if(await runOne(i)==="ok")n++;await sleep(500)}$("#st").textContent=n===items.length?"✔ "+n+" வீடியோக்களும் சேமிக்கப்பட்டன.":n+"/"+items.length+" சேமிக்கப்பட்டன — மீதியை கீழே உள்ள பொத்தான்களால் சேமிக்கவும்."}catch(e){$("#st").textContent="பிழை: "+errTxt(e)}lock(false)};
+
+/* ---------- editable watermark ---------- */
+[["gSfx","sfx"],["gTick","tick"],["gSfxP","sfxp"]].forEach(([i,k])=>{$("#"+i).onchange=e=>{G[k]=e.target.checked;save()}});
+function promoFill(){$("#gPrOn").checked=G.prOn!==false;$("#gPrDef").value=G.prDef==null?"BREAKING NEWS":G.prDef;$("#gPrEvery").value=G.prEvery||30;$("#gPrDur").value=G.prDur||4;promoAtInfo();$("#gPrStyle").value=G.prStyle==="band"?"band":"full"}
+$("#gPrOn").onchange=e=>{G.prOn=e.target.checked;save()};
+$("#gPrStyle").onchange=e=>{G.prStyle=e.target.value;save()};
+$("#gPrDef").oninput=e=>{G.prDef=e.target.value;save()};
+$("#gPrEvery").onchange=e=>{G.prEvery=clamp(+e.target.value||30,5,180);e.target.value=G.prEvery;save()};
+$("#gPrDur").onchange=e=>{G.prDur=clamp(+e.target.value||4,2,10);e.target.value=G.prDur;save()};
+function syncScrub(t,DD){window._pt=t;const sc=document.getElementById("pScrub");if(!sc)return;
+  if(+sc.max!==Math.ceil(DD))sc.max=Math.ceil(DD);
+  if(playing&&document.activeElement!==sc)sc.value=t;
+  const lb=document.getElementById("pScrubT");if(lb)lb.textContent=Math.floor(t/60)+":"+String(Math.floor(t%60)).padStart(2,"0")}
+$("#pScrub").oninput=e=>{const v=+e.target.value;window._scrub=v;playing=false;$("#bPlay").textContent="▶ முன்னோட்டம்";startT=performance.now()-v*1000};
+$("#bPrAdd").onclick=()=>{const it=items[cur],v=Math.round((window._pt||0)*10)/10,tl=promoTimes(it)||[];tl.push(v);
+  it.promoAt=[...new Set(tl)].sort((a,b)=>a-b).map(x=>Number.isInteger(x)?String(x):x.toFixed(1)).join(", ");save();fill();
+  $("#st").textContent="✔ "+Math.floor(v/60)+":"+String(Math.round(v%60)).padStart(2,"0")+" நேரத்தில் புரோமோ சேர்க்கப்பட்டது."};
+$("#bPrClr").onclick=()=>{items[cur].promoAt="";save();fill();$("#st").textContent="புரோமோ நேரங்கள் அழிக்கப்பட்டன (இடைவெளி முறைக்குத் திரும்பும்)."};
+function promoAtInfo(){const el=$("#promoAtInfo");if(!el)return;const it=items[cur],tl=promoTimes(it),D=durOf(it),DU=clamp(+G.prDur||4,2,10);
+  const f=x=>Math.floor(x/60)+":"+String(Math.round(x%60)).padStart(2,"0");
+  if(!tl){el.textContent="காலியாக உள்ளது → ஒவ்வொரு "+clamp(+G.prEvery||30,5,180)+" வினாடிக்கும் தானாக வரும் (வீடியோ நீளம் "+D+" வினாடி).";return}
+  const ok=tl.filter(x=>x+DU<=D),bad=tl.filter(x=>x+DU>D);
+  el.textContent="வரும் நேரங்கள்: "+(ok.map(f).join(", ")||"இல்லை")+(bad.length?" · ⚠ "+bad.map(f).join(", ")+" வீடியோ நீளத்தை ("+D+" வினாடி) தாண்டுவதால் வராது":"")+" · k-வது நேரத்துக்கு k-வது வார்த்தை வரும்."}
+document.querySelectorAll('[data-k="promoAt"]').forEach(e=>e.addEventListener("input",promoAtInfo));
+$("#bPrTest").onclick=()=>{const it=items[cur],tl=promoTimes(it),DU=+G.prDur||4,D=durOf(it);let T;
+  if(tl){T=tl.find(x=>x+DU<=D);if(T==null){$("#st").textContent="கொடுத்த நேரங்கள் வீடியோ நீளத்துக்குள் (" +D+" வினாடி) இல்லை.";return}}
+  else{const E=clamp(+G.prEvery||30,5,180);if(D<E+DU){$("#st").textContent="வீடியோ நீளம் "+E+" வினாடிக்கு மேல் இருந்தால்தான் புரோமோ வரும்; அல்லது 'புரோமோ வரும் நேரங்கள்' பெட்டியில் நேரம் கொடுங்கள்.";return}T=E}
+  G.prOn=true;$("#gPrOn").checked=true;playing=true;$("#bPlay").textContent="⏸ முன்னோட்டம்";startT=performance.now()-Math.max(0,T-.5)*1000;$("#st").textContent="புரோமோ 0.5 வினாடியில் வரும்…"};
+function wmFill(){$("#gWmS").value=G.wmS||56;$("#gWmO").value=G.wmO==null?.4:G.wmO;$("#gWmX").value=G.wmX==null?100:G.wmX;$("#gWmY").value=G.wmY==null?100:G.wmY;$("#gWmC").value=G.wmC||"#ffffff"}
+[["gWmS","wmS",1],["gWmO","wmO",1],["gWmX","wmX",1],["gWmY","wmY",1],["gWmC","wmC",0]].forEach(([i,k,n])=>{$("#"+i).oninput=e=>{G[k]=n?+e.target.value:e.target.value;save()}});
+function WMARK(fx,fy,fw,fh){
+  if(!G.wm)return;const o=G.wmO==null?.4:G.wmO,px=G.wmX==null?100:G.wmX,py=G.wmY==null?100:G.wmY,s=shrink(G.wm,fw-28,G.wmS||56,800);
+  ctx.save();ctx.beginPath();ctx.rect(fx,fy,fw,fh);ctx.clip();ctx.font=`800 ${s}px ${FONT}`;ctx.textAlign="left";
+  const w=ctx.measureText(G.wm).width,x=fx+14+(fw-28-w)*px/100,y=fy+s*.95+10+(fh-s*.95-34)*py/100;
+  ctx.globalAlpha=o;ctx.fillStyle=G.wmC||"#ffffff";ctx.shadowColor="rgba(0,0,0,.45)";ctx.shadowBlur=6;ctx.fillText(G.wm,x,y);ctx.restore();ctx.textAlign="left"
+}
+
+/* ---------- recorder that falls back when the phone's encoder gives an empty file ---------- */
+function mimes(){return["video/mp4;codecs=avc1.640028,mp4a.40.2","video/mp4;codecs=avc1.42E01E,mp4a.40.2","video/mp4;codecs=avc1","video/mp4;codecs=h264","video/mp4"].filter(m=>MediaRecorder.isTypeSupported(m))}
+async function record(i){
+  sel(i);rec=true;playMedia();
+  let wl=null;try{wl=await navigator.wakeLock.request("screen")}catch(e){}
+  try{
+    const ML=media[i]||[];let best=null;
+    for(const mt of mimes()){for(const br of [9e6,4e6]){
+      const st=cv.captureStream(30);
+      ML.forEach(m=>{if(m.type==="v"){try{m.el.captureStream().getAudioTracks().forEach(t=>st.addTrack(t))}catch(e){}}});
+      const sx=sfxStream(items[i]);if(sx)sx.tracks.forEach(t=>st.addTrack(t));
+      let r;try{r=new MediaRecorder(st,Object.assign({videoBitsPerSecond:br},mt?{mimeType:mt}:{}))}catch(e){continue}
+      const ch=[];let sz=0,err=null;
+      r.ondataavailable=e=>{if(e.data&&e.data.size){ch.push(e.data);sz+=e.data.size}};r.onerror=e=>{err=e};
+      const done=new Promise(res=>r.onstop=res);
+      startT=performance.now();playMedia();
+      try{r.start(500)}catch(e){continue}
+      if(sx)sx.start();
+      await sleep(2000);
+      if(err||r.state!=="recording"){try{if(r.state!=="inactive")r.stop()}catch(e){}st.getTracks().forEach(t=>t.stop());continue}
+      await sleep(Math.max(0,durOf(items[i])*1000+300-(performance.now()-startT)));
+      r.stop();await done;st.getTracks().forEach(t=>t.stop());
+      ML.forEach(m=>{if(m.type==="v")m.el.muted=true});
+      const blob=new Blob(ch,{type:"video/mp4"});
+      if(blob.size>0){if(await okBlob(blob))return{blob,ext:"mp4"};if(!best)best=blob}
+    }}
+    if(best)return{blob:best,ext:"mp4"};
+    throw new Error(mimes().length?"MP4 பதிவு தோல்வியடைந்தது. வேறு Chrome tab-களை மூடி, மீண்டும் முயற்சிக்கவும்.":"இந்த Chrome MP4 பதிவை ஆதரிக்கவில்லை — Chrome-ஐ புதுப்பிக்கவும் (v126 அல்லது அதற்கு மேல்).")
+  }finally{rec=false;try{wl&&wl.release()}catch(e){}}
+}
+
+const okBlob=b=>new Promise(r=>{const v=document.createElement("video"),u=URL.createObjectURL(b),f=x=>{clearTimeout(tm);v.removeAttribute("src");URL.revokeObjectURL(u);r(x)},tm=setTimeout(()=>f(false),10000);v.muted=true;v.preload="metadata";v.onloadedmetadata=()=>f(v.videoWidth>0);v.onerror=()=>f(false);v.src=u});
+/* ---------- news card (photo) ---------- */
+function getCard(it){if(!it.card)it.card={headline:it.headline,script:it.script,loc:it.loc,date:it.date,ticker:it.ticker,breaking:it.breaking,zoom:it.zoom||1,px:it.px||0,py:it.py||0,idx:1};return it.card}
+function fillCard(){const c=items[cur]&&items[cur].card;if(!c)return;document.querySelectorAll("[data-c]").forEach(e=>{const v=c[e.dataset.c];if(e.type==="checkbox")e.checked=!!v;else e.value=v==null?e.defaultValue:v})}
+function tgt(){return cardMode&&items[cur].card?items[cur].card:items[cur]}
+function setCard(on){cardMode=on;if(on){getCard(items[cur]);playMedia();fillCard()}else startT=performance.now();$("#mainPanel").style.display=on?"none":"";$("#cardPanel").style.display=on?"grid":"none"}
+document.querySelectorAll("[data-c]").forEach(e=>e.addEventListener("input",()=>{const c=getCard(items[cur]);c[e.dataset.c]=e.type==="checkbox"?e.checked:(e.type==="range"||e.type==="number")?+e.value:e.value;save()}));
+$("#bCard").onclick=()=>setCard(true);$("#cBack").onclick=()=>setCard(false);
+$("#cSync").onclick=()=>{const it=items[cur];delete it.card;getCard(it);fillCard();save()};
+$("#cRst").onclick=()=>{Object.assign(getCard(items[cur]),{zoom:1,px:0,py:0});fillCard();save()};
+async function cardOut(type){
+  const c=getCard(items[cur]);STILL=true;draw(c,4);
+  const name="theekkathir-card-"+(cur+1)+"-"+(c.date||today())+(type==="image/png"?".png":".jpg");
+  const blob=await new Promise(r=>cv.toBlob(r,type,.95));if(!blob)throw new Error("படம் உருவாகவில்லை");
+  const o={blob},box=$("#cOut");box.innerHTML="";const b=document.createElement("button");b.className="alt";b.textContent="⬇ சேமி: "+name+" ("+(blob.size/1048576).toFixed(1)+" MB)";
+  b.onclick=async()=>{try{await saveOut(o,name);$("#cSt").textContent="✔ சேமிக்கப்பட்டது."}catch(e){$("#cSt").textContent="பிழை — "+errTxt(e)}};box.appendChild(b);
+  try{if(await saveOut(o,name))$("#cSt").textContent="✔ சேமிக்கப்பட்டது."}catch(e){$("#cSt").textContent="கீழே உள்ள பொத்தானை அழுத்தி சேமிக்கவும்."}
+}
+$("#cJpg").onclick=()=>cardOut("image/jpeg").catch(e=>$("#cSt").textContent="பிழை — "+errTxt(e));
+$("#cPng").onclick=()=>cardOut("image/png").catch(e=>$("#cSt").textContent="பிழை — "+errTxt(e));
+
+tabs();fill();
+
+/* ---------- offline ---------- */
+if("serviceWorker" in navigator&&/^https?:$/.test(location.protocol)){navigator.serviceWorker.register("sw.js").catch(()=>{})}
+const netInfo=()=>{const e=document.getElementById("net");if(e)e.textContent=navigator.onLine?"இணையம் உள்ளது (தேவையில்லை)":"✔ Offline முறை"};
+addEventListener("online",netInfo);addEventListener("offline",netInfo);netInfo();
+
+/* ---------- MP4 export: frame-by-frame (same method as the book studio) ---------- */
+const xMsg=(s,err)=>{const e=$("#st");e.textContent=s;e.style.color=err?"#c62828":""};
+const xMC=new MessageChannel();
+const yieldNow=()=>new Promise(r=>{xMC.port1.onmessage=()=>r();xMC.port2.postMessage(0)});
+function seekTo(v,time){return new Promise(res=>{
+  if(Math.abs(v.currentTime-time)<.002&&v.readyState>=2){res();return}
+  let done=false;const fin=()=>{if(done)return;done=true;v.removeEventListener("seeked",fin);clearTimeout(tm);res()};
+  const tm=setTimeout(fin,4000);
+  v.addEventListener("seeked",fin);try{v.currentTime=time}catch(e){fin()}})}
+/* ---------- வேகமான ரெண்டர்: ஒவ்வொரு ஃப்ரேமுக்கும் seek செய்யாமல், வீடியோவை முன்னோக்கி ஓடவிட்டு ஏற்றுமதி நேரத்துடன் ஒத்திசைத்தல் ----------
+   தாவல் (seek) clip மாறும்போது / வீடியோ சுழலும்போது மட்டும்; மற்ற நேரங்களில் playbackRate-ஐ ஏற்றுமதி வேகத்துக்கு ஏற்ப மாற்றி ஃப்ரேம்களைப் பிடிக்கிறோம். */
+const HAS_RVFC="requestVideoFrameCallback"in HTMLVideoElement.prototype;
+function trackMT(el){if(el._trk||!HAS_RVFC)return;el._trk=true;const f=(n,md)=>{el._mt=md.mediaTime;el.requestVideoFrameCallback(f)};el.requestVideoFrameCallback(f)}
+const curOf=el=>(HAS_RVFC&&el._mt!=null)?el._mt:el.currentTime;
+function waitFrame(el,ms){return new Promise(res=>{if(!HAS_RVFC){setTimeout(res,50);return}let d=false;const fin=()=>{if(!d){d=true;clearTimeout(tm);res()}};const tm=setTimeout(fin,ms);el.requestVideoFrameCallback(fin)})}
+const cdist=(target,cur,dur)=>((target-cur+dur/2)%dur+dur)%dur-dur/2;
+/* வீடியோ ஃப்ரேம்களுக்கு இடையில் நிறுத்தப்பட்டிருக்கும்; தேவையான ஃப்ரேம் வரும் வரை மட்டும் 2x வேகத்தில் ஓடும் — அதனால் ஒத்திசைவு தவறாது, தாவலும் தேவையில்லை */
+async function driveVideo(m,lt,tol){
+  const el=m.el,dur=el.duration||1,target=lt%dur;trackMT(el);
+  const d=cdist(target,curOf(el),dur);
+  if(!m._pb||d<-.15||d>.6){
+    el.pause();await seekTo(el,target);el._mt=null;el.playbackRate=2;
+    try{await el.play()}catch(e){}
+    m._pb=true;await waitFrame(el,1500);el.pause();return}
+  if(d<=tol)return;
+  el.playbackRate=2;try{await el.play()}catch(e){}
+  const t0=performance.now();
+  while(performance.now()-t0<1500){if(cdist(target,curOf(el),dur)<=tol)break;await waitFrame(el,200)}
+  el.pause()
+}
+async function syncVideos(ML,t,fps){
+  const SL=G.slide||3,nM=ML.length;if(!nM)return;
+  const k0=Math.floor(t/SL),si=k0%nM,st2=t%SL,nx=(si+1)%nM,tol=.5/(fps||24),jobs=[];
+  ML.forEach((m,i)=>{if(m.type!=="v")return;let lt=null;
+    if(nM===1)lt=t;else if(i===si)lt=st2+(k0>0?.6:0);else if(i===nx&&st2>SL-.6)lt=st2-(SL-.6);
+    if(lt==null){if(m._pb){m.el.pause();m._pb=false}return}
+    jobs.push(driveVideo(m,lt,tol))});
+  await Promise.all(jobs)}
+/* ஏற்றுமதியில் வீடியோ ஃப்ரேம் தயாராகாவிட்டால் கருப்பு விடாமல் முந்தைய நல்ல ஃப்ரேமையே வரைய */
+function snapFrame(m){const el=m.el,vw=el.videoWidth,vh=el.videoHeight;if(!vw)return;
+  if(m._lc&&el._mt!=null&&m._lmt===el._mt)return;
+  const s=Math.min(1,720/Math.max(vw,vh)),w=Math.max(1,Math.round(vw*s)),h=Math.max(1,Math.round(vh*s));
+  let c=m._lc;if(!c||c.width!==w||c.height!==h){c=m._lc=document.createElement("canvas");c.width=w;c.height=h}
+  c.getContext("2d").drawImage(el,0,0,w,h);m._lmt=el._mt}
+/* ---------- ஒலி விளைவுகள் (இயற்றப்பட்டவை; தீர்மானமானவை) ---------- */
+function sfxRender(it,D,SR){
+  const n=Math.round(Math.min(D,8)*SR),o=new Float32Array(n);let seed=7;const rnd=()=>(seed=(seed*1664525+1013904223)>>>0)/4294967296*2-1;
+  const whoosh=(t0,len,vol,f0,f1)=>{let lp=0,lp2=0;const a=Math.round(t0*SR),m=Math.round(len*SR);for(let i=0;i<m&&a+i<n;i++){const u=i/m,env=Math.sin(Math.PI*Math.pow(u,.8))*vol,f=f0+(f1-f0)*u,k=Math.min(.95,2*Math.PI*f/SR);lp+=k*(rnd()-lp);lp2+=k*(lp-lp2);o[a+i]+=(lp-lp2)*env*5}};
+  const impact=(t0,vol)=>{const a=Math.round(t0*SR),m=Math.round(.32*SR);let ph=0;for(let i=0;i<m&&a+i<n;i++){const u=i/m,f=48+90*Math.exp(-u*14);ph+=2*Math.PI*f/SR;const e=Math.exp(-u*6);o[a+i]+=(Math.sin(ph)*e+(i<SR*.03?rnd()*.5*(1-i/(SR*.03)):0))*vol}};
+  const beep=(t0,len,vol,f)=>{const a=Math.round(t0*SR),m=Math.round(len*SR);for(let i=0;i<m&&a+i<n;i++){const u=i/m;o[a+i]+=Math.sin(2*Math.PI*f*i/SR)*Math.sin(Math.PI*u)*vol}};
+  const tick=(t0,vol)=>{const a=Math.round(t0*SR),m=Math.round(.022*SR);for(let i=0;i<m&&a+i<n;i++){const u=i/m;o[a+i]+=Math.sin(2*Math.PI*2100*i/SR)*Math.exp(-u*7)*vol}};
+  const L=headlineLayout(it);
+  if(it.breaking){for(let c=0,b0=.3;b0<D-.3;c++,b0=.3+5*c){whoosh(b0,.5,.16,500,2600);whoosh(b0+.1,.5,.14,2400,600);impact(b0+.6,.6);for(let k=0;k<4;k++)beep(b0+.7+k*.35,.2,.05,k%2?960:720);if(b0+4.3<D)whoosh(b0+4.3,.45,.1,1800,500)}}
+  else whoosh(.42,.55,.13,450,2200);
+  if(G.tick){const st=Math.max(.06,L.dur/Math.max(1,L.N));for(let t=L.T0,c=0;t<L.T0+L.dur&&c<60;t+=st*2,c++)tick(t,.08)}
+  let pk=0;for(let i=0;i<n;i++)pk=Math.max(pk,Math.abs(o[i]));if(pk>.9)for(let i=0;i<n;i++)o[i]*=.9/pk;
+  return o}
+function addSfx(mix,it,D,SR){
+  if(G.sfx===false)return mix;const s=sfxRender(it,D,SR),len=Math.round(D*SR);
+  if(!mix)mix={L:new Float32Array(len),R:new Float32Array(len)};
+  for(let i=0;i<s.length&&i<len;i++){mix.L[i]=Math.max(-1,Math.min(1,mix.L[i]+s[i]));mix.R[i]=Math.max(-1,Math.min(1,mix.R[i]+s[i]))}
+  return mix}
+let _ac=null,_sc=-1,_st=0;
+function acx(){try{_ac=_ac||new(window.AudioContext||window.webkitAudioContext)();return _ac}catch(e){return null}}
+addEventListener("pointerdown",()=>{const c=acx();if(c&&c.state==="suspended")c.resume()},{passive:true});
+function sfxMk(it,c){const D=durOf(it),sr=c.sampleRate,d=sfxRender(it,D,sr),b=c.createBuffer(1,d.length,sr);b.copyToChannel(d,0);const sn=c.createBufferSource();sn.buffer=b;return sn}
+function sfxPreview(it){if(!G.sfxp||G.sfx===false)return;const c=acx();if(!c||c.state!=="running")return;try{const sn=sfxMk(it,c);sn.connect(c.destination);sn.start()}catch(e){}}
+function sfxStream(it){if(G.sfx===false)return null;const c=acx();if(!c)return null;try{const dst=c.createMediaStreamDestination(),sn=sfxMk(it,c);sn.connect(dst);return{tracks:dst.stream.getAudioTracks(),start:()=>{try{c.resume();sn.start()}catch(e){}}}}catch(e){return null}}
+async function buildAudio(i,D,SR){
+  const ML=media[i]||[],nM=ML.length,SL=G.slide||3,len=Math.round(D*SR);let L=null,R=null;
+  const add=(buf,s0,s1)=>{const n=buf.length;if(!n)return;if(!L){L=new Float32Array(len);R=new Float32Array(len)}
+    const c0=buf.getChannelData(0),c1=buf.numberOfChannels>1?buf.getChannelData(1):c0;
+    for(let p=Math.max(0,s0),j=0,e=Math.min(len,s1);p<e;p++){L[p]+=c0[j];R[p]+=c1[j];if(++j>=n)j=0}};
+  for(let idx=0;idx<nM;idx++){const m=ML[idx];if(m.type!=="v"||!m.file)continue;let buf=null;
+    try{buf=await new OfflineAudioContext(2,SR,SR).decodeAudioData(await m.file.arrayBuffer())}catch(e){continue}
+    if(nM===1){add(buf,0,len);continue}
+    for(let k=idx;k*SL<D;k+=nM)add(buf,Math.round(Math.max(0,k*SL-(k>0?.6:0))*SR),Math.round((k+1)*SL*SR))}
+  if(!L)return null;const fade=Math.round(SR*.6);
+  for(let p=0;p<len;p++){const g=p>len-fade?(len-p)/fade:1;L[p]=Math.max(-1,Math.min(1,L[p]*g));R[p]=Math.max(-1,Math.min(1,R[p]*g))}
+  return{L,R}}
+let xCancel=false;
+async function exportOne(i,idx,count){
+  sel(i);playMedia();window._exp=true;
+  const it=items[i],D=durOf(it),fps=clamp(+$("#xFps").value||24,15,30),RW=$("#xRes").value==="1080"?1080:720,RH=RW===1080?1920:1280,total=Math.round(D*fps),SR=44100;
+  let venc=null,aenc=null,note="";
+  try{
+    let vcfg=null;
+    for(const codec of["avc1.640029","avc1.4D0029","avc1.42E029"]){if(vcfg)break;for(const hw of["prefer-hardware","no-preference"]){
+      const c={codec,width:RW,height:RH,bitrate:Math.round((RW===1080?9e6:4.5e6)*Math.max(.45,Math.min(1,100/D))),framerate:fps,hardwareAcceleration:hw};
+      try{if((await VideoEncoder.isConfigSupported(c)).supported){vcfg=c;break}}catch(e){}}}
+    if(!vcfg)throw new Error("இந்தச் சாதனத்தில் H.264 என்கோடர் கிடைக்கவில்லை.");
+    let mix=null,acfg=null;
+    if("AudioEncoder"in window){xMsg("ஒலியைத் தயாரிக்கிறேன்…");mix=addSfx(await buildAudio(i,D,SR),it,D,SR);
+      if(mix){const ac={codec:"mp4a.40.2",sampleRate:SR,numberOfChannels:2,bitrate:128000};
+        try{if((await AudioEncoder.isConfigSupported(ac)).supported)acfg=ac}catch(e){}
+        if(!acfg){mix=null;note=" (இந்த உலாவியில் AAC ஒலி என்கோடர் இல்லாததால் ஒலி சேர்க்கப்படவில்லை)"}}}
+    const mo={target:new Mp4Muxer.ArrayBufferTarget(),video:{codec:"avc",width:RW,height:RH,frameRate:fps},fastStart:"in-memory",firstTimestampBehavior:"offset"};
+    if(acfg)mo.audio={codec:"aac",numberOfChannels:2,sampleRate:SR};
+    const muxer=new Mp4Muxer.Muxer(mo);let encErr=null;
+    venc=new VideoEncoder({output:(c,m)=>muxer.addVideoChunk(c,m),error:e=>{encErr=e}});venc.configure(vcfg);
+    if(acfg){aenc=new AudioEncoder({output:(c,m)=>muxer.addAudioChunk(c,m),error:e=>{encErr=e}});aenc.configure(acfg)}
+    const ex=document.createElement("canvas");ex.width=RW;ex.height=RH;const ectx=ex.getContext("2d",{alpha:false});
+    const ML=media[i]||[];let aPos=0;const CH=4096,t0=performance.now();
+    ML.forEach(m=>{m._pb=false;m._lc=null;m._lmt=undefined});
+    const pushAudio=()=>{const n=Math.min(CH,mix.L.length-aPos),d=new Float32Array(n*2);
+      d.set(mix.L.subarray(aPos,aPos+n),0);d.set(mix.R.subarray(aPos,aPos+n),n);
+      const ad=new AudioData({format:"f32-planar",sampleRate:SR,numberOfFrames:n,numberOfChannels:2,timestamp:Math.round(aPos/SR*1e6),data:d});
+      aenc.encode(ad);ad.close();aPos+=n};
+    for(let f=0;f<total;f++){
+      if(xCancel)throw new Error("cancel");if(encErr)throw encErr;
+      const t=f/fps;await syncVideos(ML,t,fps);draw(it,t);ectx.drawImage(cv,0,0,RW,RH);
+      const fr=new VideoFrame(ex,{timestamp:Math.round(f*1e6/fps),duration:Math.round(1e6/fps)});
+      venc.encode(fr,{keyFrame:f%(fps*2)===0});fr.close();
+      while(aenc&&aPos<mix.L.length&&aPos/SR<=t+.3)pushAudio();
+      if(venc.encodeQueueSize>8){ML.forEach(m=>{if(m.type==="v")m.el.pause()});while(venc.encodeQueueSize>8)await yieldNow()}
+      if(f%10===0){const pc=(idx+f/total)/count*100,el=(performance.now()-t0)/1000,left=f>20?el/f*(total-f):0;
+        $("#xProg").style.width=pc.toFixed(1)+"%";
+        xMsg((count>1?"வீடியோ "+(idx+1)+"/"+count+" · ":"")+"பிரேம் "+f+" / "+total+" ("+(f/total*100).toFixed(0)+"%)"+(left?" · மீதம் சுமார் "+(left>90?Math.ceil(left/60)+" நிமிடம்":Math.ceil(left)+" வினாடி"):""));
+        await yieldNow()}}
+    await venc.flush();if(aenc){while(aPos<mix.L.length)pushAudio();await aenc.flush()}
+    muxer.finalize();
+    return{blob:new Blob([muxer.target.buffer],{type:"video/mp4"}),ext:"mp4",note}
+  }finally{(media[i]||[]).forEach(m=>{if(m.type==="v"){try{m.el.pause()}catch(e){}m._pb=false;m.el.playbackRate=1}});try{if(venc&&venc.state!=="closed")venc.close()}catch(e){}try{if(aenc&&aenc.state!=="closed")aenc.close()}catch(e){}}
+}
+function addResult(o,i,nm){
+  const name=nm||"theekkathir-"+(i+1)+"-"+(items[i].date||today())+".mp4",row=document.createElement("div");
+  row.style.cssText="display:grid;gap:8px;padding:10px;border:1px solid var(--line);border-radius:12px";
+  const v=document.createElement("video");v.src=URL.createObjectURL(o.blob);v.controls=true;v.playsInline=true;v.style.cssText="width:min(100%,240px);border-radius:10px;background:#000";
+  const b=document.createElement("button");b.textContent="MP4 சேமி · "+name+" ("+(o.blob.size/1048576).toFixed(1)+" MB)";
+  b.onclick=async()=>{try{xMsg(await saveOut(o,name)?"✔ சேமிக்கப்பட்டது.":"சேமிப்பு ரத்து செய்யப்பட்டது.")}catch(e){xMsg("சேமிக்க முடியவில்லை — "+errTxt(e),1)}};
+  row.append(v,b);outList.appendChild(row)}
+async function runExport(list){
+  setCard(false);
+  if(!("VideoEncoder"in window)||!window.Mp4Muxer){xMsg("இந்த உலாவியில் MP4 ஏற்றுமதி இயலாது. Chrome அல்லது Edge பயன்படுத்துங்கள்.",1);return}
+  xCancel=false;lock(true);$("#xCancel").hidden=false;outList.innerHTML="";$("#xProg").style.width="0%";
+  let wl=null;try{wl=await navigator.wakeLock.request("screen")}catch(e){}
+  let done=0,note="";
+  try{
+    for(let k=0;k<list.length;k++){const o=await exportOne(list[k],k,list.length);addResult(o,list[k]);done++;note=o.note}
+    $("#xProg").style.width="100%";xMsg("முடிந்தது — "+done+" வீடியோ. கீழே பார்த்து “MP4 சேமி” அழுத்தவும்."+note)
+  }catch(e){
+    if(e&&e.message==="cancel")xMsg("ஏற்றுமதி நிறுத்தப்பட்டது"+(done?" ("+done+" வீடியோ தயார்)":"")+".");
+    else xMsg("ஏற்றுமதி தோல்வி: "+errTxt(e),1);
+    $("#xProg").style.width="0%"
+  }finally{window._exp=false;lock(false);$("#xCancel").hidden=true;try{wl&&wl.release()}catch(e){}playMedia();startT=performance.now()}
+}
+$("#bOne").onclick=()=>runExport([cur]);
+$("#bAll").onclick=()=>runExport(items.map((_,i)=>i));
+$("#xCancel").onclick=()=>{xCancel=true};
+
+/* ---------- தொகுப்பு வீடியோ: பல செய்திகள் → ஒரே MP4 (≤180 வினாடி) ---------- */
+function comboFill(){$("#gCombo").checked=!!G.combo;$("#gFrom").value=G.cFrom||1;comboInfo()}
+function comboInfo(){const el=$("#cInfo");if(!el)return;const R=comboRange(),n=items.length,f=x=>Math.floor(x/60)+":"+String(Math.round(x%60)).padStart(2,"0");
+  el.textContent="இந்த வீடியோவில்: செய்தி "+(R.a+1)+(R.b>R.a?" – "+(R.b+1):"")+" · மொத்தம் "+f(R.tot)+" ("+Math.round(R.tot)+" வினாடி / 180)"+(R.b<n-1?" · மீதி செய்திகள் அடுத்த part-ல்: தொடக்க எண் "+(R.b+2)+" என்று கொடுக்கவும்.":" · எல்லா செய்திகளும் அடங்கும்.")}
+$("#gCombo").onchange=e=>{G.combo=e.target.checked;save();comboInfo()};
+$("#gFrom").onchange=e=>{G.cFrom=clamp(Math.round(+e.target.value||1),1,Math.max(1,items.length));e.target.value=G.cFrom;save();comboInfo()};
+$("#bTpl").onclick=()=>{const it=items[cur];G.tpl={breaking:!!it.breaking,promo:it.promo||"",len:+it.len||30};save();xMsg("✔ இந்த அமைப்பு (நீளம் "+G.tpl.len+" வி, BREAKING "+(G.tpl.breaking?"ஆம்":"இல்லை")+") இயல்பு அமைப்பாகச் சேமிக்கப்பட்டது.")};
+$("#bTplRst").onclick=()=>{Object.assign(items[cur],tplSt());save();fill();syncAdj();xMsg("✔ இந்தச் செய்தியின் அமைப்பு இயல்புக்கு மாற்றப்பட்டது (எழுத்து மாறவில்லை).")};
+$("#bCP").onclick=()=>{
+  if(window._cp){window._cp=false;$("#bCP").textContent="▶ தொகுப்பு முன்னோட்டம்";return}
+  G.combo=true;$("#gCombo").checked=true;save();comboInfo();
+  window._cp=true;$("#bCP").textContent="⏹ முன்னோட்டத்தை நிறுத்து";playing=true;$("#bPlay").textContent="⏸ முன்னோட்டம்";sel(comboRange().a)};
+setInterval(comboInfo,700);
+async function exportCombo(){
+  setCard(false);window._cp=false;$("#bCP").textContent="▶ தொகுப்பு முன்னோட்டம்";
+  if(!("VideoEncoder"in window)||!window.Mp4Muxer){xMsg("இந்த உலாவியில் MP4 ஏற்றுமதி இயலாது. Chrome அல்லது Edge பயன்படுத்துங்கள்.",1);return}
+  G.combo=true;$("#gCombo").checked=true;save();
+  const R=comboRange(),segs=[];let D=0;
+  for(let k=R.a;k<=R.b;k++){const d=durOf(items[k]);segs.push({i:k,off:D,D:d});D+=d}
+  const fps=clamp(+$("#xFps").value||24,15,30),RW=$("#xRes").value==="1080"?1080:720,RH=RW===1080?1920:1280,total=Math.round(D*fps),SR=44100;
+  xCancel=false;lock(true);$("#xCancel").hidden=false;outList.innerHTML="";$("#xProg").style.width="0%";
+  let wl=null;try{wl=await navigator.wakeLock.request("screen")}catch(e){}
+  let venc=null,aenc=null,note="",ok=false;window._exp=true;
+  const stopVid=i=>(media[i]||[]).forEach(m=>{if(m.type==="v"){try{m.el.pause()}catch(e){}m._pb=false;m.el.playbackRate=1}});
+  try{
+    let vcfg=null;
+    for(const codec of["avc1.640029","avc1.4D0029","avc1.42E029"]){if(vcfg)break;for(const hw of["prefer-hardware","no-preference"]){
+      const c={codec,width:RW,height:RH,bitrate:Math.round((RW===1080?9e6:4.5e6)*Math.max(.45,Math.min(1,100/D))),framerate:fps,hardwareAcceleration:hw};
+      try{if((await VideoEncoder.isConfigSupported(c)).supported){vcfg=c;break}}catch(e){}}}
+    if(!vcfg)throw new Error("இந்தச் சாதனத்தில் H.264 என்கோடர் கிடைக்கவில்லை.");
+    let mix=null,acfg=null;
+    if("AudioEncoder"in window){
+      xMsg("ஒலியைத் தயாரிக்கிறேன்…");
+      const len=Math.round(D*SR),M={L:new Float32Array(len),R:new Float32Array(len)};let any=false;
+      for(const s of segs){const part=addSfx(await buildAudio(s.i,s.D,SR),items[s.i],s.D,SR);if(!part)continue;any=true;const o=Math.round(s.off*SR);
+        for(let p=0;p<part.L.length&&o+p<len;p++){M.L[o+p]=clamp(M.L[o+p]+part.L[p],-1,1);M.R[o+p]=clamp(M.R[o+p]+part.R[p],-1,1)}}
+      if(any){mix=M;const ac={codec:"mp4a.40.2",sampleRate:SR,numberOfChannels:2,bitrate:128000};
+        try{if((await AudioEncoder.isConfigSupported(ac)).supported)acfg=ac}catch(e){}
+        if(!acfg){mix=null;note=" (இந்த உலாவியில் AAC ஒலி என்கோடர் இல்லாததால் ஒலி சேர்க்கப்படவில்லை)"}}}
+    const mo={target:new Mp4Muxer.ArrayBufferTarget(),video:{codec:"avc",width:RW,height:RH,frameRate:fps},fastStart:"in-memory",firstTimestampBehavior:"offset"};
+    if(acfg)mo.audio={codec:"aac",numberOfChannels:2,sampleRate:SR};
+    const muxer=new Mp4Muxer.Muxer(mo);let encErr=null;
+    venc=new VideoEncoder({output:(c,m)=>muxer.addVideoChunk(c,m),error:e=>{encErr=e}});venc.configure(vcfg);
+    if(acfg){aenc=new AudioEncoder({output:(c,m)=>muxer.addAudioChunk(c,m),error:e=>{encErr=e}});aenc.configure(acfg)}
+    const ex=document.createElement("canvas");ex.width=RW;ex.height=RH;const ectx=ex.getContext("2d",{alpha:false});
+    let aPos=0,si=-1;const CH=4096,t0=performance.now();
+    const pushAudio=()=>{const n=Math.min(CH,mix.L.length-aPos),d=new Float32Array(n*2);
+      d.set(mix.L.subarray(aPos,aPos+n),0);d.set(mix.R.subarray(aPos,aPos+n),n);
+      const ad=new AudioData({format:"f32-planar",sampleRate:SR,numberOfFrames:n,numberOfChannels:2,timestamp:Math.round(aPos/SR*1e6),data:d});
+      aenc.encode(ad);ad.close();aPos+=n};
+    for(let f=0;f<total;f++){
+      if(xCancel)throw new Error("cancel");if(encErr)throw encErr;
+      const t=f/fps;let k=segs.findIndex(s=>t<s.off+s.D);if(k<0)k=segs.length-1;
+      const s=segs[k],it=items[s.i];
+      if(k!==si){if(si>=0)stopVid(segs[si].i);si=k;cur=s.i;(media[s.i]||[]).forEach(m=>{m._pb=false;m._lc=null;m._lmt=undefined})}
+      const lt=Math.min(t-s.off,s.D);
+      await syncVideos(media[s.i]||[],lt,fps);draw(it,lt);ectx.drawImage(cv,0,0,RW,RH);
+      const fr=new VideoFrame(ex,{timestamp:Math.round(f*1e6/fps),duration:Math.round(1e6/fps)});
+      venc.encode(fr,{keyFrame:f%(fps*2)===0});fr.close();
+      while(aenc&&aPos<mix.L.length&&aPos/SR<=t+.3)pushAudio();
+      if(venc.encodeQueueSize>8){segs.forEach(g=>stopVid(g.i));while(venc.encodeQueueSize>8)await yieldNow()}
+      if(f%10===0){const pc=f/total*100,el=(performance.now()-t0)/1000,left=f>20?el/f*(total-f):0;
+        $("#xProg").style.width=pc.toFixed(1)+"%";
+        xMsg("தொகுப்பு · செய்தி "+(s.i+1)+" · பிரேம் "+f+" / "+total+" ("+pc.toFixed(0)+"%)"+(left?" · மீதம் சுமார் "+(left>90?Math.ceil(left/60)+" நிமிடம்":Math.ceil(left)+" வினாடி"):""));
+        await yieldNow()}}
+    await venc.flush();if(aenc){while(aPos<mix.L.length)pushAudio();await aenc.flush()}
+    muxer.finalize();
+    const o={blob:new Blob([muxer.target.buffer],{type:"video/mp4"}),ext:"mp4"};
+    addResult(o,R.a,"theekkathir-top-"+(R.a+1)+"-"+(R.b+1)+"-"+(items[R.a].date||today())+".mp4");ok=true;
+    $("#xProg").style.width="100%";
+    xMsg("முடிந்தது — செய்தி "+(R.a+1)+"–"+(R.b+1)+" ("+Math.round(D)+" வினாடி). கீழே பார்த்து “MP4 சேமி” அழுத்தவும்."+(R.b<items.length-1?" மீதி செய்திகளுக்கு 'தொடக்க செய்தி எண்' = "+(R.b+2)+" கொடுத்து மீண்டும் உருவாக்கவும்.":"")+note)
+  }catch(e){
+    if(e&&e.message==="cancel")xMsg("ஏற்றுமதி நிறுத்தப்பட்டது.");else xMsg("ஏற்றுமதி தோல்வி: "+errTxt(e),1);
+    $("#xProg").style.width="0%"
+  }finally{
+    segs.forEach(g=>stopVid(g.i));try{if(venc&&venc.state!=="closed")venc.close()}catch(e){}try{if(aenc&&aenc.state!=="closed")aenc.close()}catch(e){}
+    window._exp=false;lock(false);$("#xCancel").hidden=true;try{wl&&wl.release()}catch(e){}sel(R.a);startT=performance.now()}
+}
+$("#bCombo").onclick=exportCombo;
+</script>
+
+<script>
+window.onAppTheme=function(t){
+  try{
+    var c=(t&&t.cv)?t.cv:(t||{});
+    if(!c.yel&&t&&t.gold)c={red:t.accent||t.deep,yel:t.gold,page:t.bg,panel:t.panel,panel2:t.panel,ink:t.fg,tkb:t.dark};
+    if(!c.yel)return;
+    RED=c.red||RED;YEL=c.yel;GOLD=c.yel;
+    PAGE=c.page||PAGE;PANEL=c.panel||PANEL;PANEL2=c.panel2||PANEL2;INK=c.ink||INK;TKB=c.tkb||TKB;
+    var hx=String(c.yel).replace("#","");
+    var q=parseInt(hx,16);
+    if(!isNaN(q))YR=(q>>16)+","+(q>>8&255)+","+(q&255);
+    var r=document.documentElement;
+    r.style.setProperty("--gold",YEL);r.style.setProperty("--warm",YEL);r.style.setProperty("--yel",YEL);r.style.setProperty("--red",RED);r.style.setProperty("--stg",TKB);
+  }catch(err){console.warn("onAppTheme",err)}
+};
+</script>
+<script>
+/* காட்சிப் பக்கம் (?mode=view): தொட்டால் முந்தைய / அடுத்த செய்தி; எண் காட்டி */
+if(VIEW){
+  const st=document.querySelector(".stage"),vi=document.getElementById("vInfo");
+  st.addEventListener("click",e=>{if(items.length<2)return;const x=e.clientX/innerWidth;sel(x<.33?(cur-1+items.length)%items.length:(cur+1)%items.length)});
+  setInterval(()=>{vi.textContent=items.length>1?(cur+1)+" / "+items.length:""},400);
+}
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mp4-muxer@5.1.3/build/mp4-muxer.js"></script>
+<script src="theme.js"></script>
+<script>
+AppTheme.mount("#appThemes");
+/* force canvas colors from current theme right after mount */
+(function(){try{var id=AppTheme.get();var T=AppTheme.themes;for(var i=0;i<T.length;i++)if(T[i].id===id){window.onAppTheme(T[i]);break}}catch(e){}})();
+</script>
+<script>if(document.documentElement.classList.contains("hub")){var _c=document.getElementById("chDetails");if(_c)_c.open=false}</script>
+</body>
+</html>

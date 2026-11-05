@@ -1,0 +1,423 @@
+<!doctype html>
+<html lang="ta">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#B3121A">
+<title>செட்டிங்ஸ் · NEWS STUDIO</title>
+<link rel="stylesheet" href="settings.css">
+<style>
+*{box-sizing:border-box}
+html,body{margin:0}
+body.st-page{min-height:100vh}
+.hb-app{min-height:100vh}
+.hb-top{position:sticky;top:0;z-index:30;padding-top:env(safe-area-inset-top,0px);background:linear-gradient(180deg,var(--s-acc),var(--deep,var(--s-acc)));color:var(--s-on)}
+.hb-bar{display:flex;align-items:center;gap:8px;padding:8px 10px}
+.hb-bar h1{margin:0;flex:1;min-width:0;font:800 17px/1.2 "Noto Sans Tamil",system-ui,sans-serif}
+.hb-pill{flex:none;display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:0 14px;border-radius:99px;border:1px solid rgba(255,255,255,.55);background:rgba(0,0,0,.2);color:#fff;font:800 13px "Noto Sans Tamil",system-ui,sans-serif;text-decoration:none;cursor:pointer}
+.hb-nav{display:flex;gap:4px;z-index:25;background:var(--s-card);border:0 solid var(--s-line)}
+.hb-nav button{position:relative;display:flex;align-items:center;gap:8px;border:0;background:transparent;color:var(--s-fg);font:800 14px "Noto Sans Tamil",system-ui,sans-serif;cursor:pointer;border-radius:12px;min-height:46px}
+.hb-nav button[aria-selected=true]{background:var(--s-acc);color:var(--s-on)}
+.hb-nav i{font-style:normal;font-size:19px}
+.hb-badge{min-width:20px;height:20px;padding:0 6px;border-radius:99px;background:var(--s-gold);color:#101010;font:800 12px/20px system-ui;text-align:center}
+.hb-badge:empty{display:none}
+.hb-pane{display:none}.hb-pane.on{display:block;animation:hbIn .2s ease}
+@keyframes hbIn{from{opacity:0;transform:translateY(5px)}}
+.hb-in{display:grid;gap:12px;max-width:880px;margin:0 auto;padding:12px 12px 24px}
+.hb-h{margin:2px 2px 0;font:800 20px "Noto Sans Tamil",system-ui,sans-serif}
+.hb-sub{margin:-6px 2px 0;color:var(--s-mut);font-size:13px}
+.hb-grid{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.hb-stat{display:grid;gap:2px;text-align:left;cursor:pointer;background:var(--s-card)!important;color:var(--s-fg)!important;border:1px solid var(--s-line)!important;padding:14px!important;border-radius:16px!important;min-height:92px;align-items:start;justify-content:start!important}
+.hb-stat small{color:var(--s-mut);font-weight:600}.hb-stat b{font-size:26px;line-height:1.2}
+.hb-chips{display:flex;gap:6px;flex-wrap:wrap}
+.hb-chips button{min-height:38px!important;padding:0 14px!important;border-radius:99px!important;background:var(--s-field)!important;color:var(--s-fg)!important;border:1.5px solid var(--s-line)!important}
+.hb-chips button[aria-pressed=true]{background:var(--s-acc)!important;color:var(--s-on)!important;border-color:var(--s-acc)!important}
+.hb-list{display:grid;gap:12px}
+.hb-it .hb-tp{display:flex;gap:12px;align-items:flex-start}
+.hb-im{width:64px;height:80px;flex:none;border-radius:10px;overflow:hidden;display:grid;place-items:center;font:800 26px system-ui;background:repeating-conic-gradient(rgba(128,128,128,.18) 0 25%,transparent 0 50%) 0 0/12px 12px}
+.hb-im img{width:100%;height:100%;object-fit:contain;object-position:bottom}
+.hb-tx{min-width:0;display:grid;gap:2px}.hb-tx strong{overflow-wrap:anywhere}
+.hb-ok{background:var(--s-acc)!important;color:var(--s-on)!important}
+.hb-seg{display:flex;gap:6px;padding:10px 12px;background:var(--s-card);border-bottom:1px solid var(--s-line)}
+.hb-seg button{flex:1;max-width:260px;min-height:42px;border-radius:11px;border:1px solid var(--s-line);font:800 14px "Noto Sans Tamil",system-ui,sans-serif;cursor:pointer;background:var(--s-field);color:var(--s-fg)}
+.hb-seg button.hb-ok{border-color:var(--s-acc)}
+.hb-fr{display:none;width:100%;border:0;background:var(--s-bg)}.hb-fr.on{display:block}
+.hb-logo{width:72px;height:72px;border-radius:14px;border:1px dashed var(--s-line);display:grid;place-items:center;overflow:hidden;background:var(--s-field);color:var(--s-mut);font-size:12px;flex:none}
+.hb-logo img{width:100%;height:100%;object-fit:contain}
+.hb-two{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.hb-map{margin:0;padding-left:18px;color:var(--s-mut);font-size:13px;line-height:1.8}
+.st-empty{color:var(--s-mut);font-size:14px;text-align:center;padding:14px 0}
+
+/* ===== கணினி முறை (Computer): இடப்பக்க மெனு ===== */
+:root[data-ui=desktop] .hb-app{display:grid;grid-template-columns:230px minmax(0,1fr);grid-template-rows:auto 1fr}
+:root[data-ui=desktop] .hb-top{grid-column:1/-1}
+:root[data-ui=desktop] .hb-nav{flex-direction:column;padding:12px;border-right-width:1px;position:sticky;top:64px;height:calc(100vh - 64px);align-self:start}
+:root[data-ui=desktop] .hb-nav button{padding:0 14px;font-size:15px}
+:root[data-ui=desktop] .hb-nav .hb-badge{margin-left:auto}
+:root[data-ui=desktop] .hb-main{min-width:0}
+:root[data-ui=desktop] .hb-in{padding:20px 24px 40px}
+:root[data-ui=desktop] .hb-list{grid-template-columns:repeat(auto-fill,minmax(420px,1fr));align-items:start}
+
+/* ===== மொபைல் முறை: கீழ்ப்பக்க பட்டை ===== */
+:root[data-ui=mobile] .hb-app{max-width:560px;margin:0 auto;padding-bottom:calc(66px + env(safe-area-inset-bottom,0px));box-shadow:0 0 0 1px var(--s-line)}
+:root[data-ui=mobile] .hb-nav{position:fixed;left:0;right:0;bottom:0;padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px));border-top-width:1px;justify-content:space-around;max-width:560px;margin:0 auto}
+:root[data-ui=mobile] .hb-nav button{flex:1;flex-direction:column;gap:0;padding:4px 2px;min-height:52px;font-size:11.5px}
+:root[data-ui=mobile] .hb-nav .hb-badge{position:absolute;top:2px;right:calc(50% - 26px);min-width:18px;height:18px;line-height:18px;font-size:11px}
+:root[data-ui=mobile] .hb-bar h1{font-size:16px}
+:root[data-ui=mobile] .hb-uil{display:none}
+:root[data-ui=mobile] .hb-it .hb-tp{gap:10px}
+@media (prefers-reduced-motion:reduce){.hb-pane.on{animation:none}}
+</style>
+</head>
+<body class="st-page">
+<div class="hb-app">
+  <header class="hb-top" id="top">
+    <div class="hb-bar">
+      <a class="hb-pill" id="back" href="index.html">← <span class="hb-uil">திரும்பு</span></a>
+      <h1>⚙ செட்டிங்ஸ்</h1>
+      <button class="hb-pill" id="uiBtn" type="button" title="மொபைல் / கணினி / தானாக"></button>
+      <span data-owner-slot style="display:flex;align-items:center"></span>
+    </div>
+  </header>
+  <nav class="hb-nav" id="nav" role="tablist" aria-label="செட்டிங் பகுதிகள்"></nav>
+
+  <main class="hb-main">
+    <!-- மையம் -->
+    <section class="hb-pane" id="p-home"><div class="hb-in">
+      <h2 class="hb-h">🏠 இன்றைய நிலை</h2>
+      <div class="hb-grid" id="homeStats"></div>
+      <div class="sc"><h2>⚡ விரைவுச் செயல்கள்</h2>
+        <div class="hb-grid" id="homeAct"></div></div>
+    </div></section>
+
+    <!-- ஒப்புதல் (Articles + Shopping + Events — ஒரே இடம்) -->
+    <section class="hb-pane" id="p-approve"><div class="hb-in" id="apBox"></div></section>
+
+    <!-- வெளியீடு: E-Paper + பகிர் -->
+    <section class="hb-pane" id="p-publish"><div class="hb-in">
+      <h2 class="hb-h">📣 வெளியீடு</h2>
+      <p class="hb-sub">இதழ் PDF சேர்ப்பது முதல் இணையதளம் / Facebook / Instagram / WhatsApp பகிர்வு வரை.</p>
+      <div class="sc">
+        <h2>📰 இன்றைய இதழ் (E-Paper PDF)</h2>
+        <div class="st-kv"><span>கோப்பு</span><b id="pdfName">—</b></div>
+        <div class="st-kv"><span>அளவு</span><b id="pdfSize">—</b></div>
+        <input type="file" id="pdfFile" accept="application/pdf,.pdf" hidden>
+        <div class="st-row"><button type="button" id="pdfPick">PDF தேர்வு / மாற்று</button><button type="button" class="warn" id="pdfDel">நீக்கு</button></div>
+        <label>பதிவிறக்கக் கோப்பில் வரும் தேதி (காலி = தினமும் இன்றைய தேதி)
+          <input type="date" id="dlDate"></label>
+        <label class="toggle"><span>🔊 பக்கம் புரட்டும்போது தாள் ஒலி</span><input type="checkbox" id="sndChk"></label>
+      </div>
+      <div id="shareBox"></div>
+    </div></section>
+
+    <!-- ஸ்டுடியோ: Mobile TV · Book Video -->
+    <section class="hb-pane" id="p-studio">
+      <div class="hb-seg" id="seg">
+        <button type="button" data-s="tv">📺 Mobile TV</button>
+        <button type="button" data-s="book">📚 புத்தக வீடியோ</button>
+      </div>
+      <div id="frames"></div>
+    </section>
+
+    <!-- அமைப்பு -->
+    <section class="hb-pane" id="p-set"><div class="hb-in">
+      <h2 class="hb-h">⚙ பொது அமைப்பு</h2>
+      <p class="hb-sub">இங்கே ஒருமுறை மாற்றினால் E-Paper · Mobile TV · புத்தக வீடியோ அனைத்திலும் பொருந்தும்.</p>
+
+      <div class="sc">
+        <h2>🏷 சேனல் அடையாளம் <small class="note">(ஒரே இடம் → எல்லா இடமும்)</small></h2>
+        <div style="display:flex;gap:12px;align-items:center">
+          <div class="hb-logo" id="bLogo">லோகோ</div>
+          <div class="st-row" style="flex:1">
+            <button type="button" class="alt" id="bLogoPick">🖼 லோகோ தேர்வு</button>
+            <button type="button" class="warn" id="bLogoDel">நீக்கு</button>
+          </div>
+          <input type="file" id="bLogoFile" accept="image/*" hidden>
+        </div>
+        <div class="hb-two">
+          <label>சேனல் / நிறுவனப் பெயர்<input id="bName" type="text"></label>
+          <label>முழக்க வரி (End card)<input id="bTag" type="text"></label>
+          <label>தொடர்பு எண்<input id="bPhone" type="tel" inputmode="tel"></label>
+          <label>WhatsApp எண்<input id="bWa" type="tel" inputmode="tel" placeholder="காலி = தொடர்பு எண்"></label>
+          <label>இணையதளம்<input id="bWeb" type="text"></label>
+          <label>Instagram ID<input id="bIg" type="text" placeholder="@handle"></label>
+          <label>Hashtag / Watermark<input id="bHash" type="text" placeholder="#Theekathir"></label>
+        </div>
+        <button type="button" id="bSave">✔ சேமித்து எல்லா இடத்திலும் பயன்படுத்து</button>
+        <ul class="hb-map">
+          <li>Mobile TV: சேனல் பெயர், முழக்கம், தொடர்பு எண், watermark, லோகோ</li>
+          <li>புத்தக வீடியோ: நிறுவனப் பெயர், WhatsApp, இணையம், Instagram, லோகோ</li>
+        </ul>
+      </div>
+
+      <div class="sc">
+        <h2>🎨 ஆப் தோற்றம்</h2>
+        <div id="themes"></div>
+        <p class="note">ஒரு தேர்வு எல்லாப் பக்கங்களுக்கும் ஒரே நிறம்.</p>
+      </div>
+
+      <div class="sc">
+        <h2>🗂 பகுதிகளின் பெயர் <small class="note">(முதல் பக்கத்தில் தெரியும்)</small></h2>
+        <div class="hb-two" id="secNames"></div>
+      </div>
+
+      <div class="sc">
+        <h2>🖥 திரை முறை</h2>
+        <div class="hb-chips" id="uiChips"></div>
+        <p class="note">தானாக = திரை அகலத்துக்கு ஏற்ப. மொபைலில் கீழ்ப்பட்டை, கணினியில் இடப்பக்க மெனு.</p>
+      </div>
+    </div></section>
+  </main>
+</div>
+<div class="st-toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="theme.js"></script>
+<script src="media-store.js"></script>
+<script src="owner-gate.js"></script>
+<script src="articles-config.js"></script>
+<script src="article-store.js"></script>
+<script src="share-hub.js"></script>
+<script>
+(function () {
+  'use strict';
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var ls = {
+    get: function (k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+    set: function (k, v) { try { localStorage.setItem(k, v); } catch (e) {} },
+    del: function (k) { try { localStorage.removeItem(k); } catch (e) {} }
+  };
+  function jget(k, d) { try { return JSON.parse(ls.get(k) || 'null') || d; } catch (e) { return d; } }
+  function h(tag, cls, txt) { var e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; }
+  var toastT = 0;
+  function toast(m) { var t = $('#toast'); t.textContent = m; t.classList.add('on'); clearTimeout(toastT); toastT = setTimeout(function () { t.classList.remove('on'); }, 2600); }
+
+  /* ================= திரை முறை: தானாக / மொபைல் / கணினி ================= */
+  var root = document.documentElement, UIL = { auto: '🖥📱 தானாக', mobile: '📱 மொபைல்', desktop: '🖥 கணினி' };
+  function ui() { return ls.get('np_ui') || 'auto'; }
+  function applyUi() {
+    var m = ui(), eff = m === 'auto' ? (innerWidth >= 900 ? 'desktop' : 'mobile') : m;
+    root.dataset.ui = eff; $('#uiBtn').textContent = UIL[m];
+    [].forEach.call(document.querySelectorAll('#uiChips button'), function (b) { b.setAttribute('aria-pressed', b.dataset.m === m ? 'true' : 'false'); });
+    fit();
+  }
+  $('#uiBtn').onclick = function () { var o = ['auto', 'mobile', 'desktop']; ls.set('np_ui', o[(o.indexOf(ui()) + 1) % 3]); applyUi(); };
+  Object.keys(UIL).forEach(function (m) { var b = h('button', '', UIL[m]); b.type = 'button'; b.dataset.m = m; b.onclick = function () { ls.set('np_ui', m); applyUi(); }; $('#uiChips').appendChild(b); });
+  addEventListener('resize', applyUi);
+
+  /* ================= தாவல்கள் ================= */
+  var TABS = [['home', '🏠', 'மையம்'], ['approve', '✅', 'ஒப்புதல்'], ['publish', '📣', 'வெளியீடு'], ['studio', '🎬', 'ஸ்டுடியோ'], ['set', '⚙', 'அமைப்பு']];
+  var ALIAS = { epaper: 'publish', paper: 'publish', share: 'publish', tv: 'studio:tv', shelf: 'studio:book', books: 'studio:book', book: 'studio:book',
+    articles: 'approve', article: 'approve', shopping: 'approve', events: 'approve', sections: 'approve', theme: 'set', settings: 'set' };
+  var cur = '', studio = 'tv';
+  TABS.forEach(function (t) {
+    var b = h('button'); b.type = 'button'; b.dataset.t = t[0]; b.setAttribute('role', 'tab');
+    b.innerHTML = '<i>' + t[1] + '</i><span>' + t[2] + '</span>'; if (t[0] === 'approve') b.appendChild(h('span', 'hb-badge')); $('#nav').appendChild(b);
+  });
+  $('#nav').onclick = function (e) { var b = e.target.closest('button'); if (b) go(b.dataset.t); };
+  function fit() {
+    var f = document.querySelector('.hb-fr.on'); if (!f) return;
+    var nav = root.dataset.ui === 'mobile' ? $('#nav').offsetHeight : 0;
+    f.style.height = Math.max(300, innerHeight - $('#top').offsetHeight - $('#seg').offsetHeight - nav) + 'px';
+  }
+  function go(id, noHash) {
+    var al = (ALIAS[id] || id).split(':'); id = al[0]; if (al[1]) studio = al[1];
+    if (!$('#p-' + id)) id = 'home';
+    cur = id;
+    [].forEach.call(document.querySelectorAll('#nav button'), function (b) { b.setAttribute('aria-selected', b.dataset.t === id ? 'true' : 'false'); });
+    TABS.forEach(function (t) { $('#p-' + t[0]).classList.toggle('on', t[0] === id); });
+    if (id === 'home') drawHome();
+    if (id === 'approve') loadInbox();
+    if (id === 'publish') { pdfInfo(); if (window.ShareHub) ShareHub.mount($('#shareBox')); }
+    if (id === 'studio') openStudio(studio);
+    $('#back').href = 'index.html#' + (id === 'studio' ? (studio === 'tv' ? 'tv' : 'books') : 'paper');
+    try { if (!noHash) history.replaceState(null, '', '#' + id); } catch (e) {}
+    scrollTo(0, 0);
+  }
+  addEventListener('hashchange', function () { go(location.hash.slice(1), true); });
+
+  /* ================= ஸ்டுடியோ (Mobile TV · Book) ================= */
+  var SRC = { tv: 'news.html?mode=settings&hub=1', book: 'book.html?mode=settings&hub=1' };
+  function openStudio(k) {
+    studio = SRC[k] ? k : 'tv';
+    [].forEach.call(document.querySelectorAll('#seg button'), function (b) { b.className = b.dataset.s === studio ? 'hb-ok' : 'alt'; });
+    Object.keys(SRC).forEach(function (s) {
+      var f = $('#fr-' + s);
+      if (!f && s === studio) {
+        f = document.createElement('iframe'); f.id = 'fr-' + s; f.title = s; f.src = SRC[s]; f.className = 'hb-fr';
+        f.allow = 'camera;microphone;fullscreen;autoplay;clipboard-write;display-capture'; $('#frames').appendChild(f);
+      }
+      if (f) f.classList.toggle('on', s === studio);
+    });
+    $('#back').href = 'index.html#' + (studio === 'tv' ? 'tv' : 'books');
+    fit();
+  }
+  $('#seg').onclick = function (e) { var b = e.target.closest('button'); if (b) { openStudio(b.dataset.s); try { history.replaceState(null, '', '#studio'); } catch (x) {} } };
+  function resetFrames() { [].forEach.call(document.querySelectorAll('.hb-fr'), function (f) { f.remove(); }); }
+
+  /* ================= ஒப்புதல் — Articles · Shopping · Events ஒரே இடத்தில் ================= */
+  var KINDS = { article: ['📝', 'Articles'], shopping: ['🛒', 'Shopping'], events: ['🎪', 'Events'] };
+  var STAT = { pending: 'காத்திருப்பு', approved: 'ஏற்றவை', rejected: 'நிராகரித்தவை' };
+  var inbox = [], fStat = 'pending', fKind = 'all', loading = false, homeLoaded = false;
+  function S(k) { return window.ArticleStore.forKind(k); }
+  function isAdmin() { return S('article').isAdmin(); }
+  function kname(k) { return jget('np_tabs', {})[k] || KINDS[k][1]; }
+  function dt(ms) { try { return new Date(ms).toLocaleString('ta-IN', { dateStyle: 'medium', timeStyle: 'short' }); } catch (e) { return ''; } }
+  function pendingN() { return inbox.filter(function (a) { return a.status === 'pending'; }).length; }
+  function badge() { $('.hb-badge').textContent = pendingN() || ''; }
+  function loadInbox() {
+    if (!window.ArticleStore) return;
+    if (!isAdmin()) { inbox = []; badge(); return drawApprove(); }
+    loading = true; drawApprove();
+    return Promise.all(Object.keys(KINDS).map(function (k) { return S(k).listAll().then(function (l) { return l.map(function (a) { a._k = k; return a; }); }); }))
+      .then(function (r) { inbox = [].concat.apply([], r).sort(function (a, b) { return b.createdAt - a.createdAt; }); })
+      .catch(function (e) { if (/உள்நுழை|அமர்வு|401|403|PERMISSION/i.test(e.message)) S('article').logout(); else toast('⚠ ' + e.message); })
+      .then(function () { loading = false; badge(); drawApprove(); });
+  }
+  function drawApprove() {
+    var box = $('#apBox'); box.innerHTML = '';
+    box.appendChild(h('h2', 'hb-h', '✅ ஒப்புதல் மையம்'));
+    box.appendChild(h('p', 'hb-sub', 'Articles · Shopping · Events — மூன்றும் ஒரே இடத்தில். ஏற்று / நிராகரி இங்கேயே.'));
+    var st0 = S('article');
+    if (st0.mode !== 'cloud') box.appendChild(h('div', 'sc', '⚠ சோதனை முறை: தரவு இந்தச் சாதனத்தில் மட்டும். பகிர்வுக்கு articles-config.js நிரப்பவும்.'));
+    if (!isAdmin()) return drawLogin(box, st0);
+    var bar = h('div', 'sc'), c1 = h('div', 'hb-chips'), c2 = h('div', 'hb-chips'), c3 = h('div', 'hb-chips');
+    var scope = inbox.filter(function (a) { return fKind === 'all' || a._k === fKind; });
+    Object.keys(STAT).forEach(function (s) {
+      var n = scope.filter(function (a) { return a.status === s; }).length, b = h('button', '', STAT[s] + ' (' + n + ')'); b.type = 'button';
+      b.setAttribute('aria-pressed', s === fStat); b.onclick = function () { fStat = s; drawApprove(); }; c1.appendChild(b);
+    });
+    [['all', '📋 அனைத்தும்']].concat(Object.keys(KINDS).map(function (k) { return [k, KINDS[k][0] + ' ' + kname(k)]; })).forEach(function (p) {
+      var b = h('button', '', p[1]); b.type = 'button'; b.setAttribute('aria-pressed', p[0] === fKind); b.onclick = function () { fKind = p[0]; drawApprove(); }; c2.appendChild(b);
+    });
+    var rows = scope.filter(function (a) { return a.status === fStat; });
+    var rf = h('button', 'alt', '↻ புதுப்பி'); rf.type = 'button'; rf.onclick = loadInbox; c3.appendChild(rf);
+    if (fStat === 'pending' && rows.length > 1) { var all = h('button', 'hb-ok', '✔ அனைத்தையும் ஏற்று (' + rows.length + ')'); all.type = 'button'; all.onclick = function () { if (!confirm(rows.length + ' உருப்படிகளையும் ஏற்கவா?')) return; all.disabled = true; rows.reduce(function (p, a) { return p.then(function () { return S(a._k).setStatus(a.id, 'approved'); }); }, Promise.resolve()).then(function () { toast('✔ அனைத்தும் ஏற்கப்பட்டன'); }).catch(function (e) { toast('⚠ ' + e.message); }).then(loadInbox); }; c3.appendChild(all); }
+    if (st0.mode === 'cloud') { var lo = h('button', 'warn', 'வெளியேறு'); lo.type = 'button'; lo.onclick = function () { st0.logout(); loadInbox(); }; c3.appendChild(lo); }
+    bar.append(c1, c2, c3); box.appendChild(bar);
+    var list = h('div', 'hb-list'); box.appendChild(list);
+    if (loading) { list.appendChild(h('div', 'st-empty', 'ஏற்றுகிறது…')); return; }
+    if (!rows.length) { list.appendChild(h('div', 'st-empty', 'இந்தப் பிரிவில் எதுவும் இல்லை 🎉')); return; }
+    rows.forEach(function (a) { list.appendChild(card(a)); });
+  }
+  function drawLogin(box, st) {
+    var c = h('div', 'sc'); c.appendChild(h('h2', '', '🔐 அட்மின் உள்நுழைவு (ஒருமுறை மட்டும்)'));
+    var l1 = h('label', '', 'மின்னஞ்சல்'), em = h('input'); em.type = 'email'; em.autocomplete = 'username'; em.value = st.adminEmail || ''; l1.appendChild(em);
+    var l2 = h('label', '', 'கடவுச்சொல்'), pw = h('input'); pw.type = 'password'; pw.autocomplete = 'current-password'; l2.appendChild(pw);
+    var go1 = h('button', '', 'உள்நுழை'); go1.type = 'button'; var msg = h('p', 'note', 'Firebase Authentication-ல் உருவாக்கிய அட்மின் கணக்கு.');
+    function doLogin() { go1.disabled = true; msg.textContent = 'சரிபார்க்கிறது…'; st.login(em.value.trim(), pw.value).then(loadInbox).catch(function (e) { msg.textContent = '⚠ ' + e.message; go1.disabled = false; }); }
+    go1.onclick = doLogin; pw.onkeydown = function (e) { if (e.key === 'Enter') doLogin(); };
+    c.append(l1, l2, go1, msg); box.appendChild(c);
+  }
+  function card(a) {
+    var K = KINDS[a._k], c = h('div', 'sc hb-it'), tp = h('div', 'hb-tp'), im = h('div', 'hb-im');
+    if (a.photo) { var p = h('img'); p.src = a.photo; p.alt = ''; im.appendChild(p); } else im.textContent = (a.name && a.name !== '-' ? a.name : a.title || K[0]).charAt(0);
+    var tx = h('div', 'hb-tx'); tx.appendChild(h('strong', '', a.title));
+    var by = [K[0] + ' ' + kname(a._k)]; if (a.name && a.name !== '-') by.push(a.name); if (a.role && a.role !== '-') by.push(a.role); if (a.extra) by.push(a.extra);
+    tx.appendChild(h('span', 'note', by.join(' · '))); tx.appendChild(h('span', 'note', dt(a.createdAt))); tp.append(im, tx); c.appendChild(tp);
+    if (a.summary && a.summary !== a.title) c.appendChild(h('p', 'note', a.summary));
+    if (a.body && a.body !== a.summary && a.body !== a.title) { var d = document.createElement('details'), bd = h('div', 'note', a.body); bd.style.cssText = 'white-space:pre-wrap;line-height:1.8;overflow-wrap:anywhere;padding-top:8px'; d.append(h('summary', '', 'முழு விவரம்'), bd); c.appendChild(d); }
+    var row = h('div', 'st-row');
+    function btn(txt, cls, fn) { var b = h('button', cls, txt); b.type = 'button'; b.onclick = function () { b.disabled = true; fn().then(loadInbox).catch(function (e) { if (e.message !== 'ரத்து') toast('⚠ ' + e.message); b.disabled = false; if (/உள்நுழை|அமர்வு/.test(e.message)) loadInbox(); }); }; row.appendChild(b); }
+    var s = S(a._k);
+    if (a.status !== 'approved') btn('✔ ஏற்று', 'hb-ok', function () { return s.setStatus(a.id, 'approved').then(function () { toast('✔ ஏற்கப்பட்டது — முகப்பில் தெரியும்'); }); });
+    if (a.status === 'approved') btn('⏸ முகப்பிலிருந்து எடு', 'alt', function () { return s.setStatus(a.id, 'pending').then(function () { toast('காத்திருப்புக்கு மாற்றப்பட்டது'); }); });
+    if (a.status === 'pending') btn('✖ நிராகரி', 'alt', function () { return s.setStatus(a.id, 'rejected').then(function () { toast('நிராகரிக்கப்பட்டது'); }); });
+    btn('🗑', 'warn', function () { if (!confirm('நிரந்தரமாக நீக்கவா?')) return Promise.reject(new Error('ரத்து')); return s.remove(a.id).then(function () { toast('நீக்கப்பட்டது'); }); });
+    c.appendChild(row); return c;
+  }
+
+  /* ================= E-Paper PDF (IndexedDB 'epaper') ================= */
+  var idb = function () { return new Promise(function (res, rej) { var r = indexedDB.open('epaper', 1); r.onupgradeneeded = function () { r.result.createObjectStore('kv'); }; r.onsuccess = function () { res(r.result); }; r.onerror = function () { rej(r.error); }; }); };
+  function dbSet(k, v) { return idb().then(function (d) { return new Promise(function (res, rej) { var t = d.transaction('kv', 'readwrite'); t.objectStore('kv').put(v, k); t.oncomplete = res; t.onerror = function () { rej(t.error); }; }); }); }
+  function dbGet(k) { return idb().then(function (d) { return new Promise(function (res) { var q = d.transaction('kv').objectStore('kv').get(k); q.onsuccess = function () { res(q.result); }; q.onerror = function () { res(null); }; }); }).catch(function () { return null; }); }
+  function dbDel(k) { return idb().then(function (d) { return new Promise(function (res) { var t = d.transaction('kv', 'readwrite'); t.objectStore('kv').delete(k); t.oncomplete = res; t.onerror = res; }); }).catch(function () {}); }
+  function pdfInfo() {
+    return dbGet('pdf').then(function (d) {
+      var ok = d && d.buf; $('#pdfName').textContent = ok ? (d.name || 'PDF') : 'இல்லை'; $('#pdfSize').textContent = ok ? (d.buf.byteLength / 1048576).toFixed(1) + ' MB' : '—'; return ok ? d.name || 'PDF' : '';
+    });
+  }
+  $('#pdfPick').onclick = function () { $('#pdfFile').click(); };
+  $('#pdfFile').onchange = function (e) {
+    var f = e.target.files[0]; e.target.value = ''; if (!f) return;
+    if (!/pdf/i.test(f.type + f.name)) { toast('PDF கோப்பை மட்டும் தேர்வு செய்யவும்'); return; }
+    f.arrayBuffer().then(function (buf) { return dbSet('pdf', { name: f.name, buf: buf }).then(function () { return dbSet('pg', 0); }); })
+      .then(function () { pdfInfo(); toast('✔ PDF சேர்க்கப்பட்டது — முதல் பக்கத்தில் தெரியும்'); }).catch(function () { toast('⚠ PDF சேமிக்க முடியவில்லை'); });
+  };
+  $('#pdfDel').onclick = function () { if (confirm('PDF-ஐ நீக்கவா?')) dbDel('pdf').then(function () { return dbDel('pg'); }).then(function () { pdfInfo(); toast('PDF நீக்கப்பட்டது'); }); };
+  $('#dlDate').value = ls.get('np_dldate') || '';
+  $('#dlDate').onchange = function (e) { if (e.target.value) ls.set('np_dldate', e.target.value); else ls.del('np_dldate'); toast('✔ சேமிக்கப்பட்டது'); };
+  $('#sndChk').checked = ls.get('np_sound') !== '0';
+  $('#sndChk').onchange = function (e) { ls.set('np_sound', e.target.checked ? '1' : '0'); toast('✔ சேமிக்கப்பட்டது'); };
+
+  /* ================= மையம் ================= */
+  function drawHome() {
+    var st = $('#homeStats'), ac = $('#homeAct'); st.innerHTML = ''; ac.innerHTML = '';
+    function stat(ico, label, val, tab) { var b = h('button', 'hb-stat'); b.type = 'button'; b.append(h('small', '', ico + ' ' + label), h('b', '', val)); b.onclick = function () { go(tab); }; st.appendChild(b); return b; }
+    var p = stat('✅', 'காத்திருக்கும் ஒப்புதல்', isAdmin() ? String(pendingN()) : 'உள்நுழையவும்', 'approve');
+    var e = stat('📰', 'இன்றைய இதழ்', '…', 'publish'); pdfInfo().then(function (n) { e.lastChild.textContent = n ? '✔ உள்ளது' : 'இல்லை'; e.lastChild.style.fontSize = '20px'; });
+    stat('🏷', 'சேனல்', (jget('np_brand_v1', {}).name || 'அமைக்கவில்லை'), 'set').lastChild.style.fontSize = '20px';
+    p.lastChild.style.fontSize = isAdmin() ? '' : '18px';
+    [['📰 PDF சேர்', 'publish'], ['🎬 செய்தி வீடியோ', 'tv'], ['📚 புத்தக வீடியோ', 'book'], ['📣 பகிர்', 'publish']].forEach(function (a) {
+      var b = h('button', 'alt', a[0]); b.type = 'button'; b.onclick = function () { go(a[1] === 'tv' || a[1] === 'book' ? 'studio:' + a[1] : a[1]); }; ac.appendChild(b);
+    });
+    if (isAdmin() && !homeLoaded && window.ArticleStore) { homeLoaded = true; loadInbox().then(function () { if (cur === 'home') drawHome(); }); }
+  }
+
+  /* ================= அமைப்பு: சேனல் அடையாளம் → எல்லா இடத்திலும் ================= */
+  var logoData = '', logoDel = false;
+  function brandInit() {
+    var b = jget('np_brand_v1', null), tv = (jget('tk_studio2', {}) || {}).G || {}, bk = jget('puthaga-video-studio-v2', {}) || {};
+    b = b || { name: tv.name || bk.org || '', tag: tv.end || '', phone: tv.ph || '', wa: bk.wa || '', web: bk.web || '', ig: bk.ig || '', hash: tv.wm || '' };
+    [['bName', 'name'], ['bTag', 'tag'], ['bPhone', 'phone'], ['bWa', 'wa'], ['bWeb', 'web'], ['bIg', 'ig'], ['bHash', 'hash']].forEach(function (p) { $('#' + p[0]).value = b[p[1]] || ''; });
+    showLogo(ls.get('tk_logo') || '');
+  }
+  function showLogo(u) { var d = $('#bLogo'); d.innerHTML = ''; if (u) { var i = h('img'); i.src = u; i.alt = ''; d.appendChild(i); } else d.textContent = 'லோகோ'; }
+  $('#bLogoPick').onclick = function () { $('#bLogoFile').click(); };
+  $('#bLogoFile').onchange = function (e) {
+    var f = e.target.files[0]; e.target.value = ''; if (!f) return;
+    var u = URL.createObjectURL(f), im = new Image();
+    im.onload = function () {
+      var k = Math.min(1, 512 / Math.max(im.width, im.height)), c = document.createElement('canvas'); c.width = Math.round(im.width * k); c.height = Math.round(im.height * k);
+      c.getContext('2d').drawImage(im, 0, 0, c.width, c.height); URL.revokeObjectURL(u); logoData = c.toDataURL('image/png'); logoDel = false; showLogo(logoData);
+    };
+    im.onerror = function () { URL.revokeObjectURL(u); toast('படத்தைப் படிக்க முடியவில்லை'); }; im.src = u;
+  };
+  $('#bLogoDel').onclick = function () { logoData = ''; logoDel = true; showLogo(''); };
+  function put(o, k, v) { if (v) o[k] = v; }
+  $('#bSave').onclick = function () {
+    var v = function (id) { return $('#' + id).value.trim(); };
+    var b = { name: v('bName'), tag: v('bTag'), phone: v('bPhone'), wa: v('bWa'), web: v('bWeb'), ig: v('bIg'), hash: v('bHash') };
+    ls.set('np_brand_v1', JSON.stringify(b));
+    /* Mobile TV */
+    var tv = {}; put(tv, 'name', b.name); put(tv, 'end', b.tag); put(tv, 'ph', b.phone || b.wa); put(tv, 'wm', b.hash);
+    ls.set('np_brand', JSON.stringify({ tv: tv }));
+    var s = jget('tk_studio2', null); if (s && s.items) { s.G = Object.assign(s.G || {}, tv); ls.set('tk_studio2', JSON.stringify(s)); }
+    /* புத்தக வீடியோ */
+    var bk = jget('puthaga-video-studio-v2', {}) || {}; put(bk, 'org', b.name); put(bk, 'wa', b.wa || b.phone); put(bk, 'web', b.web); put(bk, 'ig', b.ig);
+    ls.set('puthaga-video-studio-v2', JSON.stringify(bk));
+    /* லோகோ */
+    var done = Promise.resolve();
+    if (logoData) { ls.set('tk_logo', logoData); done = fetch(logoData).then(function (r) { return r.blob(); }).then(function (bl) { return window.MediaStore && MediaStore.put('bk:logo', { file: bl, name: 'logo.png' }); }); }
+    else if (logoDel) { ls.del('tk_logo'); if (window.MediaStore) done = MediaStore.del('bk:logo'); }
+    done.catch(function () {}).then(function () { logoData = ''; logoDel = false; resetFrames(); toast('✔ Mobile TV, புத்தக வீடியோ அனைத்திலும் பொருந்தியது'); });
+  };
+
+  /* பகுதிகளின் பெயர் */
+  (function () {
+    var names = jget('np_tabs', {}), box = $('#secNames');
+    Object.keys(KINDS).forEach(function (k) {
+      var l = h('label', '', KINDS[k][0] + ' ' + KINDS[k][1]), i = h('input'); i.type = 'text'; i.placeholder = KINDS[k][1]; i.value = names[k] || '';
+      i.oninput = function () { var n = jget('np_tabs', {}), t = i.value.trim(); if (t) n[k] = t; else delete n[k]; ls.set('np_tabs', JSON.stringify(n)); };
+      l.appendChild(i); box.appendChild(l);
+    });
+  })();
+  if (window.AppTheme) AppTheme.mount('#themes');
+
+  /* ================= தொடக்கம் ================= */
+  brandInit(); applyUi();
+  go((location.hash || '').slice(1) || 'home', true);
+  if (window.ArticleStore && isAdmin()) loadInbox();
+})();
+</script>
+</body>
+</html>

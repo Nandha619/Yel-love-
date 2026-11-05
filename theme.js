@@ -22,7 +22,7 @@
   function css() {
     if (document.getElementById('at-css')) return;
     var s = document.createElement('style'); s.id = 'at-css';
-    s.textContent = '.at-row{display:flex;flex-wrap:wrap;gap:8px}.at-sw{border:2px solid var(--line,#ddd);border-radius:12px;padding:6px 10px;background:var(--field,#fff);color:var(--fg,#000);font:inherit;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:6px}.at-sw[aria-pressed=true]{border-color:var(--accent,#b3121a);box-shadow:0 0 0 2px var(--accent,#b3121a) inset}.at-sw i{width:18px;height:18px;border-radius:50%;display:inline-block;border:1px solid rgba(0,0,0,.2)}';
+    s.textContent = '.at-row{display:flex;flex-wrap:wrap;gap:8px}.at-sw{border:1.5px solid var(--line,#ddd);border-radius:14px;padding:8px 12px;background:var(--field,#fff);color:var(--fg,#000);font:inherit;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:border-color .2s,box-shadow .2s,transform .15s}.at-sw:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.08)}.at-sw[aria-pressed=true]{border-color:var(--accent,#b3121a);box-shadow:0 0 0 2px var(--accent,#b3121a),0 4px 14px color-mix(in srgb,var(--accent,#b3121a) 25%,transparent)}.at-sw i{width:18px;height:18px;border-radius:50%;display:inline-block;border:1px solid rgba(0,0,0,.15);box-shadow:inset 0 1px 2px rgba(255,255,255,.3)}';
     document.head.appendChild(s);
   }
   function paint() {

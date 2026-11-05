@@ -1,6 +1,9 @@
 # NEWS STUDIO (Royal-Red)
 
-## 2026-11 புதுப்பிப்பு · CapCut பாணி எடிட்டர்
+## 2026-11 புதுப்பிப்பு · CapCut பாணி + World-class Premium Design
+- Design system: soft depth shadows, gradient CTAs, refined focus rings, micro-animations
+- Studio: premium stage frame, chromo hero panel, gesture-first zoom
+- Settings: polished cards, toast, nav, theme switcher
 - **குரோமோ நேரம்**: Timeline scrub + “இந்த நேரத்தில் குரோமோ சேர்” — நீங்களே எந்த வினாடியில் வர வேண்டும் என்று முடிவு செய்யலாம்.
 - **ஜூம் / நிலை**: Preview-ல் டச்/இழுத்து செய்யுங்கள் (ஸ்லைடர் மேம்பட்ட பிரிவில் மறைக்கப்பட்டது).
 - **Settings எளிமை**: முக்கிய செயல்கள் ஹைலைட் · அரிதானவை `<details>`-ல் · Articles+Shopping+Events ஒரே ஒப்புதல் மையம்.

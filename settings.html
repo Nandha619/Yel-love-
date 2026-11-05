@@ -11,7 +11,7 @@
 html,body{margin:0}
 body.st-page{min-height:100vh}
 .hb-app{min-height:100vh}
-.hb-top{position:sticky;top:0;z-index:30;padding-top:env(safe-area-inset-top,0px);background:linear-gradient(180deg,var(--s-acc),var(--deep,var(--s-acc)));color:var(--s-on)}
+.hb-top{position:sticky;top:0;z-index:30;padding-top:env(safe-area-inset-top,0px);background:linear-gradient(165deg,var(--s-acc) 0%,var(--deep,var(--s-acc)) 100%);color:var(--s-on);box-shadow:0 4px 24px color-mix(in srgb,var(--s-acc) 28%,transparent)}
 .hb-bar{display:flex;align-items:center;gap:8px;padding:8px 10px}
 .hb-bar h1{margin:0;flex:1;min-width:0;font:800 17px/1.2 "Noto Sans Tamil",system-ui,sans-serif}
 .hb-pill{flex:none;display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:0 14px;border-radius:99px;border:1px solid rgba(255,255,255,.55);background:rgba(0,0,0,.2);color:#fff;font:800 13px "Noto Sans Tamil",system-ui,sans-serif;text-decoration:none;cursor:pointer}
@@ -22,7 +22,7 @@ body.st-page{min-height:100vh}
 .hb-badge{min-width:20px;height:20px;padding:0 6px;border-radius:99px;background:var(--s-gold);color:#101010;font:800 12px/20px system-ui;text-align:center}
 .hb-badge:empty{display:none}
 .hb-pane{display:none}.hb-pane.on{display:block;animation:hbIn .2s ease}
-@keyframes hbIn{from{opacity:0;transform:translateY(5px)}}
+@keyframes hbIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 .hb-in{display:grid;gap:12px;max-width:880px;margin:0 auto;padding:12px 12px 24px}
 .hb-h{margin:2px 2px 0;font:800 20px "Noto Sans Tamil",system-ui,sans-serif}
 .hb-sub{margin:-6px 2px 0;color:var(--s-mut);font-size:13px}
@@ -74,7 +74,7 @@ body.st-page{min-height:100vh}
   <header class="hb-top" id="top">
     <div class="hb-bar">
       <a class="hb-pill" id="back" href="index.html">← <span class="hb-uil">திரும்பு</span></a>
-      <h1>⚙ செட்டிங்ஸ்</h1>
+      <h1>⚙ செட்டிங்ஸ் <span style="font-size:11px;font-weight:700;opacity:.55;letter-spacing:.06em;margin-left:4px">PREMIUM</span></h1>
       <button class="hb-pill" id="uiBtn" type="button" title="மொபைல் / கணினி / தானாக"></button>
       <span data-owner-slot style="display:flex;align-items:center"></span>
     </div>

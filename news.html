@@ -10,43 +10,202 @@
 <style>
 @font-face{font-family:"Noto Sans Tamil";font-weight:100 900;src:local("Noto Sans Tamil"),local("NotoSansTamil-Regular"),local("NotoSansTamil")}
 @font-face{font-family:"Noto Sans Tamil";font-weight:700 900;src:local("Noto Sans Tamil Bold"),local("NotoSansTamil-Bold")}
-:root{--bg:#fffdf0;--card:#fff;--ink:#101010;--mut:#6b6b6b;--line:#efe3b0;--red:#D71920;--gold:#FFC800;--warm:#FFC800;--yel:#FFC800;--in:#fffef8;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#101010;--card:#1b1b1b;--ink:#f4f4f4;--mut:#9a9a9a;--line:#333;--gold:#FFC800;--warm:#FFC800;--yel:#FFC800;--in:#242424;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#101010;--card:#1b1b1b;--ink:#f4f4f4;--mut:#9a9a9a;--line:#333;--gold:#FFC800;--warm:#FFC800;--yel:#FFC800;--in:#242424;color-scheme:dark}
+:root{
+  --bg:#FBF1F1;--card:#FFFFFF;--ink:#1A0508;--mut:#7A5257;--line:#E8C9CD;
+  --red:#B3121A;--gold:#E0A823;--warm:#E0A823;--yel:#E0A823;--in:#FFF9F9;
+  --shadow:0 4px 24px rgba(45,8,12,.08),0 1px 3px rgba(45,8,12,.04);
+  --shadow-lg:0 16px 48px rgba(45,8,12,.14),0 4px 12px rgba(45,8,12,.06);
+  --radius:18px;--ease:cubic-bezier(.22,1,.36,1);
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#120607;--card:#1F0E11;--ink:#FBEDEE;--mut:#C9A3A6;--line:#4A2226;
+    --gold:#FFCC33;--warm:#FFCC33;--yel:#FFCC33;--in:#1A0C0E;
+    --shadow:0 4px 24px rgba(0,0,0,.35);--shadow-lg:0 16px 48px rgba(0,0,0,.5);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#120607;--card:#1F0E11;--ink:#FBEDEE;--mut:#C9A3A6;--line:#4A2226;
+  --gold:#FFCC33;--warm:#FFCC33;--yel:#FFCC33;--in:#1A0C0E;
+  --shadow:0 4px 24px rgba(0,0,0,.35);--shadow-lg:0 16px 48px rgba(0,0,0,.5);
+  color-scheme:dark;
+}
 *{box-sizing:border-box}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
-body{margin:0;background:var(--bg);color:var(--ink);font:500 16px/1.5 "Noto Sans Tamil","Latha","Nirmala UI",sans-serif}
-main{display:grid;gap:16px;padding:12px;max-width:1100px;margin:auto}
-@media(min-width:900px){main{grid-template-columns:380px 1fr;align-items:start}.stage{position:sticky;top:12px}}
-.stage{background:#000;border-radius:14px;padding:8px;border:2px solid var(--red)}
-canvas{width:100%;aspect-ratio:9/16;max-height:78vh;display:block;margin:auto;background:#101010;border-radius:8px}
-.panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;display:grid;gap:12px;min-width:0}
-h2{margin:0;font-size:17px;font-weight:800}
-label{display:grid;gap:4px;font-size:14px;color:var(--mut)}
-input,textarea,select{font:inherit;color:var(--ink);background:var(--in);border:1px solid var(--line);border-radius:8px;padding:9px 10px;width:100%}
-textarea{resize:vertical}
-.bar{height:10px;border-radius:99px;background:var(--line);overflow:hidden}.bar>div{height:100%;width:0;background:var(--red);transition:width .2s}
-select{width:100%;min-width:0}
-.row{display:flex;gap:8px;flex-wrap:wrap}
-.row>*{flex:1 1 140px}
-button{font:inherit;font-weight:700;border:0;border-radius:8px;padding:11px 14px;background:var(--red);color:var(--on,#101010);cursor:pointer}
-button.alt{background:var(--in);color:var(--ink);border:1px solid var(--line)}
-button.gold{background:var(--deep,#D71920);color:#fff}
-button:disabled{opacity:.5}
-.tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px}
-.tabs button{flex:0 0 auto;min-width:42px;padding:8px 12px;background:var(--in);color:var(--ink);border:1px solid var(--line)}
-.tabs button.on{background:var(--red);color:var(--on,#101010);border-color:var(--red)}
-#st{font-size:14px;color:var(--gold);min-height:22px}
-small{color:var(--mut)}
-details summary{cursor:pointer;font-weight:700}
-/* ---- முதல் பக்கம் (காட்சி மட்டும்): ?mode=view ---- */
+body{
+  margin:0;
+  background:
+    radial-gradient(1000px 500px at 0% -5%,rgba(179,18,26,.07),transparent 55%),
+    radial-gradient(800px 400px at 100% 0%,rgba(224,168,35,.06),transparent 50%),
+    var(--bg);
+  color:var(--ink);
+  font:500 15.5px/1.55 "Noto Sans Tamil","Latha","Nirmala UI",system-ui,sans-serif;
+  letter-spacing:.01em;
+}
+main{
+  display:grid;gap:18px;padding:14px;max-width:1120px;margin:auto;
+}
+@media(min-width:900px){
+  main{grid-template-columns:minmax(340px,400px) 1fr;align-items:start;gap:22px}
+  .stage{position:sticky;top:14px}
+}
+.stage{
+  background:linear-gradient(165deg,#0a0a0a,#16080a);
+  border-radius:var(--radius);
+  padding:10px;
+  border:1.5px solid color-mix(in srgb,var(--red) 55%,#000);
+  box-shadow:var(--shadow-lg),inset 0 0 0 1px rgba(255,255,255,.04);
+}
+canvas{
+  width:100%;aspect-ratio:9/16;max-height:78vh;
+  display:block;margin:auto;
+  background:#0c0c0c;border-radius:12px;
+  box-shadow:0 8px 28px rgba(0,0,0,.4);
+}
+.panel{
+  background:var(--card);
+  border:1px solid color-mix(in srgb,var(--line) 90%,transparent);
+  border-radius:var(--radius);
+  padding:16px;
+  display:grid;gap:13px;min-width:0;
+  box-shadow:var(--shadow);
+  transition:box-shadow .3s var(--ease);
+}
+.panel:hover{box-shadow:var(--shadow-lg)}
+h2{
+  margin:0;font-size:17.5px;font-weight:800;
+  letter-spacing:-.015em;color:var(--ink);
+}
+label{display:grid;gap:5px;font-size:12.5px;font-weight:700;color:var(--mut);letter-spacing:.015em}
+input,textarea,select{
+  font:inherit;font-size:15px;color:var(--ink);
+  background:var(--in);
+  border:1.5px solid var(--line);
+  border-radius:12px;padding:11px 13px;width:100%;
+  transition:border-color .2s,box-shadow .2s;
+}
+input:hover,textarea:hover,select:hover{
+  border-color:color-mix(in srgb,var(--red) 35%,var(--line));
+}
+input:focus,textarea:focus,select:focus{
+  outline:none;
+  border-color:var(--red);
+  box-shadow:0 0 0 4px color-mix(in srgb,var(--red) 16%,transparent);
+}
+textarea{resize:vertical;min-height:72px}
+.bar{
+  height:8px;border-radius:99px;
+  background:color-mix(in srgb,var(--line) 65%,transparent);
+  overflow:hidden;
+}
+.bar>div{
+  height:100%;width:0;
+  background:linear-gradient(90deg,var(--red),var(--gold));
+  border-radius:99px;
+  transition:width .25s var(--ease);
+}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.row>*{flex:1 1 140px;min-width:0}
+button{
+  font:inherit;font-weight:800;font-size:14px;
+  border:1.5px solid transparent;border-radius:13px;
+  padding:11px 15px;min-height:44px;
+  background:linear-gradient(180deg,color-mix(in srgb,var(--red) 88%,#fff),var(--red));
+  color:var(--on,#fff);
+  cursor:pointer;
+  display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  box-shadow:0 2px 10px color-mix(in srgb,var(--red) 28%,transparent),inset 0 1px 0 rgba(255,255,255,.15);
+  transition:transform .18s var(--ease),box-shadow .2s,filter .2s;
+}
+button:hover{filter:brightness(1.06);transform:translateY(-1px);box-shadow:0 6px 18px color-mix(in srgb,var(--red) 32%,transparent)}
+button:active{transform:translateY(0);filter:brightness(.97)}
+button.alt{
+  background:var(--in);color:var(--ink);border-color:var(--line);
+  box-shadow:0 1px 3px rgba(0,0,0,.04);
+}
+button.alt:hover{
+  border-color:color-mix(in srgb,var(--red) 40%,var(--line));
+  background:color-mix(in srgb,var(--red) 5%,var(--in));
+}
+button.gold{
+  background:linear-gradient(180deg,color-mix(in srgb,var(--deep,#7A0C14) 85%,#fff),var(--deep,#7A0C14));
+  color:#fff;border-color:transparent;
+  box-shadow:0 3px 14px color-mix(in srgb,var(--deep,#7A0C14) 30%,transparent);
+}
+button:disabled{opacity:.48;cursor:not-allowed;transform:none!important;filter:none!important}
+.tabs{display:flex;gap:7px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tabs button{
+  flex:0 0 auto;min-width:44px;padding:8px 14px;min-height:40px;
+  background:var(--in);color:var(--ink);border-color:var(--line);
+  border-radius:11px;font-weight:700;box-shadow:none;
+}
+.tabs button.on{
+  background:var(--red);color:var(--on,#fff);border-color:var(--red);
+  box-shadow:0 2px 10px color-mix(in srgb,var(--red) 28%,transparent);
+}
+#st{font-size:13.5px;color:var(--gold);min-height:22px;font-weight:700}
+small{color:var(--mut);font-size:12.5px;line-height:1.45}
+details{
+  border:1px solid color-mix(in srgb,var(--line) 90%,transparent);
+  border-radius:14px;overflow:hidden;
+  background:var(--card);
+  box-shadow:0 1px 4px rgba(0,0,0,.03);
+}
+details summary{
+  cursor:pointer;font-weight:800;font-size:14.5px;
+  padding:13px 14px;list-style:none;
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  transition:background .2s;
+}
+details summary:hover{background:color-mix(in srgb,var(--red) 4%,transparent)}
+details summary::-webkit-details-marker{display:none}
+details summary::after{
+  content:"+";font-size:20px;font-weight:300;color:var(--red);
+  width:26px;height:26px;display:grid;place-items:center;
+  border-radius:50%;background:color-mix(in srgb,var(--red) 10%,transparent);
+}
+details[open] summary::after{content:"\2212"}
+details > .panel,details > div.panel{border:0!important;box-shadow:none;background:transparent;padding:0 14px 14px!important}
+
+/* Chromo timing hero box */
+.chromo-box,.sc[style*="border:2px"]{
+  border:1.5px solid color-mix(in srgb,var(--red) 55%,transparent)!important;
+  background:
+    linear-gradient(145deg,color-mix(in srgb,var(--red) 6%,var(--in)),var(--in))!important;
+  border-radius:16px!important;
+  box-shadow:0 4px 20px color-mix(in srgb,var(--red) 12%,transparent);
+  padding:14px!important;
+}
+.chromo-box h2, .sc[style*="border:2px"] h2{
+  display:flex;align-items:center;gap:8px;
+  font-size:15.5px!important;
+}
+
+/* View mode */
 html.m-view,html.m-view body{height:100%;overflow:hidden;background:var(--stg,#000);padding:0;overscroll-behavior:none}
 html.m-view main{display:block;padding:0;max-width:none;margin:0;height:100%}
 html.m-view #mainPanel,html.m-view #cardPanel{display:none!important}
-html.m-view .stage{position:fixed;inset:0;background:var(--stg,#000);border:0;border-radius:0;padding:0;display:block;cursor:pointer}
-html.m-view canvas{position:absolute;inset:0;width:100%;height:100%;max-height:none;aspect-ratio:auto;object-fit:contain;border-radius:0;background:var(--stg,#000);pointer-events:none}
+html.m-view .stage{position:fixed;inset:0;background:var(--stg,#000);border:0;border-radius:0;padding:0;display:block;cursor:pointer;box-shadow:none}
+html.m-view canvas{position:absolute;inset:0;width:100%;height:100%;max-height:none;aspect-ratio:auto;object-fit:contain;border-radius:0;background:var(--stg,#000);pointer-events:none;box-shadow:none}
 #vInfo{display:none}
-html.m-view #vInfo{display:block;position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 10px);transform:translateX(-50%);z-index:5;background:rgba(0,0,0,.62);color:#fff;font:800 12px "Noto Sans Tamil",sans-serif;padding:3px 12px;border-radius:99px;pointer-events:none}
+html.m-view #vInfo{
+  display:block;position:fixed;left:50%;
+  bottom:calc(env(safe-area-inset-bottom,0px) + 12px);
+  transform:translateX(-50%);z-index:5;
+  background:rgba(0,0,0,.72);backdrop-filter:blur(12px);
+  color:#fff;font:800 12px "Noto Sans Tamil",sans-serif;
+  padding:5px 14px;border-radius:99px;pointer-events:none;
+  box-shadow:0 4px 16px rgba(0,0,0,.3);
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+}
 </style>
 <script>(function(){var m=new URLSearchParams(location.search).get('mode')||'';document.documentElement.classList.add('m-'+(m||'full'));if(new URLSearchParams(location.search).get('hub'))document.documentElement.classList.add('hub');if(m==='settings'){var l=document.createElement('link');l.rel='stylesheet';l.href='settings.css';document.head.appendChild(l)}})();</script>
 <script src="media-store.js"></script>
@@ -56,7 +215,7 @@ html.m-view #vInfo{display:block;position:fixed;left:50%;bottom:calc(env(safe-ar
 <div class="stage"><canvas id="cv" width="1080" height="1920"></canvas></div>
 <div id="vInfo"></div>
 <div class="panel" id="mainPanel">
-  <h2>தீக்கதிர் – செய்தி ஸ்டுடியோ <small style="font-weight:600;opacity:.7">· CapCut பாணி</small></h2>
+  <h2>தீக்கதிர் · செய்தி ஸ்டுடியோ <span style="font-weight:600;font-size:12px;opacity:.55;letter-spacing:.04em">PREMIUM</span></h2>
   <div id="appThemes"></div>
 
   <!-- முக்கிய செயல்கள் (ஹைலைட்) -->
@@ -79,8 +238,8 @@ html.m-view #vInfo{display:block;position:fixed;left:50%;bottom:calc(env(safe-ar
   <label>டிக்கர் (| கொண்டு பிரிக்கவும்)<input data-k="ticker"></label>
 
   <!-- 2. குரோமோ / நேரம் (CapCut பாணி) -->
-  <div class="sc" style="border:2px solid var(--red);padding:12px;border-radius:14px;background:var(--in)">
-    <h2 style="margin:0 0 8px;font-size:16px">🎬 குரோமோ · நேரம் (நீங்களே முடிவு செய்யுங்கள்)</h2>
+  <div class="chromo-box sc">
+    <h2 style="margin:0 0 10px">🎬 குரோமோ · நேரம் <small style="font-weight:600;opacity:.65;font-size:12px">CapCut பாணி · நீங்களே முடிவு</small></h2>
     <label>இந்தச் செய்தியின் நீளம்<select data-k="len"><option value="20">20 வி</option><option value="30">30 வி</option><option value="40">40 வி</option><option value="50">50 வி</option><option value="60">60 வி</option></select></label>
     <label>குரோமோ எழுத்து (காலி = இயல்பு; | கொண்டு பிரிக்கவும்)<input data-k="promo" placeholder="BREAKING NEWS | JUST IN"></label>
     <label>குரோமோ வரும் நேரங்கள் (எ.கா: 5, 18, 0:45)<input data-k="promoAt" placeholder="5, 18, 0:45" inputmode="text"></label>
